@@ -49,7 +49,7 @@ Item {
             Layout.leftMargin: shown ? 4 : 0
         }
 
-        // Temperatura: Esconde com mídia ativa OU se abaixo de 70%
+        // Temperatura
         Resource {
             iconName: "thermostat"
             percentage: (ResourceUsage.cpuTemperature / 100) ?? 0
@@ -57,19 +57,19 @@ Item {
             Layout.leftMargin: shown ? 4 : 0
         }
 
-        // Download Speed: Esconde com mídia ativa OU se abaixo de 70%
+        // Download Speed
         Resource {
             iconName: "arrow_downward"
             percentage: Math.min(1, (ResourceUsage.netDownloadSpeed / (80 * 1024)))
-            shown: !root.mediaActive && percentage >= 0.70
+            shown: !root.mediaActive && percentage >= 0.10
             Layout.leftMargin: shown ? 4 : 0
         }
 
-        // Upload Speed: Esconde com mídia ativa OU se abaixo de 70%
+        // Upload Speed
         Resource {
             iconName: "arrow_upward"
             percentage: Math.min(1, (ResourceUsage.netUploadSpeed / (40 * 1024)))
-            shown: !root.mediaActive && percentage >= 0.70
+            shown: !root.mediaActive && percentage >= 0.10
             Layout.leftMargin: shown ? 4 : 0
         }
     }

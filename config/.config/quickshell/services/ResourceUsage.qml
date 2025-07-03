@@ -120,7 +120,7 @@ Singleton {
     Process {
         id: diskUsageProcess
         // >>> USER ADJUSTMENT: Change '/home' to '/' if you want to monitor your root filesystem <<<
-        command: ["bash", "-c", "df -kP /home | awk 'NR==2 {print $3, $2}'"]
+        command: ["bash", "-c", "df -kP / | awk 'NR==2 {print $3, $2}'"]
         running: false
 
         stdout: SplitParser {
