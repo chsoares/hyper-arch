@@ -1,3 +1,4 @@
+// root:/modules/common/Resources.qml
 import "root:/modules/common"
 import "root:/modules/common/widgets"
 import "root:/services"
@@ -14,37 +15,62 @@ Item {
     implicitWidth: rowLayout.implicitWidth + rowLayout.anchors.leftMargin + rowLayout.anchors.rightMargin
     implicitHeight: 32
 
+    property bool mediaActive: MprisController.activePlayer?.trackTitle?.length > 0
+
     RowLayout {
         id: rowLayout
 
-        spacing: 0
+        spacing: 4
         anchors.fill: parent
         anchors.leftMargin: 4
         anchors.rightMargin: 4
 
-        Resource {
-            iconName: "memory"
-            percentage: ResourceUsage.memoryUsedPercentage
-        }
-
-        Resource {
-            iconName: "swap_horiz"
-            percentage: ResourceUsage.swapUsedPercentage
-            shown: (Config.options.bar.resources.alwaysShowSwap && percentage > 0) || 
-                (MprisController.activePlayer?.trackTitle == null) ||
-                root.alwaysShowAllResources
-            Layout.leftMargin: shown ? 4 : 0
-        }
-
+        // CPU: Sempre visível
         Resource {
             iconName: "settings_slow_motion"
             percentage: ResourceUsage.cpuUsage
-            shown: Config.options.bar.resources.alwaysShowCpu || 
-                !(MprisController.activePlayer?.trackTitle?.length > 0) ||
-                root.alwaysShowAllResources
+            shown: true
             Layout.leftMargin: shown ? 4 : 0
         }
 
-    }
+        // RAM: Sempre visível
+        Resource {
+            iconName: "memory"
+            percentage: ResourceUsage.memoryUsedPercentage
+            shown: true
+            Layout.leftMargin: 4
+        }
 
+        // Disco: Sempre visível
+        Resource {
+            iconName: "hard_drive"
+            percentage: ResourceUsage.diskUsedPercentage ?? 0
+            shown: true
+            Layout.leftMargin: shown ? 4 : 0
+        }
+
+        // Temperatura: Esconde com mídia ativa OU se abaixo de 70%
+        Resource {
+            iconName: "thermostat"
+            percentage: (ResourceUsage.cpuTemperature / 100) ?? 0
+            shown: !root.mediaActive && percentage >= 0.70
+            Layout.leftMargin: shown ? 4 : 0
+        }
+
+        // Download Speed: Esconde com mídia ativa OU se abaixo de 70%
+        Resource {
+            iconName: "arrow_downward"
+            percentage: Math.min(1, (ResourceUsage.netDownloadSpeed / (80 * 1024)))
+            shown: !root.mediaActive && percentage >= 0.70
+            Layout.leftMargin: shown ? 4 : 0
+        }
+
+        // Upload Speed: Esconde com mídia ativa OU se abaixo de 70%
+        Resource {
+            iconName: "arrow_upward"
+            percentage: Math.min(1, (ResourceUsage.netUploadSpeed / (40 * 1024)))
+            shown: !root.mediaActive && percentage >= 0.70
+            Layout.leftMargin: shown ? 4 : 0
+        }
+    }
 }
