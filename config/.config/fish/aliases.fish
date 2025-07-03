@@ -21,8 +21,8 @@ abbr --add gc "git commit -m"
 ## Aliases
 
 ## Abbreviations
-abbr --add nmap 'sudo nmap'
-abbr --add openvpn 'sudo openvpn'
+abbr --add nmap 'sudo nmap --min-rate 10000'
+abbr --add ovpn 'sudo openvpn'
 
 ## Variables
 set -x rockyou '/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt'
