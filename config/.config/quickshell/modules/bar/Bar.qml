@@ -466,6 +466,8 @@ Scope {
                                         reveal: ipFetcher.tun0IsUp // Usando o novo ID 'ipFetcher'
                                         Layout.fillHeight: true
                                         Layout.rightMargin: reveal ? indicatorsRowLayout.realSpacing : 0
+                                        Layout.alignment: Qt.AlignVCenter
+                                        
                                         Behavior on Layout.rightMargin {
                                             NumberAnimation {
                                                 duration: Appearance.animation.elementMoveFast.duration
@@ -478,6 +480,8 @@ Scope {
                                             font.pixelSize: Appearance.font.pixelSize.normal
                                             color: rightSidebarButton.colText
                                             verticalAlignment: Text.AlignVCenter
+                                            Layout.fillHeight: true
+                                            y: +2
                                         }
                                     }
                                     
