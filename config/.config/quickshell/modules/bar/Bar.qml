@@ -3,6 +3,7 @@ import "root:/services"
 import "root:/modules/common/"
 import "root:/modules/common/widgets"
 import "root:/modules/common/functions/color_utils.js" as ColorUtils
+import "root:/modules/common/IpFetcher.qml"
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -56,6 +57,10 @@ Scope {
             }
             color: "transparent"
 
+            IpFetcher {
+                id: ipFetcher
+            }
+            
             anchors {
                 top: !Config.options.bar.bottom
                 bottom: Config.options.bar.bottom
@@ -455,6 +460,28 @@ Scope {
                                             color: rightSidebarButton.colText
                                         }
                                     }
+                                    
+                                    // Novo Revealer para o IP da tun0
+                                    Revealer {
+                                        reveal: ipFetcher.tun0IsUp // Usando o novo ID 'ipFetcher'
+                                        Layout.fillHeight: true
+                                        Layout.rightMargin: reveal ? indicatorsRowLayout.realSpacing : 0
+                                        Behavior on Layout.rightMargin {
+                                            NumberAnimation {
+                                                duration: Appearance.animation.elementMoveFast.duration
+                                                easing.type: Appearance.animation.elementMoveFast.type
+                                                easing.bezierCurve: Appearance.animation.elementMoveFast.bezierCurve
+                                            }
+                                        }
+                                        Text {
+                                            text: ipFetcher.ipAddress // Usando o novo ID 'ipFetcher'
+                                            font.pixelSize: Appearance.font.pixelSize.normal
+                                            color: rightSidebarButton.colText
+                                            verticalAlignment: Text.AlignVCenter
+                                        }
+                                    }
+                                    
+                                    
                                     MaterialSymbol {
                                         Layout.rightMargin: indicatorsRowLayout.realSpacing
                                         text: Network.materialSymbol
