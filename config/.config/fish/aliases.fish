@@ -41,5 +41,5 @@ alias ligolo '/usr/share/ligolo/linux/proxy/amd64/proxy -selfcert'
 alias penelope '/opt/penelope/penelope.py -i tun0'
 
 ## ezpz
-set -x EZPZ_HOME '/home/chsoares/Repos/ezpz' 
-set -U fish_function_path "$EZPZ_HOME/functions" $fish_function_path
+#set -U EZPZ_HOME '/home/chsoares/Repos/ezpz' 
+#set -U fish_function_path "$EZPZ_HOME/functions" $fish_function_path
