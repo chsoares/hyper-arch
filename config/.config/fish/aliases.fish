@@ -19,6 +19,7 @@ abbr --add gc "git commit -m"
 
 # CTFs and stuff
 ## Aliases
+alias ligolo '/usr/share/ligolo/linux/proxy/amd64/proxy -selfcert'
 
 ## Abbreviations
 abbr --add nmap 'sudo nmap --min-rate 10000'
