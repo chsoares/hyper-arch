@@ -118,7 +118,7 @@ format = "· [󰝰 $path]($style) "
 disabled = false
 symbol = "  "
 style = "yellow"
-format = "· [$symbol$branch]($style)"
+format = "· [$symbol$branch ]($style)"
 
 # Shows current git status
 [git_status]
@@ -134,7 +134,7 @@ modified = ' '
 staged = '[++\($count\)](green)'
 renamed = '襁 '
 deleted = ' '
-format = '[( $all_status$ahead_behind)]($style)'
+format = '[($all_status$ahead_behind)]($style)'
 
 # Show Python virtualenv if active
 [python]
