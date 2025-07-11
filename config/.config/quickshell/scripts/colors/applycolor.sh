@@ -26,6 +26,20 @@ IFS=$'\n'
 colorlist=($colornames)     # Array of color names
 colorvalues=($colorstrings) # Array of color values
 
+# Troca os valores de $term1 e $term2
+idx1=-1
+idx2=-1
+for i in "${!colorlist[@]}"; do
+    [[ "${colorlist[$i]}" == "\$term2" ]] && idx1=$i
+    [[ "${colorlist[$i]}" == "\$term3" ]] && idx2=$i
+done
+
+if [[ $idx1 -ge 0 && $idx2 -ge 0 ]]; then
+    tmp="${colorvalues[$idx1]}"
+    colorvalues[$idx1]="${colorvalues[$idx2]}"
+    colorvalues[$idx2]="$tmp"
+fi
+
 apply_term() {
   # Check if terminal escape sequence template exists
   if [ ! -f "$CONFIG_DIR"/scripts/terminal/sequences.txt ]; then
