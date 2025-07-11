@@ -21,6 +21,14 @@ abbr --add gc "git commit -m"
 ## Aliases
 alias ligolo '/usr/share/ligolo/linux/proxy/amd64/proxy -selfcert'
 
+## Functions
+function bloodhound
+    set oldpwd (pwd)
+    cd ~/.config/bloodhound
+    docker compose up -d
+    cd $oldpwd
+end
+
 ## Abbreviations
 abbr --add nmap 'sudo nmap --min-rate 10000'
 abbr --add ovpn 'sudo openvpn'
