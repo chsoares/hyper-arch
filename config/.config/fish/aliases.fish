@@ -34,11 +34,12 @@ abbr --add ovpn 'sudo openvpn'
 
 ## Variables
 set -x rockyou '/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt'
-set -x EZPZ_HOME '/home/chsoares/Repos/ezpz' 
 set -x weblist '/home/chsoares/Repos/ezpz/utils/weblist_ezpz.txt'
 
 ## Executables
 alias ligolo '/usr/share/ligolo/linux/proxy/amd64/proxy -selfcert'
 alias penelope '/opt/penelope/penelope.py -i tun0'
 
-
+## ezpz
+set -x EZPZ_HOME '/home/chsoares/Repos/ezpz' 
+set -U fish_function_path "$EZPZ_HOME/functions" $fish_function_path
