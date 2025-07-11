@@ -20,6 +20,7 @@ abbr --add gc "git commit -m"
 # CTFs and stuff
 ## Aliases
 alias ligolo '/usr/share/ligolo/linux/proxy/amd64/proxy -selfcert'
+alias penelope '/opt/penelope/penelope.py -i tun0'
 
 ## Functions
 function bloodhound
