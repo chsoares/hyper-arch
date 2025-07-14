@@ -33,6 +33,9 @@ abbr --add nmap 'sudo nmap --min-rate 10000'
 abbr --add ovpn 'sudo openvpn'
 
 ## Variables
+if test -f ~/Lab/env.fish
+    source ~/Lab/env.fish
+end
 set -x rockyou '/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt'
 set -x weblist '/home/chsoares/Repos/ezpz/utils/weblist_ezpz.txt'
 
