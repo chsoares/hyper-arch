@@ -40,17 +40,26 @@ set -x rockyou '/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt'
 set -x weblist '/home/chsoares/Repos/ezpz/utils/weblist_ezpz.txt'
 
 ## Executables
-alias ligolo '/usr/share/ligolo/linux/proxy/amd64/proxy -selfcert'
+alias ligolo 'sudo /usr/share/ligolo/linux/proxy/amd64/proxy -selfcert'
 alias penelope '/opt/penelope/penelope.py -i tun0'
 
 ## ezpz
 #set -Ux EZPZ_HOME '/home/chsoares/Repos/ezpz' 
-#set -Ux EZPZ_HOME '/home/chsoares/Repos/ezpz' 
 #set -U fish_function_path "$EZPZ_HOME/functions" $fish_function_path
 #set -U fish_complete_path "$EZPZ_HOME/completions" $fish_complete_path
+abbr -add netscan 'ezpz netscan'
+abbr -add webscan 'ezpz webscan'
+abbr -add adscan 'ezpz adscan'
+abbr -add testcreds 'ezpz testcreds'
+abbr -add checkvulns 'ezpz checkvulns'
+abbr -add loot 'ezpz loot'
+abbr -add secretsparse 'ezpz secretsparse'
+abbr -add enumsqli 'ezpz enumsqli'
+abbr -add enumdomain 'ezpz enumdomain'
+abbr -add enumuser 'ezpz enumuser'
+abbr -add enumshares 'ezpz enumshares'
 
 ## ctf-utils
-#set -Ux CTF_HOME '/home/chsoares/Repos/ctf-utils' 
 #set -Ux CTF_HOME '/home/chsoares/Repos/ctf-utils' 
 #set -U fish_function_path "$CTF_HOME/functions" $fish_function_path
 #set -U fish_complete_path "$CTF_HOME/completions" $fish_complete_path
