@@ -45,8 +45,12 @@ alias penelope '/opt/penelope/penelope.py -i tun0'
 
 ## ezpz
 #set -Ux EZPZ_HOME '/home/chsoares/Repos/ezpz' 
+#set -Ux EZPZ_HOME '/home/chsoares/Repos/ezpz' 
 #set -U fish_function_path "$EZPZ_HOME/functions" $fish_function_path
+#set -U fish_complete_path "$EZPZ_HOME/completions" $fish_complete_path
 
 ## ctf-utils
 #set -Ux CTF_HOME '/home/chsoares/Repos/ctf-utils' 
+#set -Ux CTF_HOME '/home/chsoares/Repos/ctf-utils' 
 #set -U fish_function_path "$CTF_HOME/functions" $fish_function_path
+#set -U fish_complete_path "$CTF_HOME/completions" $fish_complete_path

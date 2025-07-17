@@ -1,7 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export CTF_HOME:/home/chsoares/Repos/ctf\x2dutils
-SETUVAR EZPZ_HOME:/home/chsoares/Repos/ezpz
+SETUVAR --export EZPZ_HOME:/home/chsoares/Repos/ezpz
 SETUVAR __fish_initialized:3800
 SETUVAR _fisher_catppuccin_2F_fish_files:\x7e/\x2econfig/fish/themes/Catppuccin\x20Frappe\x2etheme\x1e\x7e/\x2econfig/fish/themes/Catppuccin\x20Latte\x2etheme\x1e\x7e/\x2econfig/fish/themes/Catppuccin\x20Macchiato\x2etheme\x1e\x7e/\x2econfig/fish/themes/Catppuccin\x20Mocha\x2etheme
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
@@ -33,6 +33,7 @@ SETUVAR fish_color_selection:\x2d\x2dbackground\x3d313244
 SETUVAR fish_color_status:f38ba8
 SETUVAR fish_color_user:94e2d5
 SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_complete_path:/home/chsoares/Repos/ctf\x2dutils/completions\x1e/home/chsoares/\x2econfig/fish/completions\x1e/etc/fish/completions\x1e/home/chsoares/\x2elocal/share/fish/vendor_completions\x2ed\x1e/usr/lib/kitty/shell\x2dintegration/fish/vendor_completions\x2ed\x1e/home/chsoares/\x2elocal/share/flatpak/exports/share/fish/vendor_completions\x2ed\x1e/var/lib/flatpak/exports/share/fish/vendor_completions\x2ed\x1e/usr/local/share/fish/vendor_completions\x2ed\x1e/usr/share/fish/vendor_completions\x2ed\x1e/usr/share/fish/completions\x1e/home/chsoares/\x2ecache/fish/generated_completions
 SETUVAR fish_function_path:/home/chsoares/Repos/ctf\x2dutils/functions\x1e/home/chsoares/Repos/ezpz/functions\x1e/home/chsoares/\x2econfig/fish/functions\x1e/etc/fish/functions\x1e/home/chsoares/\x2elocal/share/fish/vendor_functions\x2ed\x1e/usr/lib/kitty/shell\x2dintegration/fish/vendor_functions\x2ed\x1e/home/chsoares/\x2elocal/share/flatpak/exports/share/fish/vendor_functions\x2ed\x1e/var/lib/flatpak/exports/share/fish/vendor_functions\x2ed\x1e/usr/local/share/fish/vendor_functions\x2ed\x1e/usr/share/fish/vendor_functions\x2ed\x1e/usr/share/fish/functions
 SETUVAR fish_key_bindings:fish_default_key_bindings
 SETUVAR fish_pager_color_background:\x1d
