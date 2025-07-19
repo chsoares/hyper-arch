@@ -58,6 +58,7 @@ abbr --add enumsqli 'ezpz enumsqli'
 abbr --add enumdomain 'ezpz enumdomain'
 abbr --add enumuser 'ezpz enumuser'
 abbr --add enumshares 'ezpz enumshares'
+abbr --add enumnull 'ezpz enumnull'
 
 ## ctf-utils
 #set -Ux CTF_HOME '/home/chsoares/Repos/ctf-utils' 
