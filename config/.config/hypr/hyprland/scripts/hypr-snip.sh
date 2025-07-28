@@ -14,5 +14,7 @@ grimblast --freeze save area - | satty \
     --initial-tool rectangle \
     --copy-command wl-copy \
     --output-filename $output_filename \
+    --actions-on-enter "save-to-clipboard" \
+    --actions-on-escape "exit" \
     --early-exit \
     --filename -
