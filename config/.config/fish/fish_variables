@@ -1,5 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export OBSIDIAN:/home/chsoares/Obsidian
 SETUVAR --export CTF_HOME:/home/chsoares/Repos/ctf\x2dutils
 SETUVAR --export EZPZ_HOME:/home/chsoares/Repos/ezpz
 SETUVAR __fish_initialized:3800
