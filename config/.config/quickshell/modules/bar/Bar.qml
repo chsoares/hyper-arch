@@ -454,13 +454,24 @@ Scope {
                                                 easing.bezierCurve: Appearance.animation.elementMoveFast.bezierCurve
                                             }
                                         }
-                                        Text {
-                                            text: ipFetcher.ipAddress // Usando o novo ID 'ipFetcher'
-                                            font.pixelSize: Appearance.font.pixelSize.normal
-                                            color: rightSidebarButton.colText
-                                            verticalAlignment: Text.AlignVCenter
-                                            Layout.fillHeight: true
-                                            y: +2
+                                        Row {
+                                            spacing: 4
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            
+                                            MaterialSymbol {
+                                                text: "vpn_lock"
+                                                iconSize: Appearance.font.pixelSize.larger
+                                                color: rightSidebarButton.colText
+                                                anchors.verticalCenter: parent.verticalCenter
+                                            }
+                                            
+                                            Text {
+                                                text: ipFetcher.ipAddress // Usando o novo ID 'ipFetcher'
+                                                font.pixelSize: Appearance.font.pixelSize.normal
+                                                color: rightSidebarButton.colText
+                                                verticalAlignment: Text.AlignVCenter
+                                                anchors.verticalCenter: parent.verticalCenter
+                                            }
                                         }
                                     }
                                     
