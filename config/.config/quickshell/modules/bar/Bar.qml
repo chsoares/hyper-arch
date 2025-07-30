@@ -4,6 +4,7 @@ import "root:/modules/common/"
 import "root:/modules/common/widgets"
 import "root:/modules/common/functions/color_utils.js" as ColorUtils
 import "root:/modules/common/IpFetcher.qml"
+import "root:/modules/common/YayUpdates.qml"
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -59,6 +60,10 @@ Scope {
 
             IpFetcher {
                 id: ipFetcher
+            }
+            
+            YayUpdates {
+                id: yayUpdates
             }
             
             anchors {
@@ -434,23 +439,6 @@ Scope {
                                             color: rightSidebarButton.colText
                                         }
                                     }
-                                    Revealer {
-                                        reveal: Audio.source?.audio?.muted ?? false
-                                        Layout.fillHeight: true
-                                        Layout.rightMargin: reveal ? indicatorsRowLayout.realSpacing : 0
-                                        Behavior on Layout.rightMargin {
-                                            NumberAnimation {
-                                                duration: Appearance.animation.elementMoveFast.duration
-                                                easing.type: Appearance.animation.elementMoveFast.type
-                                                easing.bezierCurve: Appearance.animation.elementMoveFast.bezierCurve
-                                            }
-                                        }
-                                        MaterialSymbol {
-                                            text: "mic_off"
-                                            iconSize: Appearance.font.pixelSize.larger
-                                            color: rightSidebarButton.colText
-                                        }
-                                    }
                                     
                                     // Novo Revealer para o IP da tun0
                                     Revealer {
@@ -476,6 +464,42 @@ Scope {
                                         }
                                     }
                                     
+                                    
+                                    // Revealer para o contador de atualizações do yay
+                                    Revealer {
+                                        reveal: yayUpdates.hasUpdates
+                                        Layout.fillHeight: true
+                                        Layout.rightMargin: reveal ? indicatorsRowLayout.realSpacing : 0
+                                        Layout.alignment: Qt.AlignVCenter
+                                        
+                                        Behavior on Layout.rightMargin {
+                                            NumberAnimation {
+                                                duration: Appearance.animation.elementMoveFast.duration
+                                                easing.type: Appearance.animation.elementMoveFast.type
+                                                easing.bezierCurve: Appearance.animation.elementMoveFast.bezierCurve
+                                            }
+                                        }
+                                        
+                                        Row {
+                                            spacing: 4
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            
+                                            MaterialSymbol {
+                                                text: "system_update"
+                                                iconSize: Appearance.font.pixelSize.larger
+                                                color: rightSidebarButton.colText
+                                                anchors.verticalCenter: parent.verticalCenter
+                                            }
+                                            
+                                            Text {
+                                                text: yayUpdates.updateCount
+                                                font.pixelSize: Appearance.font.pixelSize.normal
+                                                color: rightSidebarButton.colText
+                                                verticalAlignment: Text.AlignVCenter
+                                                anchors.verticalCenter: parent.verticalCenter
+                                            }
+                                        }
+                                    }
                                     
                                     MaterialSymbol {
                                         Layout.rightMargin: indicatorsRowLayout.realSpacing
