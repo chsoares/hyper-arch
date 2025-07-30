@@ -20,11 +20,19 @@ abbr --add gc "git commit -m"
 # CTFs and stuff
 ## Aliases
 
+
 ## Functions
 function bloodhound
     set oldpwd (pwd)
     cd ~/.config/bloodhound
     docker compose up -d
+    cd $oldpwd
+end
+
+function claudectf
+    set oldpwd (pwd)
+    cd $OBSIDIAN
+    claude
     cd $oldpwd
 end
 
