@@ -133,11 +133,6 @@ Scope {
                         barLeftSideMouseArea.hovered = false
                         barLeftSideMouseArea.trackingScroll = false
                     }
-                    onPressed: (event) => {
-                        if (event.button === Qt.LeftButton) {
-                            Hyprland.dispatch('global quickshell:sidebarLeftOpen')
-                        }
-                    }
                     // Scroll to change brightness
                     WheelHandler {
                         onWheel: (event) => {
@@ -200,9 +195,8 @@ Scope {
                                 toggled: GlobalStates.sidebarLeftOpen
                                     property color colText: toggled ? Appearance.m3colors.m3onSecondaryContainer : Appearance.colors.colOnLayer0
 
-                                onPressed: {
-                                    Hyprland.dispatch('global quickshell:sidebarLeftToggle')
-                                }
+                                enabled: false
+                                visible: false
 
                                 CustomIcon {
                                     id: distroIcon
@@ -222,6 +216,7 @@ Scope {
 
                             ActiveWindow {
                                 visible: barRoot.useShortenedForm === 0
+                                Layout.leftMargin: Appearance.rounding.screenRounding
                                 Layout.rightMargin: Appearance.rounding.screenRounding
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
@@ -286,9 +281,7 @@ Scope {
                         Layout.preferredWidth: barRoot.centerSideModuleWidth
                         Layout.fillHeight: true
 
-                        onPressed: {
-                            Hyprland.dispatch('global quickshell:sidebarRightToggle')
-                        }
+                        enabled: false
 
                         BarGroup {
                             id: rightCenterGroupContent
@@ -416,9 +409,7 @@ Scope {
                                     animation: Appearance.animation.elementMoveFast.colorAnimation.createObject(this)
                                 }
 
-                                onPressed: {
-                                    Hyprland.dispatch('global quickshell:sidebarRightToggle')
-                                }
+                                enabled: false
 
                                 RowLayout {
                                     id: indicatorsRowLayout
