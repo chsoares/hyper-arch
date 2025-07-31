@@ -1,6 +1,6 @@
 # General
 ## Aliases
-alias whatsapp elecwhat
+alias whatsapp 'chromium --app="http://web.whatsapp.com" -enable-features=UseOzonePlatform -ozone-platform=wayland'
 alias zen zen-browser
 alias editor gnome-text-editor
 
@@ -19,7 +19,7 @@ abbr --add gc "git commit -m"
 
 # CTFs and stuff
 ## Aliases
-
+alias www 'ls; python -m http.server 8888'
 
 ## Functions
 function bloodhound
@@ -36,10 +36,19 @@ function claudectf
     cd $oldpwd
 end
 
+function binbag
+    set oldpwd (pwd)
+    cd ~/Lab/binbag
+    ls
+    python -m http.server 8080
+    cd $oldpwd
+end
+
 ## Abbreviations
 abbr --add nmap 'sudo nmap --min-rate 10000'
 abbr --add ovpn 'sudo openvpn'
 abbr --add box 'cd $boxpwd'
+abbr --add john 'john -w=$rockyou'
 
 ## Variables
 if test -f ~/Lab/env.fish
