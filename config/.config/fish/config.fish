@@ -17,6 +17,8 @@ if status is-interactive
     fastfetch
 end
 
+set -x PYTHONWARNINGS "ignore"
+
 # Aliases
 source ~/.config/fish/aliases.fish
 alias pamcan pacman
