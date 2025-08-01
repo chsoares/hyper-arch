@@ -303,10 +303,6 @@ Scope {
                                 Layout.alignment: Qt.AlignVCenter
                             }
 
-                            BatteryIndicator {
-                                visible: (barRoot.useShortenedForm < 2 && UPower.displayDevice.isLaptopBattery)
-                                Layout.alignment: Qt.AlignVCenter
-                            }
                         }
                     }
 
@@ -522,6 +518,12 @@ Scope {
                                         text: Bluetooth.bluetoothConnected ? "bluetooth_connected" : Bluetooth.bluetoothEnabled ? "bluetooth" : "bluetooth_disabled"
                                         iconSize: Appearance.font.pixelSize.larger
                                         color: rightSidebarButton.colText
+                                        Layout.rightMargin: UPower.displayDevice.isLaptopBattery ? indicatorsRowLayout.realSpacing : 0
+                                    }
+                                    
+                                    BatteryIndicator {
+                                        visible: UPower.displayDevice.isLaptopBattery
+                                        Layout.alignment: Qt.AlignVCenter
                                     }
                                 }
                             }
