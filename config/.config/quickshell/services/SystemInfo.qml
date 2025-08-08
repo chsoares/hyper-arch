@@ -10,9 +10,9 @@ import Quickshell.Io
  */
 Singleton {
     id: root
-    property string distroName: "Unknown"
-    property string distroId: "unknown"
-    property string distroIcon: "linux-symbolic"
+    property string distroName: "Arch"
+    property string distroId: "arch"
+    property string distroIcon: "arch-symbolic"
     property string username: "user"
     property string homeUrl: ""
     property string documentationUrl: ""
@@ -68,7 +68,7 @@ Singleton {
                 case "debian":
                 case "raspbian":
                 case "kali": distroIcon = "debian-symbolic"; break;
-                default: distroIcon = "linux-symbolic"; break;
+                default: distroIcon = "arch-symbolic"; break;
             }
         }
     }
