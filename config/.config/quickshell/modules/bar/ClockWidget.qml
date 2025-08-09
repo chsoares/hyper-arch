@@ -16,17 +16,11 @@ Item {
         anchors.centerIn: parent
         spacing: 4
 
-        StyledText {
-            font.pixelSize: Appearance.font.pixelSize.large
-            color: Appearance.colors.colOnLayer1
-            text: DateTime.time
-        }
-
-        StyledText {
+        MaterialSymbol {
             visible: root.showDate
-            font.pixelSize: Appearance.font.pixelSize.small
+            text: "calendar_today"
+            iconSize: Appearance.font.pixelSize.large
             color: Appearance.colors.colOnLayer1
-            text: "•"
         }
 
         StyledText {
@@ -34,6 +28,25 @@ Item {
             font.pixelSize: Appearance.font.pixelSize.small
             color: Appearance.colors.colOnLayer1
             text: DateTime.date
+        }
+
+        StyledText {
+            visible: root.showDate
+            font.pixelSize: Appearance.font.pixelSize.small
+            color: Appearance.colors.colOnLayer1
+            text: ""
+        }
+
+        MaterialSymbol {
+            text: "schedule"
+            iconSize: Appearance.font.pixelSize.large
+            color: Appearance.colors.colOnLayer1
+        }
+
+        StyledText {
+            font.pixelSize: Appearance.font.pixelSize.large
+            color: Appearance.colors.colOnLayer1
+            text: DateTime.time
         }
 
     }
