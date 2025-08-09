@@ -66,7 +66,7 @@ Item {
                     text: `${Math.round(ResourceUsage.cpuUsage * 100)}%`
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.colors.colOnLayer1
-                    font.weight: Font.Bold
+                    font.weight: Font.Medium
                 }
             }
 
@@ -92,7 +92,7 @@ Item {
                     text: `${Math.round(ResourceUsage.memoryUsedPercentage * 100)}%`
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.colors.colOnLayer1
-                    font.weight: Font.Bold
+                    font.weight: Font.Medium
                 }
             }
 
@@ -118,7 +118,7 @@ Item {
                     text: `${Math.round((ResourceUsage.diskUsedPercentage ?? 0) * 100)}%`
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.colors.colOnLayer1
-                    font.weight: Font.Bold
+                    font.weight: Font.Medium
                 }
             }
 
@@ -144,7 +144,7 @@ Item {
                     text: `${Math.round(ResourceUsage.cpuTemperature ?? 0)}°C`
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.colors.colOnLayer1
-                    font.weight: Font.Bold
+                    font.weight: Font.Medium
                 }
             }
 
@@ -170,7 +170,7 @@ Item {
                     text: `${(ResourceUsage.netDownloadSpeed ?? 0).toFixed(1)} KB/s`
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.colors.colOnLayer1
-                    font.weight: Font.Bold
+                    font.weight: Font.Medium
                 }
             }
 
@@ -196,7 +196,7 @@ Item {
                     text: `${(ResourceUsage.netUploadSpeed ?? 0).toFixed(1)} KB/s`
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.colors.colOnLayer1
-                    font.weight: Font.Bold
+                    font.weight: Font.Medium
                 }
             }
         }
