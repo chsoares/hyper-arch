@@ -3,6 +3,7 @@ import "root:/modules/common/widgets"
 import "root:/services"
 import QtQuick
 import QtQuick.Layouts
+import Quickshell.Hyprland
 
 Item {
     id: root
@@ -10,6 +11,16 @@ Item {
     property bool showDate: Config.options.bar.verbose
     implicitWidth: rowLayout.implicitWidth
     implicitHeight: 32
+
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+        onPressed: (event) => {
+            if (event.button === Qt.LeftButton) {
+                Hyprland.dispatch("global quickshell:calendarMonitorToggle")
+            }
+        }
+    }
 
     RowLayout {
         id: rowLayout

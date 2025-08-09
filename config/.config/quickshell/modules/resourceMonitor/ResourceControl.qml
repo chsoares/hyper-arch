@@ -28,7 +28,7 @@ Item {
         id: backgroundRect
         anchors.fill: parent
         anchors.margins: Appearance.sizes.elevationMargin
-        color: ColorUtils.transparentize(Appearance.colors.colLayer0, 0.25)
+        color: Appearance.colors.colLayer0
         radius: Appearance.rounding.windowRounding
 
         MouseArea {

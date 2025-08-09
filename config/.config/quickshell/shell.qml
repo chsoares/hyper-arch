@@ -8,6 +8,7 @@
 import "./modules/common/"
 import "./modules/backgroundWidgets/"
 import "./modules/bar/"
+import "./modules/calendarMonitor/"
 import "./modules/cheatsheet/"
 import "./modules/dock/"
 import "./modules/mediaControls/"
@@ -32,6 +33,7 @@ ShellRoot {
     // no unnecessary stuff will take up memory if you decide to only use, say, the overview.
     property bool enableBar: true
     property bool enableBackgroundWidgets: true
+    property bool enableCalendarMonitor: true
     property bool enableCheatsheet: true
     property bool enableDock: false
     property bool enableMediaControls: true
@@ -56,6 +58,7 @@ ShellRoot {
 
     LazyLoader { active: enableBar; component: Bar {} }
     LazyLoader { active: enableBackgroundWidgets; component: BackgroundWidgets {} }
+    LazyLoader { active: enableCalendarMonitor; component: CalendarMonitor {} }
     LazyLoader { active: enableCheatsheet; component: Cheatsheet {} }
     LazyLoader { active: enableDock; component: Dock {} }
     LazyLoader { active: enableMediaControls; component: MediaControls {} }
