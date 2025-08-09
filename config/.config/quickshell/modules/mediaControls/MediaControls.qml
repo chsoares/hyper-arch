@@ -124,6 +124,7 @@ Scope {
                     - (osdWidth / 2)                     // Dodge OSD
                     - (widgetWidth)                      // Account for widget width
                     + (Appearance.sizes.elevationMargin) // It's fine for shadows to overlap
+                    - 10
                 spacing: -Appearance.sizes.elevationMargin // Shadow overlap okay
 
                 Repeater {
