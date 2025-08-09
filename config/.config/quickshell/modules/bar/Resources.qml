@@ -7,6 +7,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Mpris
+import Quickshell.Hyprland
 
 Item {
     id: root
@@ -16,6 +17,16 @@ Item {
     implicitHeight: 32
 
     property bool mediaActive: MprisController.activePlayer?.trackTitle?.length > 0
+
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton
+        onPressed: (event) => {
+            if (event.button === Qt.LeftButton) {
+                Hyprland.dispatch("global quickshell:resourceMonitorToggle")
+            }
+        }
+    }
 
     RowLayout {
         id: rowLayout

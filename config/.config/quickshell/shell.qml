@@ -15,6 +15,7 @@ import "./modules/notificationPopup/"
 import "./modules/onScreenDisplay/"
 import "./modules/onScreenKeyboard/"
 import "./modules/overview/"
+import "./modules/resourceMonitor/"
 import "./modules/screenCorners/"
 import "./modules/session/"
 import "./modules/sidebarLeft/"
@@ -40,6 +41,7 @@ ShellRoot {
     property bool enableOnScreenKeyboard: true
     property bool enableOverview: true
     property bool enableReloadPopup: true
+    property bool enableResourceMonitor: true
     property bool enableScreenCorners: true
     property bool enableSession: true
     property bool enableSidebarLeft: true
@@ -63,6 +65,7 @@ ShellRoot {
     LazyLoader { active: enableOnScreenKeyboard; component: OnScreenKeyboard {} }
     LazyLoader { active: enableOverview; component: Overview {} }
     LazyLoader { active: enableReloadPopup; component: ReloadPopup {} }
+    LazyLoader { active: enableResourceMonitor; component: ResourceMonitor {} }
     LazyLoader { active: enableScreenCorners; component: ScreenCorners {} }
     LazyLoader { active: enableSession; component: Session {} }
     LazyLoader { active: enableSidebarLeft; component: SidebarLeft {} }

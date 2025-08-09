@@ -138,6 +138,6 @@
     },
     "windows": {
         "centerTitle": true,
-        "showTitlebar": true
+        "showTitlebar": false
     }
 }
