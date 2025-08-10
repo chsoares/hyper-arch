@@ -102,10 +102,5 @@ Item {
             id: translator
             Translator {}
         }
-        Component {
-            id: anime
-            Anime {}
-        }
-        
     }
 }
