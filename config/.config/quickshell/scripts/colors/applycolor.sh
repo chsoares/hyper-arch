@@ -70,5 +70,27 @@ apply_qt() {
   python "$CONFIG_DIR/scripts/kvantum/changeAdwColors.py" # apply config colors
 }
 
+apply_hypr() {
+  # Update Hyprland colors.conf with term6 value for fullscreen border color
+  HYPR_COLORS_FILE="$HOME/.config/hypr/hyprland/colors.conf"
+  
+  if [ -f "$HYPR_COLORS_FILE" ]; then
+    # Find term6 value
+    term6_value=""
+    for i in "${!colorlist[@]}"; do
+      if [[ "${colorlist[$i]}" == "\$term6" ]]; then
+        term6_value="${colorvalues[$i]#\#}"  # Remove # if present
+        break
+      fi
+    done
+    
+    if [ -n "$term6_value" ]; then
+      # Update the fullscreen windowrulev2 border color
+      sed -i "s/windowrulev2 = bordercolor rgba([^)]*), fullscreen:1/windowrulev2 = bordercolor rgba(${term6_value}AA), fullscreen:1/g" "$HYPR_COLORS_FILE"
+    fi
+  fi
+}
+
 apply_qt &
 apply_term &
+apply_hypr &
