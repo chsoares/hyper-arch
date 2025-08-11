@@ -54,6 +54,7 @@ ShellRoot {
         MaterialThemeLoader.reapplyTheme()
         Cliphist.refresh()
         FirstRunExperience.load()
+        Hyprsunset.load()
     }
 
     LazyLoader { active: enableBar; component: Bar {} }
