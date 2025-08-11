@@ -14,7 +14,7 @@ Singleton {
     property string collapsedCalendarFormat: Qt.locale().toString(clock.date, "dd MMMM yyyy")
     property string uptime: "0h, 0m"
 
-    SystemClock {
+    property var clock: SystemClock {
         id: clock
         precision: SystemClock.Minutes
     }
