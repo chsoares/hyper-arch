@@ -330,7 +330,7 @@ main() {
 
     # Only prompt for wallpaper if not using --color and not using --noswitch and no imgpath set
     if [[ -z "$imgpath" && -z "$color_flag" && -z "$noswitch_flag" ]]; then
-        imgpath="$(zenity --file-selection --title='Choose wallpaper' --filename="$HOME/Pictures/Wallpapers" --file-filter='Image files | *.jpg *.jpeg *.png *.gif *.bmp *.webp' --file-filter='All files | *')"
+        imgpath="$(zenity --file-selection --title='Choose wallpaper' --filename="$HOME/Pictures/Wallpapers/" --file-filter='Image files | *.jpg *.jpeg *.png *.gif *.bmp *.webp' --file-filter='All files | *')"
     fi
 
     # If type_flag is 'auto', detect scheme type from image (after imgpath is set)
