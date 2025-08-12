@@ -9,11 +9,11 @@ import Quickshell.Io
 GroupButton {
     id: button
     property string buttonIcon
-    baseWidth: altAction ? 60 : 40
+    baseWidth: 60
     baseHeight: 40
     clickedWidth: baseWidth + 20
     toggled: false
-    buttonRadius: (altAction && toggled) ? Appearance?.rounding.normal : Math.min(baseHeight, baseWidth) / 2
+    buttonRadius: Math.min(baseHeight, baseWidth) / 3
     buttonRadiusPressed: Appearance?.rounding?.small
 
     contentItem: MaterialSymbol {
