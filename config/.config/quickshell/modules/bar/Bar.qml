@@ -197,7 +197,7 @@ Scope {
                                 colBackgroundToggled: Appearance.colors.colSecondaryContainer
                                 colBackgroundToggledHover: Appearance.colors.colSecondaryContainerHover
                                 colRippleToggled: Appearance.colors.colSecondaryContainerActive
-                                toggled: GlobalStates.sidebarLeftOpen
+                                toggled: false
                                     property color colText: toggled ? Appearance.m3colors.m3onSecondaryContainer : Appearance.colors.colOnLayer0
 
                                 enabled: false

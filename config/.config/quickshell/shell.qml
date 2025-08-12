@@ -19,7 +19,6 @@ import "./modules/overview/"
 import "./modules/resourceMonitor/"
 import "./modules/screenCorners/"
 import "./modules/session/"
-import "./modules/sidebarLeft/"
 import "./modules/sidebarRight/"
 import QtQuick
 import QtQuick.Controls
@@ -46,7 +45,6 @@ ShellRoot {
     property bool enableResourceMonitor: true
     property bool enableScreenCorners: true
     property bool enableSession: true
-    property bool enableSidebarLeft: true
     property bool enableSidebarRight: true
 
     // Force initialization of some singletons
@@ -72,7 +70,6 @@ ShellRoot {
     LazyLoader { active: enableResourceMonitor; component: ResourceMonitor {} }
     LazyLoader { active: enableScreenCorners; component: ScreenCorners {} }
     LazyLoader { active: enableSession; component: Session {} }
-    LazyLoader { active: enableSidebarLeft; component: SidebarLeft {} }
     LazyLoader { active: enableSidebarRight; component: SidebarRight {} }
 }
 

@@ -45,20 +45,6 @@ ContentPage {
             }
         }
     }
-    ContentSection {
-        title: "AI"
-        MaterialTextField {
-            Layout.fillWidth: true
-            placeholderText: "System prompt"
-            text: Config.options.ai.systemPrompt
-            wrapMode: TextEdit.Wrap
-            onTextChanged: {
-                Qt.callLater(() => {
-                    Config.options.ai.systemPrompt = text;
-                });
-            }
-        }
-    }
 
     ContentSection {
         title: "Battery"

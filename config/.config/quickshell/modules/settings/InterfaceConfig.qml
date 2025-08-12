@@ -11,41 +11,7 @@ ContentPage {
         title: "Policies"
 
         ConfigRow {
-            ColumnLayout { // Weeb policy
-                ContentSubsectionLabel {
-                    text: "Weeb"
-                }
-                ConfigSelectionArray {
-                    currentValue: Config.options.policies.weeb
-                    configOptionName: "policies.weeb"
-                    onSelected: (newValue) => {
-                        Config.options.policies.weeb = newValue;
-                    }
-                    options: [
-                        { displayName: "No", value: 0 },
-                        { displayName: "Yes", value: 1 },
-                        { displayName: "Closet", value: 2 }
-                    ]
-                }
-            }
 
-            ColumnLayout { // AI policy
-                ContentSubsectionLabel {
-                    text: "AI"
-                }
-                ConfigSelectionArray {
-                    currentValue: Config.options.policies.ai
-                    configOptionName: "policies.ai"
-                    onSelected: (newValue) => {
-                        Config.options.policies.ai = newValue;
-                    }
-                    options: [
-                        { displayName: "No", value: 0 },
-                        { displayName: "Yes", value: 1 },
-                        { displayName: "Local only", value: 2 }
-                    ]
-                }
-            }
         }
     }
 
