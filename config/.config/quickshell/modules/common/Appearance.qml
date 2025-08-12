@@ -236,7 +236,7 @@ Singleton {
             }
         }
         property QtObject elementMoveExit: QtObject {
-            property int duration: 200
+            property int duration: 100
             property int type: Easing.BezierSpline
             property list<real> bezierCurve: animationCurves.emphasizedAccel
             property int velocity: 650
@@ -249,7 +249,7 @@ Singleton {
             }
         }
         property QtObject elementMoveFast: QtObject {
-            property int duration: animationCurves.expressiveEffectsDuration
+            property int duration: 100
             property int type: Easing.BezierSpline
             property list<real> bezierCurve: animationCurves.expressiveEffects
             property int velocity: 850

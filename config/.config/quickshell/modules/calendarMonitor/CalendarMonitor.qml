@@ -33,6 +33,10 @@ Scope {
             id: calendarMonitorRoot
             visible: true
 
+            function hide() {
+                calendarMonitorLoader.active = false
+            }
+
             exclusiveZone: 0
             implicitWidth: (
                 (calendarMonitorRoot.screen.width / 2) // Middle of screen
@@ -52,6 +56,15 @@ Scope {
                 item: calendarColumnLayout
             }
 
+            HyprlandFocusGrab {
+                id: grab
+                windows: [ calendarMonitorRoot ]
+                active: calendarMonitorLoader.active
+                onCleared: () => {
+                    if (!active) calendarMonitorRoot.hide()
+                }
+            }
+
             ColumnLayout {
                 id: calendarColumnLayout
                 anchors.top: parent.top
@@ -62,6 +75,13 @@ Scope {
                     + (Appearance.sizes.elevationMargin) // It's fine for shadows to overlap
                     - 10
                 spacing: -Appearance.sizes.elevationMargin // Shadow overlap okay
+
+                focus: calendarMonitorLoader.active
+                Keys.onPressed: (event) => {
+                    if (event.key === Qt.Key_Escape) {
+                        calendarMonitorRoot.hide();
+                    }
+                }
 
                 CalendarControl {}
             }

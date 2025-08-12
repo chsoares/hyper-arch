@@ -97,6 +97,10 @@ Scope {
             id: mediaControlsRoot
             visible: true
 
+            function hide() {
+                mediaControlsLoader.active = false
+            }
+
             exclusiveZone: 0
             implicitWidth: (
                 (mediaControlsRoot.screen.width / 2) // Middle of screen
@@ -116,6 +120,15 @@ Scope {
                 item: playerColumnLayout
             }
 
+            HyprlandFocusGrab {
+                id: grab
+                windows: [ mediaControlsRoot ]
+                active: mediaControlsLoader.active
+                onCleared: () => {
+                    if (!active) mediaControlsRoot.hide()
+                }
+            }
+
             ColumnLayout {
                 id: playerColumnLayout
                 anchors.top: parent.top
@@ -126,6 +139,13 @@ Scope {
                     + (Appearance.sizes.elevationMargin) // It's fine for shadows to overlap
                     - 10
                 spacing: -Appearance.sizes.elevationMargin // Shadow overlap okay
+
+                focus: mediaControlsLoader.active
+                Keys.onPressed: (event) => {
+                    if (event.key === Qt.Key_Escape) {
+                        mediaControlsRoot.hide();
+                    }
+                }
 
                 Repeater {
                     model: ScriptModel {

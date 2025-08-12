@@ -33,6 +33,10 @@ Scope {
             id: resourceMonitorRoot
             visible: true
 
+            function hide() {
+                resourceMonitorLoader.active = false
+            }
+
             exclusiveZone: 0
             implicitWidth: (
                 (resourceMonitorRoot.screen.width / 2) // Middle of screen
@@ -52,6 +56,15 @@ Scope {
                 item: resourceColumnLayout
             }
 
+            HyprlandFocusGrab {
+                id: grab
+                windows: [ resourceMonitorRoot ]
+                active: resourceMonitorLoader.active
+                onCleared: () => {
+                    if (!active) resourceMonitorRoot.hide()
+                }
+            }
+
             ColumnLayout {
                 id: resourceColumnLayout
                 anchors.top: parent.top
@@ -62,6 +75,13 @@ Scope {
                     + (Appearance.sizes.elevationMargin) // It's fine for shadows to overlap
                     - 10
                 spacing: -Appearance.sizes.elevationMargin // Shadow overlap okay
+
+                focus: resourceMonitorLoader.active
+                Keys.onPressed: (event) => {
+                    if (event.key === Qt.Key_Escape) {
+                        resourceMonitorRoot.hide();
+                    }
+                }
 
                 ResourceControl {}
             }
