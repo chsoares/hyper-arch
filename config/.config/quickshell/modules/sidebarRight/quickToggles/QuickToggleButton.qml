@@ -9,8 +9,8 @@ import Quickshell.Io
 GroupButton {
     id: button
     property string buttonIcon
-    baseWidth: 60
-    baseHeight: 40
+    baseWidth: 50
+    baseHeight: 50
     clickedWidth: baseWidth + 20
     toggled: false
     buttonRadius: Math.min(baseHeight, baseWidth) / 3

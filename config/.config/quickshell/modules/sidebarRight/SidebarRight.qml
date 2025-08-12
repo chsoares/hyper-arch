@@ -144,6 +144,17 @@ Scope {
                                 }
                                 QuickToggleButton {
                                     toggled: false
+                                    buttonIcon: "deployed_code_update"
+                                    onClicked: {
+                                        Quickshell.execDetached(["kitty", "-e", "fish", "-c", "source ~/.config/quickshell/scripts/housekeeping.fish; read -P 'Press any key to continue...'"])
+                                        Hyprland.dispatch("global quickshell:sidebarRightClose")
+                                    }
+                                    StyledToolTip {
+                                        content: qsTr("Update & Housekeeping")
+                                    }
+                                }
+                                QuickToggleButton {
+                                    toggled: false
                                     buttonIcon: "settings"
                                     onClicked: {
                                         Hyprland.dispatch("global quickshell:sidebarRightClose")
