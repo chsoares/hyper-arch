@@ -2,6 +2,7 @@ import "root:/modules/common"
 import "root:/modules/common/widgets"
 import "root:/services"
 import "./calendar"
+import "./clock"
 import "./todo"
 import QtQuick
 import QtQuick.Controls
@@ -18,6 +19,7 @@ Rectangle {
     property bool collapsed: Persistent.states.sidebar.bottomGroup.collapsed
     property var tabs: [
         {"type": "calendar", "name": "Calendar", "icon": "calendar_month", "widget": calendarWidget}, 
+        {"type": "clock", "name": "Clock", "icon": "schedule", "widget": clockWidget},
         {"type": "todo", "name": "To Do", "icon": "done_outline", "widget": todoWidget}
     ]
 
@@ -224,6 +226,15 @@ Rectangle {
 
         CalendarWidget {
             anchors.centerIn: parent
+        }
+    }
+
+    // Clock component
+    Component {
+        id: clockWidget
+        ClockWidget {
+            anchors.fill: parent
+            anchors.margins: 5
         }
     }
 
