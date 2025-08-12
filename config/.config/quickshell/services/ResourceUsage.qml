@@ -28,6 +28,55 @@ Singleton {
     property double netDownloadSpeed: 0 // In KB/s
     property double netUploadSpeed: 0   // In KB/s
     property var previousNetStats // Internal for network speed calculation
+    property string networkInterface: "" // Auto-detected network interface
+    property string cpuTempSensorPath: "" // Auto-detected CPU temperature sensor path
+
+    // --- Auto-Detection Processes ---
+    Process {
+        id: networkDetectionProcess
+        command: ["bash", "-c", "ip route show default | awk '/default/ {print $5}' | head -1"]
+        running: true
+
+        stdout: SplitParser {
+            onRead: data => {
+                const interfaceName = data.trim();
+                if (interfaceName && interfaceName !== "lo") {
+                    ResourceUsage.networkInterface = interfaceName;
+                    console.log(`ResourceUsage: Auto-detected network interface: ${interfaceName}`);
+                }
+            }
+        }
+        stderr: SplitParser { onRead: data => console.error(`ResourceUsage: Network detection error: ${data.trim()}`); }
+    }
+
+    Process {
+        id: tempSensorDetectionProcess
+        command: ["bash", "-c", `sensors -j | jq -r '
+            to_entries[] |
+            select(.key | test("k10temp|coretemp|cpu")) |
+            .key as $chip |
+            .value |
+            to_entries[] |
+            select(.key | test("Tctl|Package|Core")) |
+            .key as $feature |
+            .value |
+            to_entries[] |
+            select(.key | test("temp.*_input")) |
+            "\\($chip).\\($feature).\\(.key)"
+        ' | head -1`]
+        running: true
+
+        stdout: SplitParser {
+            onRead: data => {
+                const sensorPath = data.trim();
+                if (sensorPath) {
+                    ResourceUsage.cpuTempSensorPath = sensorPath;
+                    console.log(`ResourceUsage: Auto-detected temperature sensor: ${sensorPath}`);
+                }
+            }
+        }
+        stderr: SplitParser { onRead: data => console.error(`ResourceUsage: Temp sensor detection error: ${data.trim()}`); }
+    }
 
 	// --- Main Polling Timer ---
 	Timer {
@@ -79,10 +128,11 @@ Singleton {
 
             // Parse Network Usage
             const textNetDev = fileNetDev.text()
-            // >>> USER ADJUSTMENT: Change 'wlp0s20f3' to your primary network interface name <<<
-            // You can find your interface name using 'ip link show' or 'ip a' in your terminal.
-            const netLine = textNetDev.match(/enp34s0:\s*(\d+)\s*\d+\s*\d+\s*\d+\s*\d+\s*\d+\s*\d+\s*\d+\s*(\d+)/);
-            if (netLine) {
+            // Use auto-detected network interface
+            const interfaceName = ResourceUsage.networkInterface || "enp34s0"; // fallback to hardcoded
+            const netRegex = new RegExp(`${interfaceName}:\\s*(\\d+)\\s*\\d+\\s*\\d+\\s*\\d+\\s*\\d+\\s*\\d+\\s*\\d+\\s*\\d+\\s*(\\d+)`);
+            const netLine = textNetDev.match(netRegex);
+            if (netLine && ResourceUsage.networkInterface) {
                 const receivedBytes = Number(netLine[1]);
                 const transmittedBytes = Number(netLine[2]);
 
@@ -145,10 +195,10 @@ Singleton {
     // Process for CPU Temperature
     Process {
         id: cpuTempProcess
-        // >>> USER ADJUSTMENT: You MUST customize this command for your specific CPU sensor <<<
-        // Run 'sensors -j' in your terminal and identify the JSON path to your CPU temperature.
-        // Example path from your output: '."k10temp-pci-00c3".Tctl."temp1_input"'
-        command: ["bash", "-c", "sensors -j | jq '.\"k10temp-pci-00c3\".Tctl.\"temp1_input\"'"]
+        // Dynamic command construction based on auto-detected sensor
+        command: ["bash", "-c", ResourceUsage.cpuTempSensorPath ? 
+            `sensors -j | jq '.["${ResourceUsage.cpuTempSensorPath.split('.')[0]}"]["${ResourceUsage.cpuTempSensorPath.split('.')[1]}"]["${ResourceUsage.cpuTempSensorPath.split('.')[2]}"]'` :
+            'sensors -j | jq \'."k10temp-pci-00c3".Tctl."temp1_input"\'']
         running: false
 
         stdout: SplitParser {
