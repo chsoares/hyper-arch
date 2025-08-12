@@ -68,7 +68,7 @@
         },
         "utilButtons": {
             "showColorPicker": true,
-            "showDarkModeToggle": true,
+            "showDarkModeToggle": false,
             "showKeyboardToggle": false,
             "showMicToggle": true,
             "showPerformanceProfileToggle": false,
