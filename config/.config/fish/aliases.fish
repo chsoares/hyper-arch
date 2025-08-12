@@ -4,8 +4,8 @@ alias whatsapp 'chromium --app="http://web.whatsapp.com" -enable-features=UseOzo
 alias zen zen-browser
 alias editor gnome-text-editor
 
-alias ls 'eza --icons'
-alias tree 'eza --icons --tree'
+alias ls 'eza --icons --group-directories-first'
+alias tree 'eza --icons --tree --group-directories-first'
 
 ## Abbreviations
 abbr --add yay 'yay -Sy'
