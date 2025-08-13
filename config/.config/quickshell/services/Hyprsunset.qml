@@ -13,10 +13,10 @@ import Quickshell.Io
 Singleton {
     id: root
     property var manualActive
-    property string from: Config.options?.light?.night?.from ?? "18:00" // Default to 7 PM
+    property string from: Config.options?.light?.night?.from ?? "19:00" // Default to 7 PM
     property string to: Config.options?.light?.night?.to ?? "06:30" // Default to 6:30 AM
     property bool automatic: Config.options?.light?.night?.automatic && (Config?.ready ?? true)
-    property int colorTemperature: Config.options?.light?.night?.colorTemperature ?? 3600 // Default color temperature
+    property int colorTemperature: Config.options?.light?.night?.colorTemperature ?? 5000 // Default color temperature
     property bool shouldBeOn
     property bool firstEvaluation: true
     property bool active: false
@@ -44,6 +44,20 @@ Singleton {
         root.manualActive = undefined;
         root.firstEvaluation = true;
         reEvaluate();
+    }
+    onFromChanged: {
+        root.firstEvaluation = true;
+        reEvaluate();
+    }
+    onToChanged: {
+        root.firstEvaluation = true;
+        reEvaluate();
+    }
+    onColorTemperatureChanged: {
+        if (root.active) {
+            // Re-apply with new temperature
+            root.enable();
+        }
     }
     function reEvaluate() {
         const toHourIsNextDay = !isNoLater(fromHour, fromMinute, toHour, toMinute);

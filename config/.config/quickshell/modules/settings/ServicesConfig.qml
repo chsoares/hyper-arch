@@ -89,6 +89,66 @@ ContentPage {
             }
         }
     }
+
+    ContentSection {
+        title: "Night Light"
+
+        ConfigSwitch {
+            text: "Automatic night light"
+            checked: Config.options.light.night.automatic
+            onCheckedChanged: {
+                Config.options.light.night.automatic = checked;
+            }
+            StyledToolTip {
+                content: "Automatically enables night light based on time schedule"
+            }
+        }
+
+        ConfigRow {
+            uniform: true
+            MaterialTextField {
+                Layout.preferredWidth: 120
+                placeholderText: "From"
+                text: Config.options.light.night.from
+                onTextChanged: {
+                    if (/^\d{2}:\d{2}$/.test(text)) {
+                        Config.options.light.night.from = text;
+                    }
+                }
+                enabled: Config.options.light.night.automatic
+                StyledToolTip {
+                    content: "Start time for night light (24h format: HH:MM)"
+                }
+            }
+            MaterialTextField {
+                Layout.preferredWidth: 120
+                placeholderText: "Until"
+                text: Config.options.light.night.to
+                onTextChanged: {
+                    if (/^\d{2}:\d{2}$/.test(text)) {
+                        Config.options.light.night.to = text;
+                    }
+                }
+                enabled: Config.options.light.night.automatic
+                StyledToolTip {
+                    content: "End time for night light (24h format: HH:MM)"
+                }
+            }
+        }
+
+        ConfigSpinBox {
+            text: "Color temperature (K)"
+            value: Config.options.light.night.colorTemperature
+            from: 1000
+            to: 6500
+            stepSize: 100
+            onValueChanged: {
+                Config.options.light.night.colorTemperature = value;
+            }
+            enabled: Config.options.light.night.automatic
+        
+        }
+    }
     
     ContentSection {
         title: "Audio"

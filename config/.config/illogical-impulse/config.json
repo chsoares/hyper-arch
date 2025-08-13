@@ -131,8 +131,8 @@
     "light": {
         "night": {
             "automatic": true,
-            "colorTemperature": 5000,
-            "from": "19:00",
+            "colorTemperature": 4000,
+            "from": "18:00",
             "to": "06:30"
         }
     },
