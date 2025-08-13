@@ -61,7 +61,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.margins: 10
-                    spacing: 10
+                    spacing: 5
 
                     Repeater {
                         model: root.appPwNodes
@@ -132,21 +132,13 @@ Item {
         anchors.fill: parent
         z: 9999
 
-        visible: opacity > 0
-        opacity: root.showDeviceSelector ? 1 : 0
-        Behavior on opacity {
-            NumberAnimation { 
-                duration: Appearance.animation.elementMoveFast.duration
-                easing.type: Appearance.animation.elementMoveFast.type
-                easing.bezierCurve: Appearance.animation.elementMoveFast.bezierCurve
-            }
-        }
+        visible: root.showDeviceSelector
 
         Rectangle { // Scrim
             id: scrimOverlay
             anchors.fill: parent
             radius: Appearance.rounding.small
-            color: Appearance.colors.colScrim
+            color: Appearance.colors.colLayer0
             MouseArea {
                 hoverEnabled: true
                 anchors.fill: parent
@@ -201,7 +193,7 @@ Item {
                         id: devicesColumnLayout
                         anchors.fill: parent
                         Layout.fillWidth: true
-                        spacing: 0
+                        spacing: 5
 
                         Repeater {
                             model: ScriptModel {
@@ -217,9 +209,64 @@ Item {
                                 Layout.leftMargin: root.dialogMargins
                                 Layout.rightMargin: root.dialogMargins
                                 Layout.fillWidth: true
-
+                                Layout.topMargin: 2
+                                Layout.bottomMargin: 2
+                                
+                                Layout.minimumHeight: 28
                                 description: modelData.description
                                 checked: modelData.id === Pipewire.defaultAudioSink?.id
+                                
+                                // Override contentItem for smaller spacing and text
+                                contentItem: Item {
+                                    implicitHeight: Math.max(28, textItem.implicitHeight + 8)
+                                    
+                                    RowLayout {
+                                        anchors.fill: parent
+                                        anchors.margins: 4
+                                        spacing: 8
+                                        
+                                        Rectangle {
+                                            Layout.fillWidth: false
+                                            Layout.alignment: Qt.AlignTop
+                                            Layout.topMargin: 4
+                                            width: 16
+                                            height: 16
+                                            radius: Appearance.rounding.full
+                                            border.color: radioButton.checked ? Appearance.colors.colPrimary : Appearance.m3colors.m3onSurfaceVariant
+                                            border.width: 2
+                                            color: "transparent"
+                                            
+                                            Rectangle {
+                                                anchors.centerIn: parent
+                                                width: radioButton.checked ? 8 : 3
+                                                height: radioButton.checked ? 8 : 3
+                                                radius: Appearance.rounding.full
+                                                color: Appearance.colors.colPrimary
+                                                opacity: radioButton.checked ? 1 : 0
+                                                
+                                                Behavior on opacity {
+                                                    animation: Appearance.animation.elementMoveFast.numberAnimation.createObject(this)
+                                                }
+                                                Behavior on width {
+                                                    animation: Appearance.animation.elementMove.numberAnimation.createObject(this)
+                                                }
+                                                Behavior on height {
+                                                    animation: Appearance.animation.elementMove.numberAnimation.createObject(this)
+                                                }
+                                            }
+                                        }
+                                        
+                                        StyledText {
+                                            id: textItem
+                                            text: modelData.description
+                                            Layout.fillWidth: true
+                                            Layout.alignment: Qt.AlignVCenter
+                                            font.pixelSize: Appearance.font.pixelSize.small
+                                            wrapMode: Text.Wrap
+                                            color: Appearance.m3colors.m3onSurface
+                                        }
+                                    }
+                                }
 
                                 Connections {
                                     target: root

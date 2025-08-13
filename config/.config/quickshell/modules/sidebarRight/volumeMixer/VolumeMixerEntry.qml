@@ -19,29 +19,28 @@ Item {
     RowLayout {
         id: rowLayout
         anchors.fill: parent
-        spacing: 10
+        spacing: 5
 
         ColumnLayout {
             Layout.fillWidth: true
-            spacing: 0
+            spacing: 2
 
-            RowLayout {
-                StyledText {
-                    Layout.fillWidth: true
-                    font.pixelSize: Appearance.font.pixelSize.normal
-                    elide: Text.ElideRight
-                    text: {
-                        // application.name -> description -> name
-                        const app = root.node.properties["application.name"] ?? (root.node.description != "" ? root.node.description : root.node.name);
-                        const media = root.node.properties["media.name"];
-                        return media != undefined ? `${app} • ${media}` : app;
-                    }
+            StyledText {
+                Layout.fillWidth: true
+                font.pixelSize: Appearance.font.pixelSize.small
+                elide: Text.ElideRight
+                text: {
+                    // application.name -> description -> name
+                    const app = root.node.properties["application.name"] ?? (root.node.description != "" ? root.node.description : root.node.name);
+                    const media = root.node.properties["media.name"];
+                    return media != undefined ? `${app} • ${media}` : app;
                 }
             }
 
             RowLayout {
+                spacing: 5
                 Image {
-                    property real size: slider.trackHeight * 1.3
+                    property real size: 16
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     visible: source != ""
                     sourceSize.width: size
@@ -56,6 +55,7 @@ Item {
                 }
                 StyledSlider {
                     id: slider
+                    Layout.fillWidth: true
                     value: root.node.audio.volume
                     onValueChanged: root.node.audio.volume = value
                 }
