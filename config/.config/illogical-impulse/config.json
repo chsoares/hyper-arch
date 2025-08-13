@@ -76,7 +76,7 @@
         },
         "verbose": true,
         "weather": {
-            "city": "Brasilia",
+            "city": "BSB",
             "enable": true,
             "enableGPS": false,
             "fetchInterval": 10,

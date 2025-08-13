@@ -8,7 +8,7 @@ Singleton {
     id: root
     
     readonly property int fetchInterval: (Config.options?.bar?.weather?.fetchInterval || 10) * 60 * 1000
-    readonly property string city: Config.options?.bar?.weather?.city || "São Paulo"
+    readonly property string city: Config.options?.bar?.weather?.city || "Brasilia"
     readonly property bool useUSCS: Config.options?.bar?.weather?.useUSCS || false
     
     property var data: ({
