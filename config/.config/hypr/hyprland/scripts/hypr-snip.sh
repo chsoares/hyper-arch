@@ -7,7 +7,7 @@ set filename (date "+%Y%m%d-%H:%M:%S").png
 if test -d $boxpwd
     set output_filename "$boxpwd/screenshots/satty-$filename"
 else
-    set output_filename "$HOME/Picures/Screenshots"
+    set output_filename "$HOME/Pictures/Screenshots"
 end
 
 grimblast --freeze save area - | satty \
