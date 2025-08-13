@@ -61,9 +61,21 @@ Singleton {
     }
     function reEvaluate() {
         const toHourIsNextDay = !isNoLater(fromHour, fromMinute, toHour, toMinute);
-        const toHourWrapped = toHourIsNextDay ? toHour + 24 : toHour;
-        const toMinuteWrapped = toMinute;
-        root.shouldBeOn = isNoLater(fromHour, fromMinute, clockHour, clockMinute) && isNoLater(clockHour, clockMinute, toHourWrapped, toMinuteWrapped);
+        
+        if (toHourIsNextDay) {
+            // Night period crosses midnight (e.g., 19:00 to 06:30)
+            // Should be on if: current time >= from OR current time <= to
+            const afterStart = isNoLater(fromHour, fromMinute, clockHour, clockMinute) || 
+                              (clockHour === fromHour && clockMinute >= fromMinute);
+            const beforeEnd = isNoLater(clockHour, clockMinute, toHour, toMinute);
+            root.shouldBeOn = afterStart || beforeEnd;
+        } else {
+            // Normal period within same day (e.g., 09:00 to 17:00)
+            const toHourWrapped = toHour;
+            const toMinuteWrapped = toMinute;
+            root.shouldBeOn = isNoLater(fromHour, fromMinute, clockHour, clockMinute) && isNoLater(clockHour, clockMinute, toHourWrapped, toMinuteWrapped);
+        }
+        
         if (firstEvaluation) {
             firstEvaluation = false;
             root.ensureState();
