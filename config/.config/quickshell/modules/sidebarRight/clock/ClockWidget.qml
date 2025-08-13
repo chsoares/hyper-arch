@@ -216,7 +216,14 @@ Item {
                 id: timeText
                 text: {
                     const format = Config.options?.time?.format ?? "hh:mm";
-                    const withSeconds = format + ":ss";
+                    let withSeconds;
+                    if (format.includes(" AP")) {
+                        withSeconds = format.replace(" AP", ":ss AP");
+                    } else if (format.includes(" ap")) {
+                        withSeconds = format.replace(" ap", ":ss ap");
+                    } else {
+                        withSeconds = format + ":ss";
+                    }
                     return Qt.locale().toString(new Date(), withSeconds);
                 }
                 font.pixelSize: Appearance.font.pixelSize.huge * 1.2
@@ -233,7 +240,14 @@ Item {
         onTriggered: {
             const now = new Date();
             const format = Config.options?.time?.format ?? "hh:mm";
-            const withSeconds = format + ":ss";
+            let withSeconds;
+            if (format.includes(" AP")) {
+                withSeconds = format.replace(" AP", ":ss AP");
+            } else if (format.includes(" ap")) {
+                withSeconds = format.replace(" ap", ":ss ap");
+            } else {
+                withSeconds = format + ":ss";
+            }
             timeText.text = Qt.locale().toString(now, withSeconds);
             dateText.text = DateTime.date;
         }
