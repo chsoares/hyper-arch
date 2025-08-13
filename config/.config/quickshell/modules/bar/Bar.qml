@@ -492,7 +492,7 @@ Scope {
                                             anchors.verticalCenter: parent.verticalCenter
                                             
                                             MaterialSymbol {
-                                                text: "deployed_code_alert"
+                                                text: "package_2"
                                                 iconSize: Appearance.font.pixelSize.larger
                                                 color: rightSidebarButton.colText
                                                 anchors.verticalCenter: parent.verticalCenter

@@ -144,7 +144,7 @@ Scope {
                                 }
                                 QuickToggleButton {
                                     toggled: false
-                                    buttonIcon: "deployed_code_update"
+                                    buttonIcon: "flare"
                                     onClicked: {
                                         Quickshell.execDetached(["kitty", "-e", "fish", "-c", "source ~/.config/quickshell/scripts/housekeeping.fish; read -P 'Press any key to continue...'"])
                                         Hyprland.dispatch("global quickshell:sidebarRightClose")
