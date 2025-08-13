@@ -28,7 +28,7 @@ Item {
             
             StyledText {
                 id: dateText
-                text: DateTime.date
+                text: Qt.locale().toString(new Date(), "dddd, MMMM d")
                 font.pixelSize: Appearance.font.pixelSize.normal
                 color: Appearance.colors.colOnLayer1
                 opacity: 0.8
@@ -249,7 +249,7 @@ Item {
                 withSeconds = format + ":ss";
             }
             timeText.text = Qt.locale().toString(now, withSeconds);
-            dateText.text = DateTime.date;
+            dateText.text = Qt.locale().toString(now, "dddd, MMMM d");
         }
     }
 }

@@ -38,14 +38,35 @@ Item {
             visible: root.showDate
             font.pixelSize: Appearance.font.pixelSize.small
             color: Appearance.colors.colOnLayer1
-            text: DateTime.date
+            text: Qt.locale().toString(new Date(), Config.options.bar.weather.enable ? "ddd dd/MM" : "dddd dd/MM")
         }
 
+        StyledText {
+            visible: Config.options.bar.weather.enable
+            font.pixelSize: Appearance.font.pixelSize.small
+            color: Appearance.colors.colOnLayer1
+            text: " "
+        }
+        // Weather widget
+        MaterialSymbol {
+            visible: Config.options.bar.weather.enable
+            text: Weather.getWeatherIcon(Weather.data.condition)
+            iconSize: Appearance.font.pixelSize.large
+            color: Appearance.colors.colOnLayer1
+        }
+
+        StyledText {
+            visible: Config.options.bar.weather.enable
+            font.pixelSize: Appearance.font.pixelSize.small
+            color: Appearance.colors.colOnLayer1
+            text: Weather.data.temp
+        }
+        
         StyledText {
             visible: root.showDate
             font.pixelSize: Appearance.font.pixelSize.small
             color: Appearance.colors.colOnLayer1
-            text: ""
+            text: " "
         }
 
         MaterialSymbol {
@@ -59,6 +80,8 @@ Item {
             color: Appearance.colors.colOnLayer1
             text: DateTime.time
         }
+        
+
 
     }
 
