@@ -9,6 +9,88 @@ ContentPage {
     forceWidth: true
 
     ContentSection {
+        title: "Time"
+
+        ContentSubsection {
+            title: "Format"
+            tooltip: ""
+
+            ConfigSelectionArray {
+                currentValue: Config.options.time.format
+                configOptionName: "time.format"
+                onSelected: newValue => {
+                    Config.options.time.format = newValue;
+                }
+                options: [
+                    {
+                        displayName: "24h",
+                        value: "hh:mm"
+                    },
+                    {
+                        displayName: "12h am/pm",
+                        value: "h:mm ap"
+                    },
+                    {
+                        displayName: "12h AM/PM",
+                        value: "h:mm AP"
+                    },
+                ]
+            }
+        }
+    }
+
+    ContentSection {
+        title: "Weather"
+
+        ConfigSwitch {
+            text: "Enable weather service"
+            checked: Config.options.bar.weather.enable
+            onCheckedChanged: {
+                Config.options.bar.weather.enable = checked;
+            }
+            StyledToolTip {
+                content: "Enables weather data fetching for the clock widget"
+            }
+        }
+
+        MaterialTextField {
+            Layout.fillWidth: true
+            placeholderText: "Enter city name (e.g. São Paulo, London, Tokyo)"
+            text: Config.options.bar.weather.city
+            onTextChanged: {
+                Config.options.bar.weather.city = text;
+            }
+            enabled: Config.options.bar.weather.enable
+        }
+
+        ConfigRow {
+            uniform: true
+            ConfigSpinBox {
+                text: "Update interval"
+                value: Config.options.bar.weather.fetchInterval
+                from: 1
+                to: 120
+                stepSize: 1
+                onValueChanged: {
+                    Config.options.bar.weather.fetchInterval = value;
+                }
+                enabled: Config.options.bar.weather.enable
+            }
+            ConfigSwitch {
+                text: "Use Imperial units"
+                checked: Config.options.bar.weather.useUSCS
+                onCheckedChanged: {
+                    Config.options.bar.weather.useUSCS = checked;
+                }
+                enabled: Config.options.bar.weather.enable
+                StyledToolTip {
+                    content: "Use Fahrenheit and mph instead of Celsius and km/h"
+                }
+            }
+        }
+    }
+    
+    ContentSection {
         title: "Audio"
 
         ConfigSwitch {
@@ -124,34 +206,5 @@ ContentPage {
         }
     }
 
-    ContentSection {
-        title: "Time"
-
-        ContentSubsection {
-            title: "Format"
-            tooltip: ""
-
-            ConfigSelectionArray {
-                currentValue: Config.options.time.format
-                configOptionName: "time.format"
-                onSelected: newValue => {
-                    Config.options.time.format = newValue;
-                }
-                options: [
-                    {
-                        displayName: "24h",
-                        value: "hh:mm"
-                    },
-                    {
-                        displayName: "12h am/pm",
-                        value: "h:mm ap"
-                    },
-                    {
-                        displayName: "12h AM/PM",
-                        value: "h:mm AP"
-                    },
-                ]
-            }
-        }
-    }
+    
 }

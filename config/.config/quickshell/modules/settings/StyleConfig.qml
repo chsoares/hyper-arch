@@ -133,24 +133,24 @@ ContentPage {
     }
 
     ContentSection {
-        title: "Decorations & Effects"
+        title: "Bar"
 
-        ContentSubsection {
-            title: "Transparency"
-
-            ConfigRow {
-                ConfigSwitch {
-                    text: "Enable"
-                    checked: Config.options.appearance.transparency
-                    onCheckedChanged: {
-                        Config.options.appearance.transparency = checked;
-                    }
-                    StyledToolTip {
-                        content: "Might look ass. Unsupported."
-                    }
-                }
+        ConfigSelectionArray {
+            currentValue: Config.options.bar.cornerStyle
+            configOptionName: "bar.cornerStyle"
+            onSelected: (newValue) => {
+                Config.options.bar.cornerStyle = newValue;
             }
+            options: [
+                { displayName: "Hug", value: 0 },
+                { displayName: "Float", value: 1 },
+                { displayName: "Plain rectangle", value: 2 }
+            ]
         }
+    }
+
+    ContentSection {
+        title: "Decorations & Effects"
 
         ContentSubsection {
             title: "Fake screen rounding"

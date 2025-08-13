@@ -11,22 +11,218 @@ Item {
     
     ColumnLayout {
         anchors.centerIn: parent
-        spacing: 8
+        spacing: 0
         
-        StyledText {
+        // 1. Data com ícone
+        RowLayout {
             Layout.alignment: Qt.AlignHCenter
-            text: Qt.formatDateTime(new Date(), "hh:mm:ss")
-            font.pixelSize: Appearance.font.pixelSize.huge * 1.2
-            font.weight: Font.Bold
-            color: Appearance.colors.colOnLayer1
+            Layout.bottomMargin: 25
+            spacing: 8
+            
+            MaterialSymbol {
+                text: "calendar_today"
+                iconSize: Appearance.font.pixelSize.normal
+                color: Appearance.colors.colOnLayer1
+                opacity: 0.8
+            }
+            
+            StyledText {
+                id: dateText
+                text: DateTime.date
+                font.pixelSize: Appearance.font.pixelSize.normal
+                color: Appearance.colors.colOnLayer1
+                opacity: 0.8
+            }
         }
         
-        StyledText {
+        // 2. Bloco de Weather com fundo
+        Rectangle {
             Layout.alignment: Qt.AlignHCenter
-            text: Qt.formatDateTime(new Date(), "dddd, dd MMMM yyyy")
-            font.pixelSize: Appearance.font.pixelSize.normal
-            color: Appearance.colors.colOnLayer1
-            opacity: 0.8
+            Layout.preferredWidth: 300
+            Layout.preferredHeight: weatherContent.implicitHeight + 30
+            Layout.bottomMargin: 25
+            color: Appearance.colors.colLayer2
+            radius: Appearance.rounding.normal
+            
+            ColumnLayout {
+                id: weatherContent
+                anchors.centerIn: parent
+                spacing: 10
+                
+                // Cidade com ícone de localização
+                RowLayout {
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 6
+                    
+                    MaterialSymbol {
+                        text: "location_on"
+                        iconSize: Appearance.font.pixelSize.normal
+                        color: Appearance.colors.colOnLayer2
+                        opacity: 0.7
+                    }
+                    
+                    StyledText {
+                        text: Weather.data.city
+                        font.pixelSize: Appearance.font.pixelSize.normal
+                        color: Appearance.colors.colOnLayer2
+                        opacity: 0.7
+                    }
+                }
+                
+                // Ícone do weather e temperatura, grandes no meio
+                RowLayout {
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 15
+                    
+                    MaterialSymbol {
+                        text: Weather.getWeatherIcon(Weather.data.condition)
+                        iconSize: Appearance.font.pixelSize.huge * 2
+                        color: Appearance.colors.colPrimary
+                    }
+                    
+                    StyledText {
+                        text: Weather.data.temp
+                        font.pixelSize: Appearance.font.pixelSize.huge * 2
+                        font.weight: Font.Bold
+                        color: Appearance.colors.colOnLayer2
+                    }
+                }
+                
+                // Demais informações do clima
+                RowLayout {
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 15
+                    
+                    RowLayout {
+                        spacing: 4
+                        MaterialSymbol {
+                            text: "humidity_low"
+                            iconSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                        StyledText {
+                            text: Weather.data.humidity
+                            font.pixelSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                    }
+                    
+                    RowLayout {
+                        spacing: 4
+                        MaterialSymbol {
+                            text: "air"
+                            iconSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                        StyledText {
+                            text: Weather.data.windSpeed
+                            font.pixelSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                    }
+                    
+                    RowLayout {
+                        spacing: 4
+                        MaterialSymbol {
+                            text: "rainy"
+                            iconSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                        StyledText {
+                            text: Weather.data.precipitation
+                            font.pixelSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                    }
+                }
+                
+                // Nascer e pôr do sol
+                RowLayout {
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 25
+                    
+                    RowLayout {
+                        spacing: 6
+                        MaterialSymbol {
+                            text: "wb_twilight"
+                            iconSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                        StyledText {
+                            text: Weather.data.sunrise
+                            font.pixelSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                    }
+                    
+                    RowLayout {
+                        spacing: 6
+                        MaterialSymbol {
+                            text: "bedtime"
+                            iconSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                        StyledText {
+                            text: Weather.data.sunset
+                            font.pixelSize: Appearance.font.pixelSize.small
+                            color: Appearance.colors.colOnLayer2
+                            opacity: 0.7
+                        }
+                    }
+                }
+                
+                // Fase da lua (linha própria)
+                RowLayout {
+                    Layout.alignment: Qt.AlignHCenter
+                    spacing: 6
+                    
+                    MaterialSymbol {
+                        text: Weather.getMoonPhase().icon
+                        iconSize: Appearance.font.pixelSize.small
+                        color: Appearance.colors.colOnLayer2
+                        opacity: 0.7
+                    }
+                    StyledText {
+                        text: Weather.getMoonPhase().name
+                        font.pixelSize: Appearance.font.pixelSize.small
+                        color: Appearance.colors.colOnLayer2
+                        opacity: 0.7
+                    }
+                }
+            }
+        }
+        
+        // 3. Relógio com ícone
+        RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 8
+            
+            MaterialSymbol {
+                text: "schedule"
+                iconSize: Appearance.font.pixelSize.huge
+                color: Appearance.colors.colOnLayer1
+            }
+            
+            StyledText {
+                id: timeText
+                text: {
+                    const format = Config.options?.time?.format ?? "hh:mm";
+                    const withSeconds = format + ":ss";
+                    return Qt.locale().toString(new Date(), withSeconds);
+                }
+                font.pixelSize: Appearance.font.pixelSize.huge * 1.2
+                font.weight: Font.Bold
+                color: Appearance.colors.colOnLayer1
+            }
         }
     }
     
@@ -35,8 +231,11 @@ Item {
         running: true
         repeat: true
         onTriggered: {
-            root.children[0].children[0].text = Qt.formatDateTime(new Date(), "hh:mm:ss")
-            root.children[0].children[1].text = Qt.formatDateTime(new Date(), "dddd, dd MMMM yyyy")
+            const now = new Date();
+            const format = Config.options?.time?.format ?? "hh:mm";
+            const withSeconds = format + ":ss";
+            timeText.text = Qt.locale().toString(now, withSeconds);
+            dateText.text = DateTime.date;
         }
     }
 }

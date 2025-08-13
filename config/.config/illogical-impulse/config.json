@@ -76,9 +76,9 @@
         },
         "verbose": true,
         "weather": {
-            "city": "",
-            "enable": false,
-            "enableGPS": true,
+            "city": "Brasilia",
+            "enable": true,
+            "enableGPS": false,
             "fetchInterval": 10,
             "useUSCS": false
         },
@@ -140,7 +140,7 @@
         "filterDuplicatePlayers": true
     },
     "networking": {
-        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36as"
     },
     "osd": {
         "timeout": 1000
@@ -201,6 +201,6 @@
     },
     "windows": {
         "centerTitle": true,
-        "showTitlebar": false
+        "showTitlebar": true
     }
 }

@@ -53,6 +53,7 @@ ShellRoot {
         Cliphist.refresh()
         FirstRunExperience.load()
         Hyprsunset.load()
+        Weather.fetchWeather()
     }
 
     LazyLoader { active: enableBar; component: Bar {} }

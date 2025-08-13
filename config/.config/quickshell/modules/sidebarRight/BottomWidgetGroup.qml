@@ -15,7 +15,7 @@ Rectangle {
     color: Appearance.colors.colLayer1
     clip: true
     implicitHeight: collapsed ? collapsedBottomWidgetGroupRow.implicitHeight : bottomWidgetGroupRow.implicitHeight
-    property int selectedTab: 0
+    property int selectedTab: 1
     property bool collapsed: Persistent.states.sidebar.bottomGroup.collapsed
     property var tabs: [
         {"type": "calendar", "name": "Calendar", "icon": "calendar_month", "widget": calendarWidget}, 
@@ -172,10 +172,11 @@ Rectangle {
         // Content area
         StackLayout {
             id: tabStack
+            currentIndex: 1
             Layout.fillWidth: true
             height: tabStack.children[0]?.tabLoader?.implicitHeight // TODO: make this less stupid
             Layout.alignment: Qt.AlignVCenter
-            property int realIndex: 0
+            property int realIndex: 1
             property int animationDuration: Appearance.animation.elementMoveFast.duration * 1.5
 
             // Switch the tab on halfway of the anim duration

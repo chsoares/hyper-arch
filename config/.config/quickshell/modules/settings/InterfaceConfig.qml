@@ -7,29 +7,9 @@ import "root:/modules/common/widgets/"
 
 ContentPage {
     forceWidth: true
-    ContentSection {
-        title: "Policies"
-
-        ConfigRow {
-
-        }
-    }
 
     ContentSection {
         title: "Bar"
-
-        ConfigSelectionArray {
-            currentValue: Config.options.bar.cornerStyle
-            configOptionName: "bar.cornerStyle"
-            onSelected: (newValue) => {
-                Config.options.bar.cornerStyle = newValue;
-            }
-            options: [
-                { displayName: "Hug", value: 0 },
-                { displayName: "Float", value: 1 },
-                { displayName: "Plain rectangle", value: 2 }
-            ]
-        }
 
         ContentSubsection {
             title: "Appearance"
