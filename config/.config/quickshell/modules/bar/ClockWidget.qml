@@ -38,7 +38,7 @@ Item {
             visible: root.showDate
             font.pixelSize: Appearance.font.pixelSize.small
             color: Appearance.colors.colOnLayer1
-            text: Qt.locale().toString(new Date(), Config.options.bar.weather.enable ? "ddd dd/MM" : "dddd dd/MM")
+            text: Config.options.bar.weather.enable ? Qt.locale().toString(DateTime.clock.date, "ddd dd/MM") : DateTime.date
         }
 
         StyledText {
