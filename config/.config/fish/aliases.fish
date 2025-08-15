@@ -20,6 +20,7 @@ abbr --add gc "git commit -m"
 # CTFs and stuff
 ## Aliases
 alias www 'ls; python -m http.server 8888'
+alias john /opt/john/run/john
 
 ## Functions
 function bloodhound
@@ -40,7 +41,7 @@ function binbag
     set oldpwd (pwd)
     cd ~/Lab/binbag
     ls
-    python -m http.server 8080
+    python -m http.server 8000
     cd $oldpwd
 end
 
