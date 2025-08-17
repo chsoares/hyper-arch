@@ -18,6 +18,11 @@ abbr --add gc "git commit -m"
 
 
 # CTFs and stuff
+if test -f ~/Lab/env.fish
+    source ~/Lab/env.fish
+    cd $boxpwd
+end
+
 ## Aliases
 alias www 'ls; python -m http.server 8888'
 
@@ -66,15 +71,10 @@ abbr --add box 'cd $boxpwd'
 abbr --add john 'john -w=$rockyou'
 
 ## Variables
-if test -f ~/Lab/env.fish
-    source ~/Lab/env.fish
-    cd $boxpwd
-end
 set -x rockyou '/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt'
 set -x weblist '/home/chsoares/Repos/ezpz/utils/weblist_ezpz.txt'
 
 ## Executables
-
 alias penelope '/opt/penelope/penelope.py -i tun0'
 alias john /opt/john/run/john
 
