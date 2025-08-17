@@ -20,7 +20,7 @@ abbr --add gc "git commit -m"
 # CTFs and stuff
 ## Aliases
 alias www 'ls; python -m http.server 8888'
-alias john /opt/john/run/john
+
 
 ## Functions
 function bloodhound
@@ -45,6 +45,20 @@ function binbag
     cd $oldpwd
 end
 
+function ligolo
+    set oldpwd (pwd)
+    cd ~
+    
+    # Use provided port or default to 11601
+    set port 11601
+    if test (count $argv) -gt 0
+        set port $argv[1]
+    end
+    
+    sudo /usr/share/ligolo/linux/proxy/amd64/proxy -selfcert -laddr 0.0.0.0:$port
+    cd $oldpwd
+end
+
 ## Abbreviations
 abbr --add nmap 'sudo nmap --min-rate 10000'
 abbr --add ovpn 'sudo openvpn'
@@ -60,8 +74,9 @@ set -x rockyou '/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt'
 set -x weblist '/home/chsoares/Repos/ezpz/utils/weblist_ezpz.txt'
 
 ## Executables
-alias ligolo 'sudo /usr/share/ligolo/linux/proxy/amd64/proxy -selfcert'
+
 alias penelope '/opt/penelope/penelope.py -i tun0'
+alias john /opt/john/run/john
 
 ## ezpz
 #set -Ux EZPZ_HOME '/home/chsoares/Repos/ezpz' 
