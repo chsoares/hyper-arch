@@ -192,6 +192,139 @@ Scope {
                             IdleInhibitor {}
                         }
 
+                        // System volume control
+                        RowLayout {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 28
+                            Layout.rightMargin: 10
+                            spacing: 8
+                            
+                            RippleButton {
+                                id: systemVolumeIconButton
+                                Layout.preferredWidth: 28
+                                Layout.preferredHeight: 28
+                                buttonRadius: 14
+                                
+                                onClicked: {
+                                    if (Audio.sink?.audio) {
+                                        Audio.sink.audio.muted = !Audio.sink.audio.muted
+                                    }
+                                }
+                                
+                                contentItem: MaterialSymbol {
+                                    anchors.centerIn: parent
+                                    text: (Audio.sink?.audio.muted ?? true) ? "volume_off" : "volume_up"
+                                    iconSize: Appearance.font.pixelSize.large
+                                    color: (Audio.sink?.audio.muted ?? true) ? Appearance.colors.colOnLayer1Inactive : Appearance.colors.colOnLayer1
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    
+                                    Behavior on color {
+                                        animation: Appearance.animation.elementMoveFast.colorAnimation.createObject(this)
+                                    }
+                                }
+                                
+                                StyledToolTip {
+                                    content: (Audio.sink?.audio.muted ?? true) ? qsTr("Unmute") : qsTr("Mute")
+                                }
+                            }
+                            
+                            StyledSlider {
+                                id: systemVolumeSlider
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: 12
+                                
+                                // Custom properties to make it thinner
+                                scale: 0.4
+                                trackHeight: 6
+                                handleHeight: 16
+                                handleWidth: 3
+                                backgroundDotSize: 2
+                                backgroundDotMargins: 2
+                                
+                                enabled: !(Audio.sink?.audio.muted ?? true)
+                                opacity: (Audio.sink?.audio.muted ?? true) ? 0.5 : 1.0
+                                value: Audio.sink?.audio.volume ?? 0
+                                onValueChanged: {
+                                    if (Audio.sink?.audio) {
+                                        Audio.sink.audio.volume = value
+                                    }
+                                }
+                                
+                                Behavior on opacity {
+                                    animation: Appearance.animation.elementMoveFast.numberAnimation.createObject(this)
+                                }
+                            }
+                            
+                            RippleButton {
+                                id: microphoneMuteButton
+                                Layout.preferredWidth: 24
+                                Layout.preferredHeight: 24
+                                buttonRadius: 12
+                                
+                                onClicked: {
+                                    if (Audio.source?.audio) {
+                                        Audio.source.audio.muted = !Audio.source.audio.muted
+                                    }
+                                }
+                                
+                                contentItem: MaterialSymbol {
+                                    anchors.centerIn: parent
+                                    text: (Audio.source?.audio.muted ?? true) ? "mic_off" : "mic"
+                                    iconSize: Appearance.font.pixelSize.normal
+                                    color: (Audio.source?.audio.muted ?? true) ? Appearance.colors.colOnLayer1Inactive : Appearance.colors.colOnLayer1
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    
+                                    Behavior on color {
+                                        animation: Appearance.animation.elementMoveFast.colorAnimation.createObject(this)
+                                    }
+                                }
+                                
+                                StyledToolTip {
+                                    content: (Audio.source?.audio.muted ?? true) ? qsTr("Unmute microphone") : qsTr("Mute microphone")
+                                }
+                            }
+                            
+                            RippleButton {
+                                id: webcamToggleButton
+                                Layout.preferredWidth: 24
+                                Layout.preferredHeight: 24
+                                buttonRadius: 12
+                                
+                                property bool webcamDisabled: false
+                                
+                                onClicked: {
+                                    webcamDisabled = !webcamDisabled
+                                    
+                                    if (webcamDisabled) {
+                                        // Disable webcam by modprobe -r uvcvideo
+                                        Quickshell.execDetached(["pkexec", "modprobe", "-r", "uvcvideo"])
+                                    } else {
+                                        // Enable webcam by modprobe uvcvideo
+                                        Quickshell.execDetached(["pkexec", "modprobe", "uvcvideo"])
+                                    }
+                                }
+                                
+                                contentItem: MaterialSymbol {
+                                    anchors.centerIn: parent
+                                    text: webcamToggleButton.webcamDisabled ? "videocam_off" : "videocam"
+                                    iconSize: Appearance.font.pixelSize.normal
+                                    color: webcamToggleButton.webcamDisabled ? Appearance.colors.colOnLayer1Inactive : Appearance.colors.colOnLayer1
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    
+                                    Behavior on color {
+                                        animation: Appearance.animation.elementMoveFast.colorAnimation.createObject(this)
+                                    }
+                                }
+                                
+                                StyledToolTip {
+                                    content: webcamToggleButton.webcamDisabled ? qsTr("Enable webcam") : qsTr("Disable webcam")
+                                }
+                            }
+                        }
+
                         // Center widget group
                         CenterWidgetGroup {
                             focus: sidebarRoot.visible
