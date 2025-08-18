@@ -285,47 +285,6 @@ Scope {
                                     content: (Audio.source?.audio.muted ?? true) ? qsTr("Unmute microphone") : qsTr("Mute microphone")
                                 }
                             }
-                            
-                            RippleButton {
-                                id: webcamToggleButton
-                                Layout.preferredWidth: 24
-                                Layout.preferredHeight: 24
-                                buttonRadius: 12
-                                
-                                property bool webcamDisabled: Config.options.privacy.webcamDisabled
-                                
-                                onClicked: {
-                                    const newState = !webcamDisabled
-                                    
-                                    // Save state to config
-                                    Config.options.privacy.webcamDisabled = newState
-                                    
-                                    if (newState) {
-                                        // Disable webcam by modprobe -r uvcvideo
-                                        Quickshell.execDetached(["pkexec", "modprobe", "-r", "uvcvideo"])
-                                    } else {
-                                        // Enable webcam by modprobe uvcvideo
-                                        Quickshell.execDetached(["pkexec", "modprobe", "uvcvideo"])
-                                    }
-                                }
-                                
-                                contentItem: MaterialSymbol {
-                                    anchors.centerIn: parent
-                                    text: webcamToggleButton.webcamDisabled ? "videocam_off" : "videocam"
-                                    iconSize: Appearance.font.pixelSize.normal
-                                    color: webcamToggleButton.webcamDisabled ? Appearance.colors.colOnLayer1Inactive : Appearance.colors.colOnLayer1
-                                    horizontalAlignment: Text.AlignHCenter
-                                    verticalAlignment: Text.AlignVCenter
-                                    
-                                    Behavior on color {
-                                        animation: Appearance.animation.elementMoveFast.colorAnimation.createObject(this)
-                                    }
-                                }
-                                
-                                StyledToolTip {
-                                    content: webcamToggleButton.webcamDisabled ? qsTr("Enable webcam") : qsTr("Disable webcam")
-                                }
-                            }
                         }
 
                         // Center widget group
