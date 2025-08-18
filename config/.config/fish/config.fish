@@ -21,10 +21,7 @@ set -x PYTHONWARNINGS "ignore"
 
 # Aliases
 source ~/.config/fish/aliases.fish
-alias pamcan pacman
 alias clear "printf '\033[2J\033[3J\033[1;1H'"
 
 # Fzf.fish
 fzf_configure_bindings --directory=\cf --variables=\e\cv
-
-string match -q "$TERM_PROGRAM" "kiro" and . (kiro --locate-shell-integration-path fish)
