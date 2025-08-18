@@ -6,6 +6,7 @@ import "./notifications"
 import "./todo"
 import "./updates"
 import "./volumeMixer"
+import "root:/modules/resourceMonitor"
 import Qt5Compat.GraphicalEffects
 import QtQuick
 import QtQuick.Controls
@@ -18,7 +19,7 @@ Rectangle {
     color: Appearance.colors.colLayer1
 
     property int selectedTab: 0
-    property var tabButtonList: [{"icon": "notifications", "name": qsTr("Notifications")}, {"icon": "system_update", "name": qsTr("Updates")}, {"icon": "volume_up", "name": qsTr("Volume mixer")}]
+    property var tabButtonList: [{"icon": "notifications", "name": qsTr("Notifications")}, {"icon": "system_update_alt", "name": qsTr("Updates")}, {"icon": "memory", "name": qsTr("Resources")}, {"icon": "volume_up", "name": qsTr("Mixer")}]
 
     Keys.onPressed: (event) => {
         if (event.key === Qt.Key_PageDown || event.key === Qt.Key_PageUp) {
@@ -78,6 +79,7 @@ Rectangle {
 
             NotificationList {}
             UpdatesList {}
+            ResourceControlSidebar {}
             VolumeMixer {}
         }
     }

@@ -201,17 +201,29 @@ Rectangle {
             statusText.implicitHeight
         )
 
-        StyledText {
-            id: statusText
+        Rectangle {
+            id: statusTextBackground
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            horizontalAlignment: Text.AlignHCenter
-            text: `${root.packagesList.length} ${root.packagesList.length === 1 ? 'update' : 'updates'}`
-
+            
+            implicitWidth: statusText.implicitWidth + 16
+            implicitHeight: 30
+            radius: 15
+            color: Appearance.colors.colLayer2
+            
             opacity: root.packagesList.length > 0 ? 1 : 0
             visible: opacity > 0
             Behavior on opacity {
                 animation: Appearance.animation.elementMove.numberAnimation.createObject(this)
+            }
+            
+            StyledText {
+                id: statusText
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+                text: `${root.packagesList.length} ${root.packagesList.length === 1 ? 'update' : 'updates'}`
+                font.pixelSize: Appearance.font.pixelSize.small
+                color: Appearance.colors.colOnLayer2
             }
         }
 
