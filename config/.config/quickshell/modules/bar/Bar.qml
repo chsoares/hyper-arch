@@ -45,6 +45,21 @@ Scope {
             property var brightnessMonitor: Brightness.getMonitorForScreen(modelData)
             property real useShortenedForm: (Appearance.sizes.barHellaShortenScreenWidthThreshold >= screen.width) ? 2 :
                 (Appearance.sizes.barShortenScreenWidthThreshold >= screen.width) ? 1 : 0
+            property bool isPrimaryMonitor: {
+                // Se o modo multi-monitor não está ativado, todos os monitores mostram tudo
+                const multiMonitorMode = Config.options.bar && Config.options.bar.multiMonitorMode;
+                if (!multiMonitorMode) {
+                    return true;
+                }
+                
+                // Se não há configuração de monitor primário, use o primeiro monitor
+                const primaryMonitor = Config.options.bar && Config.options.bar.primaryMonitor;
+                if (!primaryMonitor || primaryMonitor === "") {
+                    const allScreens = Quickshell.screens;
+                    return allScreens.length > 0 && allScreens[0].name === screen.name;
+                }
+                return primaryMonitor === screen.name;
+            }
             readonly property int centerSideModuleWidth: 
                 (useShortenedForm == 2) ? Appearance.sizes.barCenterSideModuleWidthHellaShortened :
                 (useShortenedForm == 1) ? Appearance.sizes.barCenterSideModuleWidthShortened : 
@@ -238,8 +253,9 @@ Scope {
 
                     BarGroup {
                         id: leftCenterGroup
-                        Layout.preferredWidth: barRoot.centerSideModuleWidth
+                        Layout.preferredWidth: barRoot.isPrimaryMonitor ? barRoot.centerSideModuleWidth : 0
                         Layout.fillHeight: true
+                        visible: barRoot.isPrimaryMonitor
 
                         Resources {
                             alwaysShowAllResources: barRoot.useShortenedForm === 2
@@ -253,7 +269,7 @@ Scope {
 
                     }
 
-                    VerticalBarSeparator {visible: Config.options?.bar.borderless}
+                    VerticalBarSeparator {visible: Config.options?.bar.borderless && barRoot.isPrimaryMonitor}
 
                     BarGroup {
                         id: middleCenterGroup
@@ -277,14 +293,15 @@ Scope {
                         }
                     }
 
-                    VerticalBarSeparator {visible: Config.options?.bar.borderless}
+                    VerticalBarSeparator {visible: Config.options?.bar.borderless && barRoot.isPrimaryMonitor}
 
                     MouseArea {
                         id: rightCenterGroup
-                        implicitWidth: rightCenterGroupContent.implicitWidth
+                        implicitWidth: barRoot.isPrimaryMonitor ? rightCenterGroupContent.implicitWidth : 0
                         implicitHeight: rightCenterGroupContent.implicitHeight
-                        Layout.preferredWidth: barRoot.centerSideModuleWidth
+                        Layout.preferredWidth: barRoot.isPrimaryMonitor ? barRoot.centerSideModuleWidth : 0
                         Layout.fillHeight: true
+                        visible: barRoot.isPrimaryMonitor
 
                         enabled: false
 

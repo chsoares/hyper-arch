@@ -126,6 +126,8 @@ Singleton {
                     property bool alwaysShowCpu: false
                 }
                 property list<string> screenList: [] // List of names, like "eDP-1", find out with 'hyprctl monitors' command
+                property bool multiMonitorMode: false // Show simplified bars on secondary monitors
+                property string primaryMonitor: "" // Name of primary monitor, empty for auto-detect
                 property JsonObject utilButtons: JsonObject {
                     property bool showScreenSnip: true
                     property bool showColorPicker: false

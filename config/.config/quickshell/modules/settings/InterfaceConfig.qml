@@ -33,6 +33,27 @@ ContentPage {
                     }
                 }
             }
+            ConfigSwitch {
+                text: 'Simplified bars on secondary monitors'
+                checked: Config.options.bar.multiMonitorMode || false
+                onCheckedChanged: {
+                    Config.options.bar.multiMonitorMode = checked;
+                }
+                StyledToolTip {
+                    content: "Show only workspaces on secondary monitors"
+                }
+            }
+            
+            MaterialTextField {
+                Layout.fillWidth: true
+                placeholderText: "Primary monitor name (e.g., DP-1, HDMI-A-1)"
+                text: Config.options.bar.primaryMonitor
+                onTextChanged: {
+                    Config.options.bar.primaryMonitor = text;
+                }
+                enabled: Config.options.bar.multiMonitorMode
+                visible: Config.options.bar.multiMonitorMode
+            }
         }
 
         ContentSubsection {
