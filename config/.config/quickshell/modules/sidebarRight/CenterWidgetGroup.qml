@@ -19,7 +19,7 @@ Rectangle {
     color: Appearance.colors.colLayer1
 
     property int selectedTab: 0
-    property var tabButtonList: [{"icon": "notifications", "name": qsTr("Notifications")}, {"icon": "system_update_alt", "name": qsTr("Updates")}, {"icon": "memory", "name": qsTr("Resources")}, {"icon": "volume_up", "name": qsTr("Mixer")}]
+    property var tabButtonList: [{"icon": "notifications", "name": qsTr("Notifications")}, {"icon": "package_2", "name": qsTr("Updates")}, {"icon": "memory", "name": qsTr("Resources")}, {"icon": "volume_up", "name": qsTr("Mixer")}]
 
     Keys.onPressed: (event) => {
         if (event.key === Qt.Key_PageDown || event.key === Qt.Key_PageUp) {
