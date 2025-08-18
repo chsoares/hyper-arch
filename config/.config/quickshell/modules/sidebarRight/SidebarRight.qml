@@ -292,12 +292,15 @@ Scope {
                                 Layout.preferredHeight: 24
                                 buttonRadius: 12
                                 
-                                property bool webcamDisabled: false
+                                property bool webcamDisabled: Config.options.privacy.webcamDisabled
                                 
                                 onClicked: {
-                                    webcamDisabled = !webcamDisabled
+                                    const newState = !webcamDisabled
                                     
-                                    if (webcamDisabled) {
+                                    // Save state to config
+                                    Config.options.privacy.webcamDisabled = newState
+                                    
+                                    if (newState) {
                                         // Disable webcam by modprobe -r uvcvideo
                                         Quickshell.execDetached(["pkexec", "modprobe", "-r", "uvcvideo"])
                                     } else {

@@ -281,6 +281,10 @@ Singleton {
             property JsonObject screenshotTool: JsonObject {
                 property bool showContentRegions: true
             }
+
+            property JsonObject privacy: JsonObject {
+                property bool webcamDisabled: false
+            }
         }
     }
 }
