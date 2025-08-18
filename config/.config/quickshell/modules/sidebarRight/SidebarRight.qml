@@ -180,8 +180,6 @@ Scope {
                         }
 
                         ButtonGroup {
-                            Layout.fillWidth: true
-                            Layout.maximumWidth: parent.width
                             Layout.alignment: Qt.AlignHCenter
                             spacing: 5
                             padding: 5

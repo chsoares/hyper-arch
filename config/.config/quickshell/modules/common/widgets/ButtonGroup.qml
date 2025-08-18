@@ -33,9 +33,9 @@ Rectangle {
     bottomRightRadius: topRightRadius
 
     color: "transparent"
-    width: Math.min(root.contentWidth + padding * 2, parent ? parent.width : root.contentWidth + padding * 2)
+    width: root.contentWidth + padding * 2
     implicitHeight: rowLayout.implicitHeight + padding * 2
-    implicitWidth: Math.min(root.contentWidth + padding * 2, parent ? parent.width : root.contentWidth + padding * 2)
+    implicitWidth: root.contentWidth + padding * 2
     
     children: [RowLayout {
         id: rowLayout
