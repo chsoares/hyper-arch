@@ -39,8 +39,9 @@ Scope {
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.topMargin: 5
-            implicitWidth: parent.width - Appearance.sizes.elevationMargin * 2
+            anchors.topMargin: Appearance.sizes.hyprlandGapsOut
+            anchors.bottomMargin: Appearance.sizes.hyprlandGapsOut
+            implicitWidth: parent.width - Appearance.sizes.elevationMargin - Appearance.sizes.hyprlandGapsOut
             popup: true
         }
     }
