@@ -53,11 +53,47 @@ Item {
                         return Quickshell.iconPath(icon, "image-missing");
                     }
                 }
+                
                 StyledSlider {
                     id: slider
                     Layout.fillWidth: true
+                    enabled: !root.node.audio.muted
+                    opacity: root.node.audio.muted ? 0.5 : 1.0
                     value: root.node.audio.volume
                     onValueChanged: root.node.audio.volume = value
+                    
+                    Behavior on opacity {
+                        animation: Appearance.animation.elementMoveFast.numberAnimation.createObject(this)
+                    }
+                }
+                
+                RippleButton {
+                    id: muteButton
+                    Layout.preferredWidth: 28
+                    Layout.preferredHeight: 28
+                    Layout.alignment: Qt.AlignVCenter
+                    buttonRadius: 14
+                    
+                    onClicked: {
+                        root.node.audio.muted = !root.node.audio.muted
+                    }
+                    
+                    contentItem: MaterialSymbol {
+                        anchors.centerIn: parent
+                        text: root.node.audio.muted ? "volume_off" : "volume_up"
+                        iconSize: 24
+                        color: root.node.audio.muted ? Appearance.colors.colOnLayer2Disabled : Appearance.colors.colOnLayer2
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        
+                        Behavior on color {
+                            animation: Appearance.animation.elementMoveFast.colorAnimation.createObject(this)
+                        }
+                    }
+                    
+                    StyledToolTip {
+                        content: root.node.audio.muted ? qsTr("Unmute") : qsTr("Mute")
+                    }
                 }
             }
         }
