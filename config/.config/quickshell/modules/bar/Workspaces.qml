@@ -102,8 +102,8 @@ Item {
                     }
                     return uniqueApps
                 }
-                property int calculatedWidth: Math.max(workspaceMinWidth, Math.min(workspaceMaxWidth, 
-                    workspaceApps.length > 0 ? workspaceApps.length * (workspaceIconSize + iconSpacing) - iconSpacing + 6 : workspaceMinWidth))
+                property int calculatedWidth: Math.max(workspaceMinWidth,
+                    workspaceApps.length > 0 ? workspaceApps.length * (workspaceIconSize + iconSpacing) - iconSpacing + 6 : workspaceMinWidth)
                 
                 implicitWidth: calculatedWidth
                 implicitHeight: workspaceButtonWidth
@@ -237,8 +237,8 @@ Item {
                     }
                     return uniqueApps
                 }
-                property int calculatedWidth: Math.max(workspaceMinWidth, Math.min(workspaceMaxWidth, 
-                    workspaceApps.length > 0 ? workspaceApps.length * (workspaceIconSize + iconSpacing) - iconSpacing + 6 : workspaceMinWidth))
+                property int calculatedWidth: Math.max(workspaceMinWidth,
+                    workspaceApps.length > 0 ? workspaceApps.length * (workspaceIconSize + iconSpacing) - iconSpacing + 6 : workspaceMinWidth)
                 
                 Layout.fillHeight: true
                 onPressed: Hyprland.dispatch(`workspace ${workspaceValue}`)

@@ -19,6 +19,7 @@ Item {
 
     RowLayout {
         id: rowLayout
+        visible: true
 
         anchors.fill: parent
         spacing: 15
