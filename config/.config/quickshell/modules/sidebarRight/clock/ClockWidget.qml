@@ -41,7 +41,7 @@ Item {
             Layout.preferredWidth: 300
             Layout.preferredHeight: weatherContent.implicitHeight + 30
             Layout.bottomMargin: 25
-            color: Appearance.colors.colLayer1
+            color: "transparent"
             radius: Appearance.rounding.normal
             
             ColumnLayout {

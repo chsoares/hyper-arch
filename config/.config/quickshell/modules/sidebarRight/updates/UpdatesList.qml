@@ -193,7 +193,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: 10
+        anchors.margins: 5
 
         Layout.fillWidth: true
         implicitHeight: Math.max(

@@ -71,25 +71,23 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.margins: 5
 
         Layout.fillWidth: true
         implicitHeight: Math.max(
             controls.implicitHeight,
-            statusText.implicitHeight
+            silentButton.implicitHeight
         )
 
-        StyledText {
-            id: statusText
+        NotificationStatusButton {
+            id: silentButton
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: 10
-            horizontalAlignment: Text.AlignHCenter
-            text: `${Notifications.list.length} notifications`
-
-            opacity: Notifications.list.length > 0 ? 1 : 0
-            visible: opacity > 0
-            Behavior on opacity {
-                animation: Appearance.animation.elementMove.numberAnimation.createObject(this)
+            buttonIcon: "notifications_paused"
+            buttonText: qsTr("Silent")
+            toggled: Notifications.silent
+            onClicked: () => {
+                Notifications.silent = !Notifications.silent;
             }
         }
 
@@ -97,16 +95,7 @@ Item {
             id: controls
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            anchors.rightMargin: 5
 
-            NotificationStatusButton {
-                buttonIcon: "notifications_paused"
-                buttonText: qsTr("Silent")
-                toggled: Notifications.silent
-                onClicked: () => {
-                    Notifications.silent = !Notifications.silent;
-                }
-            }
             NotificationStatusButton {
                 buttonIcon: "clear_all"
                 buttonText: qsTr("Clear")
