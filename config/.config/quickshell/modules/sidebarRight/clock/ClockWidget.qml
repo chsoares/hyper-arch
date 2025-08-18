@@ -21,17 +21,17 @@ Item {
             
             MaterialSymbol {
                 text: "calendar_today"
-                iconSize: Appearance.font.pixelSize.normal
+                iconSize: Appearance.font.pixelSize.large
                 color: Appearance.colors.colOnLayer1
-                opacity: 0.8
+                opacity: 1
             }
             
             StyledText {
                 id: dateText
                 text: Qt.locale().toString(new Date(), "dddd, MMMM d")
-                font.pixelSize: Appearance.font.pixelSize.normal
+                font.pixelSize: Appearance.font.pixelSize.large
                 color: Appearance.colors.colOnLayer1
-                opacity: 0.8
+                opacity: 1
             }
         }
         
@@ -41,7 +41,7 @@ Item {
             Layout.preferredWidth: 300
             Layout.preferredHeight: weatherContent.implicitHeight + 30
             Layout.bottomMargin: 25
-            color: Appearance.colors.colLayer2
+            color: Appearance.colors.colLayer1
             radius: Appearance.rounding.normal
             
             ColumnLayout {
