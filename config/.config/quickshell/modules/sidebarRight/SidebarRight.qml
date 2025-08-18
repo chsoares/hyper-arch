@@ -31,6 +31,7 @@ Scope {
         }
 
         exclusiveZone: 0
+        width: sidebarWidth
         implicitWidth: sidebarWidth
         WlrLayershell.namespace: "quickshell:sidebarRight"
         // Hyprland 0.49: Focus is always exclusive and setting this breaks mouse focus grab
@@ -55,6 +56,7 @@ Scope {
         Loader {
             id: sidebarContentLoader
             active: GlobalStates.sidebarRightOpen
+            clip: true
             anchors {
                 top: parent.top
                 bottom: parent.bottom
@@ -65,8 +67,7 @@ Scope {
                 bottomMargin: Appearance.sizes.hyprlandGapsOut
                 leftMargin: Appearance.sizes.elevationMargin
             }
-            width: sidebarWidth - Appearance.sizes.hyprlandGapsOut - Appearance.sizes.elevationMargin
-            height: parent.height - Appearance.sizes.hyprlandGapsOut * 2
+            // Remove explicit width/height to allow anchors to control size
 
             focus: GlobalStates.sidebarRightOpen
             Keys.onPressed: (event) => {
@@ -86,8 +87,9 @@ Scope {
                     id: sidebarRightBackground
 
                     anchors.fill: parent
-                    implicitHeight: parent.height - Appearance.sizes.hyprlandGapsOut * 2
-                    implicitWidth: sidebarWidth - Appearance.sizes.hyprlandGapsOut * 2
+                    clip: true
+                    implicitHeight: parent.height
+                    implicitWidth: parent.width
                     color: Appearance.colors.colLayer0
                     radius: Appearance.rounding.screenRounding - Appearance.sizes.hyprlandGapsOut + 1
 
@@ -98,8 +100,8 @@ Scope {
 
                         RowLayout {
                             Layout.fillHeight: false
+                            Layout.fillWidth: true
                             spacing: 10
-                            Layout.margins: 10
                             Layout.topMargin: 5
                             Layout.bottomMargin: 0
 
@@ -178,6 +180,8 @@ Scope {
                         }
 
                         ButtonGroup {
+                            Layout.fillWidth: true
+                            Layout.maximumWidth: parent.width
                             Layout.alignment: Qt.AlignHCenter
                             spacing: 5
                             padding: 5
@@ -193,13 +197,11 @@ Scope {
                         // Center widget group
                         CenterWidgetGroup {
                             focus: sidebarRoot.visible
-                            Layout.alignment: Qt.AlignHCenter
                             Layout.fillHeight: true
                             Layout.fillWidth: true
                         }
 
                         BottomWidgetGroup {
-                            Layout.alignment: Qt.AlignHCenter
                             Layout.fillHeight: false
                             Layout.fillWidth: true
                             Layout.preferredHeight: implicitHeight
