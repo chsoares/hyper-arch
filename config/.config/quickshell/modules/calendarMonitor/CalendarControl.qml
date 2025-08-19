@@ -139,7 +139,7 @@ Item {
                         property var dayData: calendarLayout[index]
                         
                         color: dayData.isToday ? 
-                            Appearance.colors.colSecondaryContainer : 
+                            Appearance.colors.colPrimary : 
                             dayData.isCurrentMonth ? 
                                 "transparent" : 
                                 "transparent"
@@ -151,21 +151,21 @@ Item {
                             text: dayData.day
                             font.pixelSize: Appearance.font.pixelSize.small
                             color: dayData.isToday ? 
-                                Appearance.colors.colOnSecondaryContainer :
+                                Appearance.colors.colOnPrimary :
                                 dayData.isCurrentMonth ? 
                                     Appearance.colors.colOnLayer1 : 
                                     Qt.rgba(0.5, 0.5, 0.5, 1.0)
-                            font.weight: dayData.isToday ? Font.Bold : Font.Normal
+                            font.weight: Font.Normal
                         }
                         
                         MouseArea {
                             anchors.fill: parent
                             hoverEnabled: true
                             onEntered: {
-                                if (dayData.isCurrentMonth) {
-                                    parent.color = Qt.rgba(Appearance.colors.colSecondaryContainer.r, 
-                                                         Appearance.colors.colSecondaryContainer.g, 
-                                                         Appearance.colors.colSecondaryContainer.b, 0.3)
+                                if (dayData.isCurrentMonth && !dayData.isToday) {
+                                    parent.color = Qt.rgba(Appearance.colors.colPrimary.r, 
+                                                         Appearance.colors.colPrimary.g, 
+                                                         Appearance.colors.colPrimary.b, 0.3)
                                 }
                             }
                             onExited: {

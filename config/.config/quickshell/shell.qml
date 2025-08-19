@@ -17,6 +17,8 @@ import "./modules/onScreenDisplay/"
 import "./modules/onScreenKeyboard/"
 import "./modules/overview/"
 import "./modules/resourceMonitor/"
+import "./modules/weatherMonitor/"
+import "./modules/clockMonitor/"
 import "./modules/screenCorners/"
 import "./modules/session/"
 import "./modules/sidebarRight/"
@@ -43,6 +45,8 @@ ShellRoot {
     property bool enableOverview: true
     property bool enableReloadPopup: true
     property bool enableResourceMonitor: true
+    property bool enableWeatherMonitor: true
+    property bool enableClockMonitor: true
     property bool enableScreenCorners: true
     property bool enableSession: true
     property bool enableSidebarRight: true
@@ -69,6 +73,8 @@ ShellRoot {
     LazyLoader { active: enableOverview; component: Overview {} }
     LazyLoader { active: enableReloadPopup; component: ReloadPopup {} }
     LazyLoader { active: enableResourceMonitor; component: ResourceMonitor {} }
+    LazyLoader { active: enableWeatherMonitor; component: WeatherMonitor {} }
+    LazyLoader { active: enableClockMonitor; component: ClockMonitor {} }
     LazyLoader { active: enableScreenCorners; component: ScreenCorners {} }
     LazyLoader { active: enableSession; component: Session {} }
     LazyLoader { active: enableSidebarRight; component: SidebarRight {} }

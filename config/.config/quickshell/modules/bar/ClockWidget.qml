@@ -12,33 +12,46 @@ Item {
     implicitWidth: rowLayout.implicitWidth
     implicitHeight: 32
 
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton
-        onPressed: (event) => {
-            if (event.button === Qt.LeftButton) {
-                Hyprland.dispatch("global quickshell:calendarMonitorToggle")
-            }
-        }
-    }
+    // Removed global mouse area to allow specific click areas
 
     RowLayout {
         id: rowLayout
         anchors.centerIn: parent
         spacing: 4
 
-        MaterialSymbol {
+        // Date section - clickable area for calendar
+        Item {
             visible: root.showDate
-            text: "calendar_today"
-            iconSize: Appearance.font.pixelSize.large
-            color: Appearance.colors.colOnLayer1
-        }
+            Layout.fillHeight: true
+            implicitWidth: dateRow.implicitWidth
+            
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton
+                onPressed: (event) => {
+                    if (event.button === Qt.LeftButton) {
+                        Hyprland.dispatch("global quickshell:calendarMonitorToggle")
+                    }
+                }
+            }
+            
+            RowLayout {
+                id: dateRow
+                anchors.centerIn: parent
+                spacing: 4
+                
+                MaterialSymbol {
+                    text: "calendar_today"
+                    iconSize: Appearance.font.pixelSize.large
+                    color: Appearance.colors.colOnLayer1
+                }
 
-        StyledText {
-            visible: root.showDate
-            font.pixelSize: Appearance.font.pixelSize.small
-            color: Appearance.colors.colOnLayer1
-            text: Config.options.bar.weather.enable ? Qt.locale().toString(DateTime.clock.date, "ddd dd/MM") : DateTime.date
+                StyledText {
+                    font.pixelSize: Appearance.font.pixelSize.small
+                    color: Appearance.colors.colOnLayer1
+                    text: Config.options.bar.weather.enable ? Qt.locale().toString(DateTime.clock.date, "ddd dd/MM") : DateTime.date
+                }
+            }
         }
 
         StyledText {
@@ -47,19 +60,40 @@ Item {
             color: Appearance.colors.colOnLayer1
             text: " "
         }
-        // Weather widget
-        MaterialSymbol {
+        
+        // Weather section - clickable area for weather popup
+        Item {
             visible: Config.options.bar.weather.enable
-            text: Weather.getWeatherIcon(Weather.data.condition)
-            iconSize: Appearance.font.pixelSize.large
-            color: Appearance.colors.colOnLayer1
-        }
+            Layout.fillHeight: true
+            implicitWidth: weatherRow.implicitWidth
+            
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton
+                onPressed: (event) => {
+                    if (event.button === Qt.LeftButton) {
+                        Hyprland.dispatch("global quickshell:weatherMonitorToggle")
+                    }
+                }
+            }
+            
+            RowLayout {
+                id: weatherRow
+                anchors.centerIn: parent
+                spacing: 4
+                
+                MaterialSymbol {
+                    text: Weather.getWeatherIcon(Weather.data.condition)
+                    iconSize: Appearance.font.pixelSize.large
+                    color: Appearance.colors.colOnLayer1
+                }
 
-        StyledText {
-            visible: Config.options.bar.weather.enable
-            font.pixelSize: Appearance.font.pixelSize.small
-            color: Appearance.colors.colOnLayer1
-            text: Weather.data.temp
+                StyledText {
+                    font.pixelSize: Appearance.font.pixelSize.small
+                    color: Appearance.colors.colOnLayer1
+                    text: Weather.data.temp
+                }
+            }
         }
         
         StyledText {
@@ -69,16 +103,38 @@ Item {
             text: " "
         }
 
-        MaterialSymbol {
-            text: "schedule"
-            iconSize: Appearance.font.pixelSize.large
-            color: Appearance.colors.colOnLayer1
-        }
+        // Clock section - clickable area for clock popup
+        Item {
+            Layout.fillHeight: true
+            implicitWidth: clockRow.implicitWidth
+            
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton
+                onPressed: (event) => {
+                    if (event.button === Qt.LeftButton) {
+                        Hyprland.dispatch("global quickshell:clockMonitorToggle")
+                    }
+                }
+            }
+            
+            RowLayout {
+                id: clockRow
+                anchors.centerIn: parent
+                spacing: 4
+                
+                MaterialSymbol {
+                    text: "schedule"
+                    iconSize: Appearance.font.pixelSize.large
+                    color: Appearance.colors.colOnLayer1
+                }
 
-        StyledText {
-            font.pixelSize: Appearance.font.pixelSize.large
-            color: Appearance.colors.colOnLayer1
-            text: DateTime.time
+                StyledText {
+                    font.pixelSize: Appearance.font.pixelSize.large
+                    color: Appearance.colors.colOnLayer1
+                    text: DateTime.time
+                }
+            }
         }
         
 
