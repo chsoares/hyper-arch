@@ -149,7 +149,73 @@ apply_hypr() {
   fi
 }
 
+apply_kitty() {
+  KITTY_CONFIG_FILE="$XDG_CONFIG_HOME/kitty/kitty.conf"
+  
+  if [ -f "$KITTY_CONFIG_FILE" ]; then
+    # Get color values
+    local bg="" fg="" term_colors=()
+    for i in "${!colorlist[@]}"; do
+      case "${colorlist[$i]}" in
+        '$background') bg="${colorvalues[$i]}" ;;
+        '$onBackground') fg="${colorvalues[$i]}" ;;
+        '$term0') term_colors[0]="${colorvalues[$i]}" ;;
+        '$term1') term_colors[1]="${colorvalues[$i]}" ;;
+        '$term2') term_colors[2]="${colorvalues[$i]}" ;;
+        '$term3') term_colors[3]="${colorvalues[$i]}" ;;
+        '$term4') term_colors[4]="${colorvalues[$i]}" ;;
+        '$term5') term_colors[5]="${colorvalues[$i]}" ;;
+        '$term6') term_colors[6]="${colorvalues[$i]}" ;;
+        '$term7') term_colors[7]="${colorvalues[$i]}" ;;
+        '$term8') term_colors[8]="${colorvalues[$i]}" ;;
+        '$term9') term_colors[9]="${colorvalues[$i]}" ;;
+        '$term10') term_colors[10]="${colorvalues[$i]}" ;;
+        '$term11') term_colors[11]="${colorvalues[$i]}" ;;
+        '$term12') term_colors[12]="${colorvalues[$i]}" ;;
+        '$term13') term_colors[13]="${colorvalues[$i]}" ;;
+        '$term14') term_colors[14]="${colorvalues[$i]}" ;;
+        '$term15') term_colors[15]="${colorvalues[$i]}" ;;
+      esac
+    done
+    
+    # Remove everything after # Theme
+    sed -i '/^# Theme$/,$d' "$KITTY_CONFIG_FILE"
+    
+    # Append new theme
+    cat >> "$KITTY_CONFIG_FILE" << EOF
+# Theme
+foreground              $fg
+background              $bg
+selection_foreground    $bg
+selection_background    $fg
+cursor                  $fg
+cursor_text_color       $bg
+
+color0 ${term_colors[0]}
+color8 ${term_colors[8]}
+color1 ${term_colors[1]}
+color9 ${term_colors[9]}
+color2 ${term_colors[2]}
+color10 ${term_colors[10]}
+color3 ${term_colors[3]}
+color11 ${term_colors[11]}
+color4 ${term_colors[4]}
+color12 ${term_colors[12]}
+color5 ${term_colors[5]}
+color13 ${term_colors[13]}
+color6 ${term_colors[6]}
+color14 ${term_colors[14]}
+color7 ${term_colors[7]}
+color15 ${term_colors[15]}
+EOF
+    
+    # Signal running kitty instances to reload config
+    pkill -USR1 kitty 2>/dev/null || true
+  fi
+}
+
 apply_qt &
 apply_term &
 apply_hypr &
+apply_kitty &
 apply_openrgb &

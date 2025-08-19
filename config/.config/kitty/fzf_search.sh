@@ -70,3 +70,6 @@ fzf \
     --header="Ctrl-/ toggle preview │ Alt-↑↓ scroll │ Shift-↑↓ page" \
     --header-lines=0 \
     < "$stdin_file"
+
+# Always exit with success, even if user cancelled with ESC (exit code 130)
+exit 0
