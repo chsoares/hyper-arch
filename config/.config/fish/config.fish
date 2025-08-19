@@ -24,4 +24,4 @@ source ~/.config/fish/aliases.fish
 alias clear "printf '\033[2J\033[3J\033[1;1H'"
 
 # Fzf.fish
-fzf_configure_bindings --directory=\cf --variables=\e\cv
+fzf_configure_bindings --directory=\ce --variables=\e\cv
