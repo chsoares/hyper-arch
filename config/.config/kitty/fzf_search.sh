@@ -8,6 +8,7 @@ show_context() {
     local line_num=$1
     local height=${FZF_PREVIEW_LINES:-15}
     
+    
     # Ensure height doesn't exceed total lines
     ((height > total_lines)) && height=$total_lines
     
@@ -52,17 +53,16 @@ export SHELL=bash
 
 # Configure FZF_DEFAULT_OPTS if not already set (matching fzf.fish defaults)
 if [[ -z "$FZF_DEFAULT_OPTS" && -z "$FZF_DEFAULT_OPTS_FILE" ]]; then
-    export FZF_DEFAULT_OPTS="--cycle --layout=reverse --border --height=90% --preview-window=wrap --marker=*"
+    export FZF_DEFAULT_OPTS="--cycle --layout=reverse --border --height=100% --preview-window=wrap --marker=*"
 fi
 
 # Execute fzf with fzf.fish-style interface
 fzf \
     --ansi \
     --no-sort \
-    --tac \
     --exact \
     --prompt="Scrollback> " \
-    --preview='show_context {n}' \
+    --preview='show_context $(({n} + 1))' \
     --preview-window="right:60%:wrap:border-left" \
     --bind="ctrl-/:toggle-preview" \
     --bind="alt-up:preview-up,alt-down:preview-down" \
