@@ -34,7 +34,11 @@ Item {
             font.pixelSize: Appearance.font.pixelSize.small
             color: Appearance.colors.colOnLayer0
             elide: Text.ElideRight
-            text: root.activeWindow?.activated ? root.activeWindow?.title : `${qsTr("Workspace")} ${monitor.activeWorkspace?.id}`
+            text: root.activeWindow?.activated ? 
+                (root.activeWindow?.title.length > 50 ? 
+                    root.activeWindow?.title.substring(0, 50) + "..." : 
+                    root.activeWindow?.title) : 
+                `${qsTr("Workspace")} ${monitor.activeWorkspace?.id}`
         }
 
     }
