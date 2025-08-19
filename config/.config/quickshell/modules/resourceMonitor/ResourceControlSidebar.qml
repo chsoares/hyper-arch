@@ -13,11 +13,11 @@ Rectangle {
 
     property var resourceItems: [
         {
-            "name": qsTr("CPU"),
+            "name": qsTr("Processor"),
             "icon": "developer_board",
             "value": Math.round(ResourceUsage.cpuUsage * 100),
             "unit": "%",
-            "description": qsTr("Processor usage")
+            "description": qsTr("CPU usage")
         },
         {
             "name": qsTr("Memory"),
@@ -28,7 +28,7 @@ Rectangle {
         },
         {
             "name": qsTr("Storage"),
-            "icon": "storage",
+            "icon": "hard_drive",
             "value": Math.round(ResourceUsage.diskUsedPercentage * 100),
             "unit": "%",
             "description": qsTr("Disk usage")
@@ -62,7 +62,10 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.margins: 10
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        anchors.topMargin: 2
+        anchors.bottomMargin: 10
 
         model: root.resourceItems
         spacing: 2
@@ -70,7 +73,7 @@ Rectangle {
         delegate: Rectangle {
             width: listView.width
             height: 60
-            color: Appearance.colors.colLayer1
+            color: "transparent"
             radius: Appearance.rounding.small
 
             RowLayout {

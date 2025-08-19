@@ -21,7 +21,7 @@ Scope {
     readonly property var realPlayers: Mpris.players.values.filter(player => isRealPlayer(player))
     readonly property var meaningfulPlayers: filterDuplicatePlayers(realPlayers)
     readonly property real osdWidth: Appearance.sizes.osdWidth
-    readonly property real widgetWidth: Appearance.sizes.mediaControlsWidth
+    readonly property real widgetWidth: Appearance.sizes.mediaControlsWidth * 1.5
     readonly property real widgetHeight: Appearance.sizes.mediaControlsHeight
     property real contentPadding: 13
     property real popupRounding: Appearance.rounding.screenRounding - Appearance.sizes.elevationMargin + 1
@@ -102,11 +102,7 @@ Scope {
             }
 
             exclusiveZone: 0
-            implicitWidth: (
-                (mediaControlsRoot.screen.width / 2) // Middle of screen
-                    - (osdWidth / 2)                 // Dodge OSD
-                    - (widgetWidth / 2)              // Account for widget width
-            ) * 2
+            implicitWidth: playerColumnLayout.implicitWidth
             implicitHeight: playerColumnLayout.implicitHeight
             color: "transparent"
             WlrLayershell.namespace: "quickshell:mediaControls"
@@ -115,6 +111,7 @@ Scope {
                 top: !Config.options.bar.bottom
                 bottom: Config.options.bar.bottom
                 left: true
+                right: true
             }
             mask: Region {
                 item: playerColumnLayout
@@ -132,12 +129,9 @@ Scope {
             ColumnLayout {
                 id: playerColumnLayout
                 anchors.top: parent.top
+                anchors.topMargin: -10
                 anchors.bottom: parent.bottom
-                x: (mediaControlsRoot.screen.width / 2)  // Middle of screen
-                    - (osdWidth / 2)                     // Dodge OSD
-                    - (widgetWidth)                      // Account for widget width
-                    + (Appearance.sizes.elevationMargin) // It's fine for shadows to overlap
-                    - 10
+                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: -Appearance.sizes.elevationMargin // Shadow overlap okay
 
                 focus: mediaControlsLoader.active

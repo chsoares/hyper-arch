@@ -38,11 +38,7 @@ Scope {
             }
 
             exclusiveZone: 0
-            implicitWidth: (
-                (resourceMonitorRoot.screen.width / 2) // Middle of screen
-                    - (osdWidth / 2)                 // Dodge OSD
-                    - (widgetWidth / 2)              // Account for widget width
-            ) * 2
+            implicitWidth: resourceColumnLayout.implicitWidth
             implicitHeight: resourceColumnLayout.implicitHeight
             color: "transparent"
             WlrLayershell.namespace: "quickshell:resourceMonitor"
@@ -51,6 +47,7 @@ Scope {
                 top: !Config.options.bar.bottom
                 bottom: Config.options.bar.bottom
                 left: true
+                right: true
             }
             mask: Region {
                 item: resourceColumnLayout
@@ -68,12 +65,9 @@ Scope {
             ColumnLayout {
                 id: resourceColumnLayout
                 anchors.top: parent.top
+                anchors.topMargin: -10
                 anchors.bottom: parent.bottom
-                x: (resourceMonitorRoot.screen.width / 2)  // Middle of screen
-                    - (osdWidth / 2)                     // Dodge OSD
-                    - (widgetWidth)                      // Account for widget width
-                    + (Appearance.sizes.elevationMargin) // It's fine for shadows to overlap
-                    - 10
+                anchors.horizontalCenter: parent.horizontalCenter
                 spacing: -Appearance.sizes.elevationMargin // Shadow overlap okay
 
                 focus: resourceMonitorLoader.active

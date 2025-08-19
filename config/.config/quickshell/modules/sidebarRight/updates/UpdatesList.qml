@@ -84,7 +84,9 @@ Rectangle {
         anchors.top: parent.top
         anchors.bottom: statusRow.top
         anchors.bottomMargin: 5
-        anchors.margins: 10
+        anchors.leftMargin: 10
+        anchors.rightMargin: 10
+        anchors.topMargin: 2
 
         model: root.packagesList
         spacing: 3
@@ -92,7 +94,7 @@ Rectangle {
         delegate: Rectangle {
             width: listView.width
             height: 60
-            color: Appearance.colors.colLayer1
+            color: "transparent"
             radius: Appearance.rounding.small
 
             RowLayout {

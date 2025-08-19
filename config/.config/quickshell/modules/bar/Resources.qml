@@ -38,7 +38,7 @@ Item {
 
         // CPU: Sempre visível
         Resource {
-            iconName: "settings_slow_motion"
+            iconName: "developer_board"
             percentage: ResourceUsage.cpuUsage
             shown: true
             Layout.leftMargin: shown ? 4 : 0

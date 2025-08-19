@@ -57,8 +57,8 @@ Singleton {
     }
     
     readonly property var weatherIcons: ({
-        "113": "clear_day",      // Sunny
-        "116": "partly_cloudy_day", // Partly cloudy
+        "113": { day: "clear_day", night: "clear_night" },      // Sunny/Clear
+        "116": { day: "partly_cloudy_day", night: "partly_cloudy_night" }, // Partly cloudy
         "119": "cloud",          // Cloudy
         "122": "cloud",          // Overcast
         "143": "foggy",          // Mist
@@ -80,8 +80,51 @@ Singleton {
         "395": "snowing"         // Heavy snow showers
     })
     
+    function isNightTime() {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const currentTimeMinutes = currentHour * 60 + currentMinute;
+        
+        // Parse sunrise and sunset times
+        const sunriseTime = parseTimeString(root.data.sunrise);
+        const sunsetTime = parseTimeString(root.data.sunset);
+        
+        if (sunriseTime === null || sunsetTime === null) {
+            // Fallback: consider night if between 18:00 and 06:00
+            return currentHour >= 18 || currentHour < 6;
+        }
+        
+        // Check if current time is before sunrise or after sunset
+        return currentTimeMinutes < sunriseTime || currentTimeMinutes >= sunsetTime;
+    }
+    
+    function parseTimeString(timeStr) {
+        if (!timeStr || timeStr === "--") return null;
+        
+        // Parse time in format "HH:mm" or "H:mm"
+        const match = timeStr.match(/(\d{1,2}):(\d{2})/);
+        if (!match) return null;
+        
+        const hours = parseInt(match[1]);
+        const minutes = parseInt(match[2]);
+        return hours * 60 + minutes;
+    }
+    
     function getWeatherIcon(code) {
-        return weatherIcons[code] || "cloud";
+        const iconData = weatherIcons[code];
+        
+        if (!iconData) return "cloud";
+        
+        // If iconData is a string, return it directly (no day/night variants)
+        if (typeof iconData === "string") return iconData;
+        
+        // If iconData is an object with day/night variants
+        if (typeof iconData === "object" && iconData.day && iconData.night) {
+            return isNightTime() ? iconData.night : iconData.day;
+        }
+        
+        return "cloud";
     }
     
     function formatTime(timeStr) {

@@ -50,14 +50,14 @@ Item {
                 spacing: 8
                 
                 MaterialSymbol {
-                    text: "settings_slow_motion"
-                    iconSize: Appearance.font.pixelSize.small
+                    text: "developer_board"
+                    iconSize: Appearance.font.pixelSize.normal
                     color: Appearance.colors.colOnLayer1
                 }
                 
                 StyledText {
                     Layout.fillWidth: true
-                    text: "CPU"
+                    text: "Processor"
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.colors.colOnLayer1
                 }
@@ -77,7 +77,7 @@ Item {
                 
                 MaterialSymbol {
                     text: "memory"
-                    iconSize: Appearance.font.pixelSize.small
+                    iconSize: Appearance.font.pixelSize.normal
                     color: Appearance.colors.colOnLayer1
                 }
                 
@@ -103,13 +103,13 @@ Item {
                 
                 MaterialSymbol {
                     text: "hard_drive"
-                    iconSize: Appearance.font.pixelSize.small
+                    iconSize: Appearance.font.pixelSize.normal
                     color: Appearance.colors.colOnLayer1
                 }
                 
                 StyledText {
                     Layout.fillWidth: true
-                    text: "Disk"
+                    text: "Storage"
                     font.pixelSize: Appearance.font.pixelSize.small
                     color: Appearance.colors.colOnLayer1
                 }
@@ -129,7 +129,7 @@ Item {
                 
                 MaterialSymbol {
                     text: "thermostat"
-                    iconSize: Appearance.font.pixelSize.small
+                    iconSize: Appearance.font.pixelSize.normal
                     color: Appearance.colors.colOnLayer1
                 }
                 
@@ -155,7 +155,7 @@ Item {
                 
                 MaterialSymbol {
                     text: "arrow_downward"
-                    iconSize: Appearance.font.pixelSize.small
+                    iconSize: Appearance.font.pixelSize.normal
                     color: Appearance.colors.colOnLayer1
                 }
                 
@@ -181,7 +181,7 @@ Item {
                 
                 MaterialSymbol {
                     text: "arrow_upward"
-                    iconSize: Appearance.font.pixelSize.small
+                    iconSize: Appearance.font.pixelSize.normal
                     color: Appearance.colors.colOnLayer1
                 }
                 
