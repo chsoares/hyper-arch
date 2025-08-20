@@ -32,6 +32,10 @@ Item {
 
                 bar: root.bar
                 item: modelData
+                visible: !Config.options.bar.tray.blacklistedApps.includes(modelData.id)
+                
+                // Debug: mostra o ID no console
+                Component.onCompleted: console.log("SystemTray item ID:", modelData.id)
             }
 
         }
@@ -42,7 +46,13 @@ Item {
             color: Appearance.colors.colSubtext
             text: "•"
             visible: {
-                SystemTray.items.values.length > 0
+                var visibleItems = 0;
+                for (var i = 0; i < SystemTray.items.values.length; i++) {
+                    if (!Config.options.bar.tray.blacklistedApps.includes(SystemTray.items.values[i].id)) {
+                        visibleItems++;
+                    }
+                }
+                return visibleItems > 0;
             }
         }
 

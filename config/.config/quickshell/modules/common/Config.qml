@@ -138,6 +138,7 @@ Singleton {
                 }
                 property JsonObject tray: JsonObject {
                     property bool monochromeIcons: true
+                    property list<string> blacklistedApps: ["spotify-client", "electron"]
                 }
                 property JsonObject workspaces: JsonObject {
                     property bool monochromeIcons: true
