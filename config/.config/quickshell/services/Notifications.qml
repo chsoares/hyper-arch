@@ -147,6 +147,15 @@ Singleton {
         persistenceSupported: true
 
         onNotification: (notification) => {
+            // Filter out empty notifications
+            const hasValidContent = (notification.summary && notification.summary.trim() !== "") || 
+                                  (notification.body && notification.body.trim() !== "");
+            
+            if (!hasValidContent) {
+                console.log("[Notifications] Discarding empty notification from", notification.appName || "unknown app");
+                return;
+            }
+
             notification.tracked = true
             const newNotifObject = notifComponent.createObject(root, {
                 "id": notification.id + root.idOffset,
