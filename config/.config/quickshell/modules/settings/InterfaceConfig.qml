@@ -132,56 +132,6 @@ ContentPage {
         }   
     }
 
-    ContentSection {
-        title: "Battery"
-
-        ConfigRow {
-            uniform: true
-            ConfigSpinBox {
-                text: "Low warning"
-                value: Config.options.battery.low
-                from: 0
-                to: 100
-                stepSize: 5
-                onValueChanged: {
-                    Config.options.battery.low = value;
-                }
-            }
-            ConfigSpinBox {
-                text: "Critical warning"
-                value: Config.options.battery.critical
-                from: 0
-                to: 100
-                stepSize: 5
-                onValueChanged: {
-                    Config.options.battery.critical = value;
-                }
-            }
-        }
-        ConfigRow {
-            uniform: true
-            ConfigSwitch {
-                text: "Automatic suspend"
-                checked: Config.options.battery.automaticSuspend
-                onCheckedChanged: {
-                    Config.options.battery.automaticSuspend = checked;
-                }
-                StyledToolTip {
-                    content: "Automatically suspends the system when battery is low"
-                }
-            }
-            ConfigSpinBox {
-                text: "Suspend at"
-                value: Config.options.battery.suspend
-                from: 0
-                to: 100
-                stepSize: 5
-                onValueChanged: {
-                    Config.options.battery.suspend = value;
-                }
-            }
-        }
-    }
 
     ContentSection {
         title: "Overview"

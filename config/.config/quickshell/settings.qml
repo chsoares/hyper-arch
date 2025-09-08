@@ -154,20 +154,6 @@ ApplicationWindow {
                         focus: root.visible
                     }
 
-                    FloatingActionButton {
-                        id: fab
-                        iconText: "edit"
-                        buttonText: "Edit config"
-                        expanded: navRail.expanded
-                        onClicked: {
-                            Qt.openUrlExternally(`${Directories.config}/illogical-impulse/config.json`);
-                        }
-
-                        StyledToolTip {
-                            extraVisibleCondition: !navRail.expanded
-                            content: "Edit shell config file"
-                        }
-                    }
 
                     NavigationRailTabArray {
                         currentIndex: root.currentPage
