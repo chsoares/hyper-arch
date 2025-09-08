@@ -224,7 +224,7 @@ Singleton {
             }
 
             property JsonObject resources: JsonObject {
-                property int updateInterval: 3000
+                property int updateInterval: 3
             }
 
             property JsonObject search: JsonObject {

@@ -156,7 +156,7 @@ Singleton {
             }
 
             // Update interval based on configuration
-            interval = Config.options?.resources?.updateInterval ?? 3000
+            interval = (Config.options?.resources?.updateInterval ?? 3) * 1000
         }
 	}
 
