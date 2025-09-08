@@ -11,6 +11,15 @@ MATUGEN_DIR="$XDG_CONFIG_HOME/matugen"
 terminalscheme="$XDG_CONFIG_HOME/quickshell/scripts/terminal/scheme-base.json"
 
 handle_kde_material_you_colors() {
+    # Check if Qt app theming is enabled in config
+    SHELL_CONFIG_FILE="$XDG_CONFIG_HOME/illogical-impulse/config.json"
+    if [ -f "$SHELL_CONFIG_FILE" ]; then
+        enable_qt_apps=$(jq -r '.appearance.wallpaperTheming.enableQtApps' "$SHELL_CONFIG_FILE")
+        if [ "$enable_qt_apps" == "false" ]; then
+            return
+        fi
+    fi
+
     # Map $type_flag to allowed scheme variants for kde-material-you-colors-wrapper.sh
     local kde_scheme_variant=""
     case "$type_flag" in
@@ -326,6 +335,18 @@ main() {
     if [[ $valid_type -eq 0 ]]; then
         echo "[switchwall.sh] Warning: Invalid type '$type_flag', defaulting to 'auto'" >&2
         type_flag="auto"
+    fi
+
+    # Handle --noswitch mode: use current wallpaper if no imgpath specified
+    if [[ -n "$noswitch_flag" && -z "$imgpath" && -z "$color_flag" ]]; then
+        # Try to get current wallpaper from swww
+        current_wallpaper=$(swww query | head -1 | sed 's/.*image: //' | tr -d '\n\r')
+        if [[ -n "$current_wallpaper" && -f "$current_wallpaper" ]]; then
+            imgpath="$current_wallpaper"
+        else
+            echo "Could not determine current wallpaper for --noswitch mode"
+            exit 1
+        fi
     fi
 
     # Only prompt for wallpaper if not using --color and not using --noswitch and no imgpath set

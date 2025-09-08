@@ -8,7 +8,7 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 
-GroupButton {
+RippleButton {
     id: lightDarkButtonRoot
     required property bool dark
     property color previewBg: dark ? ColorUtils.colorWithHueOf("#3f3838", Appearance.m3colors.m3primary) : 
@@ -19,7 +19,8 @@ GroupButton {
     colBackground: Appearance.colors.colLayer2
     toggled: Appearance.m3colors.darkmode === dark
     onClicked: {
-        Quickshell.execDetached(["bash", "-c", `${Directories.wallpaperSwitchScriptPath} --mode ${dark ? "dark" : "light"} --noswitch`])
+        // Get current wallpaper and apply it with the new mode (without --noswitch so it properly applies colors)
+        Quickshell.execDetached(["bash", "-c", `current_wallpaper=$(swww query | head -1 | sed 's/.*image: //' | tr -d '\\n\\r'); ${Directories.wallpaperSwitchScriptPath} "$current_wallpaper" --mode ${dark ? "dark" : "light"}`])
     }
     contentItem: Item {
         anchors.centerIn: parent
