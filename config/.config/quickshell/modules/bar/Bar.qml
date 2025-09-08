@@ -18,7 +18,14 @@ Scope {
     id: bar
 
     readonly property int osdHideMouseMoveThreshold: 20
-    property bool showBarBackground: Config.options.bar.showBackground
+    property bool showBarBackground: {
+        // If cornerStyle is 3 (Invisible), force background off
+        if (Config.options.bar.cornerStyle === 3) {
+            return false;
+        }
+        // Otherwise, use the showBackground setting
+        return Config.options.bar.showBackground;
+    }
 
     component VerticalBarSeparator: Rectangle {
         Layout.topMargin: Appearance.sizes.baseBarHeight / 3

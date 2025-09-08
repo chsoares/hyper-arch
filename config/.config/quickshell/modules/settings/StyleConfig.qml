@@ -121,19 +121,9 @@ ContentPage {
             options: [
                 { displayName: "Hug", value: 0 },
                 { displayName: "Float", value: 1 },
-                { displayName: "Rectangle", value: 2 }
+                { displayName: "Rectangle", value: 2 },
+                { displayName: "Invisible", value: 3 }
             ]
-        }
-
-        ConfigSwitch {
-            text: 'Show background'
-            checked: Config.options.bar.showBackground
-            onCheckedChanged: {
-                Config.options.bar.showBackground = checked;
-            }
-            StyledToolTip {
-                content: "Note: turning off can hurt readability"
-            }
         }
 
         ConfigSwitch {
