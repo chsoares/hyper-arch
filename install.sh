@@ -288,6 +288,19 @@ EOF
         print_success "monitors.conf already exists, skipping creation"
     fi
     
+    # Create wallpaper symlink
+    print_step "Setting up wallpaper directory..."
+    mkdir -p "$HOME/Pictures"
+    WALLPAPER_LINK="$HOME/Pictures/Wallpapers"
+    if [[ ! -L "$WALLPAPER_LINK" && ! -d "$WALLPAPER_LINK" ]]; then
+        ln -s "$base/wallpapers" "$WALLPAPER_LINK"
+        print_success "Created wallpaper symlink: ~/Pictures/Wallpapers -> $base/wallpapers"
+    elif [[ -L "$WALLPAPER_LINK" ]]; then
+        print_success "Wallpaper symlink already exists"
+    else
+        print_warning "~/Pictures/Wallpapers exists but is not a symlink - skipping"
+    fi
+    
     # Reload Hyprland if running
     if pgrep -x hyprland >/dev/null; then
         print_step "Reloading Hyprland configuration..."

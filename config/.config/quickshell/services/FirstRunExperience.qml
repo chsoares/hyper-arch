@@ -27,8 +27,12 @@ Singleton {
     }
 
     function handleFirstRun() {
-        Quickshell.execDetached(["bash", "-c", `swww query | grep 'image' || '${Directories.wallpaperSwitchScriptPath}' '${root.defaultWallpaperPath}'`])
-        Quickshell.execDetached(["bash", "-c", `qs -p '${root.welcomeQmlPath}'`])
+        // Set random wallpaper using the same script as Super+Ctrl+Alt+T
+        Quickshell.execDetached(["bash", `${Directories.config}/hypr/hyprland/scripts/random-wallpaper.sh`])
+        // Show welcome notification
+        Quickshell.execDetached(["notify-send", root.firstRunNotifSummary, root.firstRunNotifBody, "-i", "welcome"])
+        // Open settings for first-time configuration (same as Super+I)
+        Quickshell.execDetached(["qs", "-t", "settings"])
     }
 
     FileView {
