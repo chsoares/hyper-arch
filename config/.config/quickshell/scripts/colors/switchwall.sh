@@ -250,17 +250,45 @@ switch() {
 
     pre_process "$mode_flag"
 
-    matugen "${matugen_args[@]}"
+    # Run matugen and python color generation in parallel for speed
+    matugen "${matugen_args[@]}" &
+    MATUGEN_PID=$!
+    
+    # Generate colors in parallel while matugen runs
     source "$(eval echo $ILLOGICAL_IMPULSE_VIRTUAL_ENV)/bin/activate"
     python3 "$SCRIPT_DIR/generate_colors_material.py" "${generate_colors_material_args[@]}" \
-        > "$STATE_DIR"/user/generated/material_colors.scss
+        > "$STATE_DIR"/user/generated/material_colors.scss &
+    PYTHON_PID=$!
+    
+    # Wait for both to complete
+    wait $MATUGEN_PID
+    wait $PYTHON_PID
+    
+    # Apply colors immediately after generation
     "$SCRIPT_DIR"/applycolor.sh
     deactivate
 
-    # Pass screen width, height, and wallpaper path to post_process
-    max_width_desired="$(hyprctl monitors -j | jq '([.[].width] | min)' | xargs)"
-    max_height_desired="$(hyprctl monitors -j | jq '([.[].height] | min)' | xargs)"
-    post_process "$max_width_desired" "$max_height_desired" "$imgpath"
+    # Notify user about the color mode change
+    if [ "$mode_flag" = "light" ]; then
+        mode_display="Light"
+        mode_icon="weather-clear-symbolic"
+    else
+        mode_display="Dark"
+        mode_icon="weather-clear-night-symbolic" 
+    fi
+    
+    notify-send "Theme Mode: $mode_display" \
+        "Colors applied successfully!\nNote: Some apps (like Nautilus) may need logout to update." \
+        -i "$mode_icon" \
+        -t 4000 \
+        -u low
+
+    # Run post_process in background to avoid blocking UI updates
+    {
+        max_width_desired="$(hyprctl monitors -j | jq '([.[].width] | min)' | xargs)"
+        max_height_desired="$(hyprctl monitors -j | jq '([.[].height] | min)' | xargs)"
+        post_process "$max_width_desired" "$max_height_desired" "$imgpath"
+    } &
 }
 
 main() {
