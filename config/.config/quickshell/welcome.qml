@@ -40,13 +40,13 @@ ApplicationWindow {
     color: Appearance.m3colors.m3background
 
     Process {
-        id: konachanWallProc
+        id: randomWallProc
         property string status: ""
-        command: ["bash", "-c", FileUtils.trimFileProtocol(`${Directories.config}/quickshell/scripts/colors/random_konachan_wall.sh`)]
+        command: ["bash", "-c", `${Directories.home}/.config/hypr/hyprland/scripts/random-wallpaper.sh`]
         stdout: SplitParser {
             onRead: data => {
-                console.log(`Konachan wall proc output: ${data}`);
-                konachanWallProc.status = data.trim();
+                console.log(`Random wall proc output: ${data}`);
+                randomWallProc.status = data.trim();
             }
         }
     }
@@ -159,13 +159,13 @@ ApplicationWindow {
                             Layout.alignment: Qt.AlignHCenter
                             buttonRadius: Appearance.rounding.small
                             materialIcon: "wallpaper"
-                            mainText: konachanWallProc.running ? "Be patient..." : "Random: Konachan"
+                            mainText: randomWallProc.running ? "Be patient..." : "Random wallpaper"
                             onClicked: {
-                                console.log(konachanWallProc.command.join(" "))
-                                konachanWallProc.running = true;
+                                console.log(randomWallProc.command.join(" "))
+                                randomWallProc.running = true;
                             }
                             StyledToolTip {
-                                content: "Random SFW Anime wallpaper from Konachan\nImage is saved to ~/Pictures/Wallpapers"
+                                content: "Random wallpaper from ~/Pictures/Wallpapers"
                             }
                         }
                         RippleButtonWithIcon {
