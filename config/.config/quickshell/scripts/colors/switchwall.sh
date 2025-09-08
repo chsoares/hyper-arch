@@ -268,20 +268,39 @@ switch() {
     "$SCRIPT_DIR"/applycolor.sh
     deactivate
 
-    # Notify user about the color mode change
-    if [ "$mode_flag" = "light" ]; then
-        mode_display="Light"
-        mode_icon="weather-clear-symbolic"
+    # Notify user about the color/palette change
+    notification_title=""
+    notification_body="Colors applied successfully!\nNote: Some apps (like Nautilus) may need logout to update."
+    notification_icon="preferences-desktop-theme"
+    
+    if [[ -n "$mode_flag" && -n "$type_flag" ]]; then
+        # Both mode and type changed
+        mode_display=$([ "$mode_flag" = "light" ] && echo "Light" || echo "Dark")
+        type_display=$(echo "$type_flag" | sed 's/scheme-//' | sed 's/-/ /g' | sed 's/\b\w/\U&/g')
+        notification_title="Theme: $mode_display + $type_display"
+        notification_icon=$([ "$mode_flag" = "light" ] && echo "weather-clear-symbolic" || echo "weather-clear-night-symbolic")
+    elif [[ -n "$mode_flag" ]]; then
+        # Only mode changed
+        mode_display=$([ "$mode_flag" = "light" ] && echo "Light" || echo "Dark")
+        notification_title="Theme Mode: $mode_display"
+        notification_icon=$([ "$mode_flag" = "light" ] && echo "weather-clear-symbolic" || echo "weather-clear-night-symbolic")
+    elif [[ -n "$type_flag" ]]; then
+        # Only palette type changed
+        type_display=$(echo "$type_flag" | sed 's/scheme-//' | sed 's/-/ /g' | sed 's/\b\w/\U&/g')
+        notification_title="Material Palette: $type_display"
+        notification_icon="applications-graphics-symbolic"
     else
-        mode_display="Dark"
-        mode_icon="weather-clear-night-symbolic" 
+        # Fallback for wallpaper change
+        notification_title="Colors Updated"
     fi
     
-    notify-send "Theme Mode: $mode_display" \
-        "Colors applied successfully!\nNote: Some apps (like Nautilus) may need logout to update." \
-        -i "$mode_icon" \
-        -t 4000 \
-        -u low
+    if [[ -n "$notification_title" ]]; then
+        notify-send "$notification_title" \
+            "$notification_body" \
+            -i "$notification_icon" \
+            -t 4000 \
+            -u low
+    fi
 
     # Run post_process in background to avoid blocking UI updates
     {

@@ -49,7 +49,12 @@ ContentPage {
                 currentValue: Config.options.appearance.palette.type
                 configOptionName: "appearance.palette.type"
                 onSelected: (newValue) => {
+                    console.log(`Material palette selected: ${newValue}`);
                     Config.options.appearance.palette.type = newValue;
+                    // Apply the new palette immediately by reprocessing current wallpaper
+                    Quickshell.execDetached(["bash", "-c", `current_wallpaper=$(swww query | head -1 | sed 's/.*image: //' | tr -d '\\n\\r'); ${Directories.wallpaperSwitchScriptPath} "$current_wallpaper" --type ${newValue}`]);
+                    // Force theme reload after a short delay
+                    delayedReloadTimer.restart();
                 }
                 options: [
                     {"value": "auto", "displayName": "Auto"},
@@ -128,6 +133,15 @@ ContentPage {
             text: "Alternatively use /dark, /light, /img in the launcher"
             font.pixelSize: Appearance.font.pixelSize.smaller
             color: Appearance.colors.colSubtext
+        }
+
+        Timer {
+            id: delayedReloadTimer
+            interval: 3000 // 3 seconds delay to allow script to complete
+            repeat: false
+            onTriggered: {
+                MaterialThemeLoader.reapplyTheme();
+            }
         }
     
     }
