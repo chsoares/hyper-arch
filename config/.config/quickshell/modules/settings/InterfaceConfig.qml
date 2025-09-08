@@ -12,27 +12,7 @@ ContentPage {
         title: "Bar"
 
         ContentSubsection {
-            title: "Appearance"
-            ConfigRow {
-                uniform: true
-                ConfigSwitch {
-                    text: 'Borderless'
-                    checked: Config.options.bar.borderless
-                    onCheckedChanged: {
-                        Config.options.bar.borderless = checked;
-                    }
-                }
-                ConfigSwitch {
-                    text: 'Show background'
-                    checked: Config.options.bar.showBackground
-                    onCheckedChanged: {
-                        Config.options.bar.showBackground = checked;
-                    }
-                    StyledToolTip {
-                        content: "Note: turning off can hurt readability"
-                    }
-                }
-            }
+            title: "Multi-monitor"
             ConfigSwitch {
                 text: 'Simplified bars on secondary monitors'
                 checked: Config.options.bar.multiMonitorMode || false

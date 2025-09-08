@@ -121,8 +121,27 @@ ContentPage {
             options: [
                 { displayName: "Hug", value: 0 },
                 { displayName: "Float", value: 1 },
-                { displayName: "Plain rectangle", value: 2 }
+                { displayName: "Rectangle", value: 2 }
             ]
+        }
+
+        ConfigSwitch {
+            text: 'Show background'
+            checked: Config.options.bar.showBackground
+            onCheckedChanged: {
+                Config.options.bar.showBackground = checked;
+            }
+            StyledToolTip {
+                content: "Note: turning off can hurt readability"
+            }
+        }
+
+        ConfigSwitch {
+            text: 'Borderless'
+            checked: Config.options.bar.borderless
+            onCheckedChanged: {
+                Config.options.bar.borderless = checked;
+            }
         }
     }
 
