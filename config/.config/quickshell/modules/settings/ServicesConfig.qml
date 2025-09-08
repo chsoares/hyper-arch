@@ -42,14 +42,28 @@ ContentPage {
     ContentSection {
         title: "Weather"
 
-        ConfigSwitch {
-            text: "Enable weather service"
-            checked: Config.options.bar.weather.enable
-            onCheckedChanged: {
-                Config.options.bar.weather.enable = checked;
+        ConfigRow {
+            uniform: false
+            ConfigSwitch {
+                text: "Enable"
+                checked: Config.options.bar.weather.enable
+                onCheckedChanged: {
+                    Config.options.bar.weather.enable = checked;
+                }
+                StyledToolTip {
+                    content: "Enables weather data fetching for the clock widget"
+                }
             }
-            StyledToolTip {
-                content: "Enables weather data fetching for the clock widget"
+            ConfigSwitch {
+                text: "Imperial units"
+                checked: Config.options.bar.weather.useUSCS
+                onCheckedChanged: {
+                    Config.options.bar.weather.useUSCS = checked;
+                }
+                enabled: Config.options.bar.weather.enable
+                StyledToolTip {
+                    content: "Use Fahrenheit and mph instead of Celsius and km/h"
+                }
             }
         }
 
@@ -63,30 +77,16 @@ ContentPage {
             enabled: Config.options.bar.weather.enable
         }
 
-        ConfigRow {
-            uniform: true
-            ConfigSpinBox {
-                text: "Update interval"
-                value: Config.options.bar.weather.fetchInterval
-                from: 1
-                to: 120
-                stepSize: 1
-                onValueChanged: {
-                    Config.options.bar.weather.fetchInterval = value;
-                }
-                enabled: Config.options.bar.weather.enable
+        ConfigSpinBox {
+            text: "Update interval (minutes)"
+            value: Config.options.bar.weather.fetchInterval
+            from: 1
+            to: 120
+            stepSize: 1
+            onValueChanged: {
+                Config.options.bar.weather.fetchInterval = value;
             }
-            ConfigSwitch {
-                text: "Use Imperial units"
-                checked: Config.options.bar.weather.useUSCS
-                onCheckedChanged: {
-                    Config.options.bar.weather.useUSCS = checked;
-                }
-                enabled: Config.options.bar.weather.enable
-                StyledToolTip {
-                    content: "Use Fahrenheit and mph instead of Celsius and km/h"
-                }
-            }
+            enabled: Config.options.bar.weather.enable
         }
     }
 
@@ -239,27 +239,15 @@ ContentPage {
         }
     }
 
-    ContentSection {
-        title: "Networking"
-        MaterialTextField {
-            Layout.fillWidth: true
-            placeholderText: "User agent (for services that require it)"
-            text: Config.options.networking.userAgent
-            wrapMode: TextEdit.Wrap
-            onTextChanged: {
-                Config.options.networking.userAgent = text;
-            }
-        }
-    }
 
     ContentSection {
         title: "Resources"
         ConfigSpinBox {
-            text: "Polling interval (ms)"
+            text: "Polling interval (seconds)"
             value: Config.options.resources.updateInterval
-            from: 100
-            to: 10000
-            stepSize: 100
+            from: 1
+            to: 100
+            stepSize: 1
             onValueChanged: {
                 Config.options.resources.updateInterval = value;
             }

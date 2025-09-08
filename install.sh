@@ -274,6 +274,20 @@ install_dotfiles() {
     
     print_success "Dotfiles installed successfully"
     
+    # Create default monitors.conf if it doesn't exist
+    MONITORS_CONF="$XDG_CONFIG_HOME/hypr/hyprland/monitors.conf"
+    if [[ ! -f "$MONITORS_CONF" ]]; then
+        print_step "Creating default monitors.conf..."
+        cat > "$MONITORS_CONF" << 'EOF'
+# MONITOR CONFIG
+# To see device name, use `hyprctl monitors`
+monitor = , preferred, auto, 1
+EOF
+        print_success "Created default monitors.conf"
+    else
+        print_success "monitors.conf already exists, skipping creation"
+    fi
+    
     # Reload Hyprland if running
     if pgrep -x hyprland >/dev/null; then
         print_step "Reloading Hyprland configuration..."

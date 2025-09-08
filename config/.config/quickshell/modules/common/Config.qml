@@ -206,9 +206,6 @@ Singleton {
                 property bool filterDuplicatePlayers: true
             }
 
-            property JsonObject networking: JsonObject {
-                property string userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-            }
 
             property JsonObject osd: JsonObject {
                 property int timeout: 1000
@@ -246,14 +243,6 @@ Singleton {
                 property bool keepRightSidebarLoaded: true
                 property JsonObject translator: JsonObject {
                     property int delay: 300 // Delay before sending request. Reduces (potential) rate limits and lag.
-                }
-                property JsonObject booru: JsonObject {
-                    property bool allowNsfw: false
-                    property string defaultProvider: "yandere"
-                    property int limit: 20
-                    property JsonObject zerochan: JsonObject {
-                        property string username: "[unset]"
-                    }
                 }
             }
 

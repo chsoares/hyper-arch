@@ -1,5 +1,4 @@
 # === ARCH DOTFILES DEPENDENCIES ===
-# Lista completa de pacotes necessários para o setup funcionar
 
 # === CORE SYSTEM ===
 axel
@@ -127,6 +126,7 @@ zoxide
 yazi
 stow
 timeshift
+timeshift-autosnap
 plocate
 htop
 fzf

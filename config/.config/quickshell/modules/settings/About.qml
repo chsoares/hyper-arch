@@ -96,11 +96,11 @@ ContentPage {
                 Layout.alignment: Qt.AlignVCenter
                 // spacing: 10
                 StyledText {
-                    text: "illogical-impulse"
+                    text: "hypr-arch"
                     font.pixelSize: Appearance.font.pixelSize.title
                 }
                 StyledText {
-                    text: "https://github.com/end-4/dots-hyprland"
+                    text: "https://github.com/chsoares/hypr-arch"
                     font.pixelSize: Appearance.font.pixelSize.normal
                     textFormat: Text.MarkdownText
                     onLinkActivated: (link) => {
@@ -108,44 +108,23 @@ ContentPage {
                     }
                     PointingHandLinkHover {}
                 }
+                StyledText {
+                    text: "Based on"
+                    color: Appearance.colors.colSubtext
+                    font.pixelSize: Appearance.font.pixelSize.small
+                }
+                StyledText {
+                    text: "https://github.com/end-4/dots-hyprland"
+                    font.pixelSize: Appearance.font.pixelSize.small
+                    textFormat: Text.MarkdownText
+                    onLinkActivated: (link) => {
+                        Qt.openUrlExternally(link)
+                    }
+                    PointingHandLinkHover {}
+                    color: Appearance.colors.colSubtext
+                }
             }
         }
 
-        Flow {
-            Layout.fillWidth: true
-            spacing: 5
-
-            RippleButtonWithIcon {
-                materialIcon: "auto_stories"
-                mainText: "Documentation"
-                onClicked: {
-                    Qt.openUrlExternally("https://end-4.github.io/dots-hyprland-wiki/en/ii-qs/02usage/")
-                }
-            }
-            RippleButtonWithIcon {
-                materialIcon: "adjust"
-                materialIconFill: false
-                mainText: "Issues"
-                onClicked: {
-                    Qt.openUrlExternally("https://github.com/end-4/dots-hyprland/issues")
-                }
-            }
-            RippleButtonWithIcon {
-                materialIcon: "forum"
-                mainText: "Discussions"
-                onClicked: {
-                    Qt.openUrlExternally("https://github.com/end-4/dots-hyprland/discussions")
-                }
-            }
-            RippleButtonWithIcon {
-                materialIcon: "favorite"
-                mainText: "Donate"
-                onClicked: {
-                    Qt.openUrlExternally("https://github.com/sponsors/end-4")
-                }
-            }
-
-            
-        }
     }
 }
