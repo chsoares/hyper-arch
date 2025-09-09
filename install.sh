@@ -213,6 +213,18 @@ EOF
     print_success "OpenRGB service configured and started (listening on 127.0.0.1)"
 }
 
+# Setup UFW firewall
+setup_firewall() {
+    print_step "Installing and configuring UFW firewall..."
+    
+    # Install ufw
+    yay -S --needed --noconfirm ufw
+    
+    # Enable and start firewall
+    sudo ufw --force enable
+    print_success "UFW firewall installed and enabled"
+}
+
 # Setup GRUB with timeshift integration
 setup_grub_timeshift() {
     print_step "Setting up GRUB with Timeshift integration..."
@@ -483,6 +495,9 @@ setup_user_groups
 
 # Enable services
 setup_services
+
+# Setup firewall
+setup_firewall
 
 # Configure desktop settings
 setup_desktop_settings
