@@ -67,6 +67,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             
             Text {
+                id: iconText
                 text: "desktop_windows"
                 font.family: "Material Symbols Outlined"
                 font.pixelSize: root.font.pointSize * 0.9
@@ -76,6 +77,7 @@ Item {
             }
             
             Text {
+                id: labelText
                 text: (config.TranslateSession || (textConstantSession + ":"))
                 color: config.MainColour
                 verticalAlignment: Text.AlignVCenter
@@ -85,6 +87,7 @@ Item {
             }
             
             Text {
+                id: sessionText
                 text: selectSession.currentText
                 color: config.MainColour
                 verticalAlignment: Text.AlignVCenter
@@ -146,36 +149,60 @@ Item {
                 name: "pressed"
                 when: selectSession.down
                 PropertyChanges {
-                    target: displayedItem
-                    color: Qt.darker(config.AccentColour, 1.1)
-                }
-                PropertyChanges {
                     target: selectSession.background
                     border.color: Qt.darker(config.AccentColour, 1.1)
+                }
+                PropertyChanges {
+                    target: iconText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : Qt.darker(config.AccentColour, 1.1)
+                }
+                PropertyChanges {
+                    target: labelText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : Qt.darker(config.AccentColour, 1.1)
+                }
+                PropertyChanges {
+                    target: sessionText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : Qt.darker(config.AccentColour, 1.1)
                 }
             },
             State {
                 name: "hovered"
                 when: selectSession.hovered
                 PropertyChanges {
-                    target: displayedItem
-                    color: config.AccentColour
-                }
-                PropertyChanges {
                     target: selectSession.background
                     border.color: config.AccentColour
+                }
+                PropertyChanges {
+                    target: iconText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : config.AccentColour
+                }
+                PropertyChanges {
+                    target: labelText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : config.AccentColour
+                }
+                PropertyChanges {
+                    target: sessionText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : config.AccentColour
                 }
             },
             State {
                 name: "focused"
                 when: selectSession.visualFocus
                 PropertyChanges {
-                    target: displayedItem
-                    color: config.AccentColour
-                }
-                PropertyChanges {
                     target: selectSession.background
                     border.color: config.AccentColour
+                }
+                PropertyChanges {
+                    target: iconText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : config.AccentColour
+                }
+                PropertyChanges {
+                    target: labelText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : config.AccentColour
+                }
+                PropertyChanges {
+                    target: sessionText
+                    color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : config.AccentColour
                 }
             }
         ]
