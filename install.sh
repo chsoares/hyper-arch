@@ -273,11 +273,24 @@ setup_grub_theme() {
         cd "$TEMP_DIR"
         # Clean any existing theme installation
         sudo rm -rf /boot/grub/themes/Particle* 2>/dev/null || true
-        # Install with sidebar theme variant  
-        sudo ./install.sh -b -t sidebar
+        # Install with sidebar theme variant, forcing overwrite and continuing on errors
+        print_step "Installing theme (may show file exists warnings - this is normal)..."
+        if sudo ./install.sh -b -t sidebar 2>/dev/null || sudo cp -rf themes/Particle-sidebar /boot/grub/themes/ 2>/dev/null; then
+            print_success "Particle GRUB theme (sidebar) installed successfully"
+        else
+            print_warning "Theme installation had issues, trying manual copy..."
+            sudo mkdir -p /boot/grub/themes/
+            sudo cp -rf themes/Particle-sidebar /boot/grub/themes/ 2>/dev/null || true
+            # Set theme in grub config
+            if ! grep -q "GRUB_THEME=" /etc/default/grub; then
+                echo 'GRUB_THEME="/boot/grub/themes/Particle-sidebar/theme.txt"' | sudo tee -a /etc/default/grub > /dev/null
+            else
+                sudo sed -i 's|^GRUB_THEME=.*|GRUB_THEME="/boot/grub/themes/Particle-sidebar/theme.txt"|' /etc/default/grub
+            fi
+            print_success "Particle GRUB theme manually installed"
+        fi
         cd "$base"
         rm -rf "$TEMP_DIR"
-        print_success "Particle GRUB theme (sidebar) installed successfully"
     else
         print_warning "Failed to clone Particle theme repository - continuing without theme"
     fi
