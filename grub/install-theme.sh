@@ -7,7 +7,14 @@ set -o errexit
 readonly THEME_NAME="Particle-circle"
 readonly THEME_VARIANT="window"
 readonly SCREEN_VARIANT="2k"
-readonly GRUB_DIR="/usr/share/grub/themes"
+# Detect GRUB directory
+if [[ -d "/boot/grub" ]]; then
+  readonly GRUB_DIR="/boot/grub/themes"
+elif [[ -d "/boot/grub2" ]]; then
+  readonly GRUB_DIR="/boot/grub2/themes"
+else
+  readonly GRUB_DIR="/usr/share/grub/themes"
+fi
 readonly SCRIPT_DIR="$(dirname "$(readlink -m "${0}")")"
 
 # Colors for output
@@ -50,7 +57,8 @@ copy_theme_files() {
   cp -a --no-preserve=ownership "${SCRIPT_DIR}/backgrounds/backgrounds/background-${THEME_VARIANT}.jpg" "${theme_dir}/background.jpg"
   
   # Copy icons
-  cp -a --no-preserve=ownership "${SCRIPT_DIR}/assets/assets-icons/icons-${SCREEN_VARIANT}" "${theme_dir}/icons"
+  mkdir -p "${theme_dir}/icons"
+  cp -r --no-preserve=ownership "${SCRIPT_DIR}/assets/assets-icons/icons-${SCREEN_VARIANT}/"* "${theme_dir}/icons/"
   
   # Copy theme configuration
   cp -a --no-preserve=ownership "${SCRIPT_DIR}/config/theme-${THEME_VARIANT}-${SCREEN_VARIANT}.txt" "${theme_dir}/theme.txt"
