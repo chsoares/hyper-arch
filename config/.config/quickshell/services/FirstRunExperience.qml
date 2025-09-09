@@ -11,7 +11,7 @@ Singleton {
     property string firstRunFilePath: `${Directories.state}/user/first_run.txt`
     property string firstRunFileContent: "This file is just here to confirm you've been greeted :>"
     property string firstRunNotifSummary: "Welcome!"
-    property string firstRunNotifBody: "Hit Super+/ for a list of keybinds"
+    property string firstRunNotifBody: "Hit Super+H for a list of keybinds"
     property string defaultWallpaperPath: FileUtils.trimFileProtocol(`${Directories.config}/quickshell/assets/images/default_wallpaper.png`)
     property string welcomeQmlPath: FileUtils.trimFileProtocol(`${Directories.config}/quickshell/welcome.qml`)
 
@@ -32,7 +32,7 @@ Singleton {
         // Show welcome notification
         Quickshell.execDetached(["notify-send", root.firstRunNotifSummary, root.firstRunNotifBody, "-i", "welcome"])
         // Open settings for first-time configuration (same as Super+I)
-        Quickshell.execDetached(["qs", "-t", "settings"])
+        Quickshell.execDetached(["qs", "-p", "~/.config/quickshell/settings.qml"])
     }
 
     FileView {
