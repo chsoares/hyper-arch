@@ -393,6 +393,7 @@ install_dotfiles() {
     MONITORS_CONF="$XDG_CONFIG_HOME/hypr/hyprland/monitors.conf"
     if [[ ! -f "$MONITORS_CONF" ]]; then
         print_step "Creating default monitors.conf..."
+        mkdir -p "$(dirname "$MONITORS_CONF")"
         cat > "$MONITORS_CONF" << 'EOF'
 # MONITOR CONFIG
 # To see device name, use `hyprctl monitors`
