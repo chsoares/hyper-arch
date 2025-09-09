@@ -361,38 +361,18 @@ install_dotfiles() {
     XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
     mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
     
-    print_step "Copying configuration files with rsync..."
+    print_step "Copying configuration files..."
     
-    # Debug: Show what we're working with
-    print_step "Available configurations:"
-    ls -la config/.config/ | head -5
+    # Simple and reliable: copy entire .config directory content
+    print_step "Copying all configurations from config/.config/ to $XDG_CONFIG_HOME/"
+    echo "[DEBUG] Source: $(pwd)/config/.config/"
+    echo "[DEBUG] Target: $XDG_CONFIG_HOME/"
     
-    # Copy all .config directories using rsync with --delete to ensure clean sync
-    for config_dir in config/.config/*/; do
-        if [[ -d "$config_dir" ]]; then
-            dirname=$(basename "$config_dir")
-            print_step "Installing $dirname configuration..."
-            echo "[DEBUG] Copying: $config_dir -> $XDG_CONFIG_HOME/$dirname"
-            # Use -v for verbose output without --delete to avoid removing other configs
-            rsync -av "$config_dir" "$XDG_CONFIG_HOME/" || {
-                print_warning "rsync failed for $dirname, trying cp..."
-                cp -rf "$config_dir" "$XDG_CONFIG_HOME/"
-            }
-        fi
-    done
-    
-    # Copy individual config files (if any)
-    for config_file in config/.config/*; do
-        if [[ -f "$config_file" ]]; then
-            filename=$(basename "$config_file")
-            print_step "Installing $filename configuration..."
-            echo "[DEBUG] Copying file: $config_file -> $XDG_CONFIG_HOME/$filename"
-            rsync -av "$config_file" "$XDG_CONFIG_HOME/" || {
-                print_warning "rsync failed for $filename, trying cp..."
-                cp -f "$config_file" "$XDG_CONFIG_HOME/"
-            }
-        fi
-    done
+    # Use cp -r to copy the entire directory structure
+    cp -rf config/.config/* "$XDG_CONFIG_HOME/" || {
+        print_error "Failed to copy configuration files"
+        exit 1
+    }
     
     # Copy .local/share files if they exist
     if [[ -d "config/.local/share" ]]; then
