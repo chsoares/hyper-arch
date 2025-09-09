@@ -373,8 +373,8 @@ install_dotfiles() {
             dirname=$(basename "$config_dir")
             print_step "Installing $dirname configuration..."
             echo "[DEBUG] Copying: $config_dir -> $XDG_CONFIG_HOME/$dirname"
-            # Use -v for verbose output and ensure trailing slash behavior is correct
-            rsync -av --delete "$config_dir" "$XDG_CONFIG_HOME/" || {
+            # Use -v for verbose output without --delete to avoid removing other configs
+            rsync -av "$config_dir" "$XDG_CONFIG_HOME/" || {
                 print_warning "rsync failed for $dirname, trying cp..."
                 cp -rf "$config_dir" "$XDG_CONFIG_HOME/"
             }
