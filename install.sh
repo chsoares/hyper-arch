@@ -300,7 +300,7 @@ setup_sddm() {
         print_step "Installing Sugar Candy SDDM theme..."
         sudo mkdir -p /usr/share/sddm/themes/
         sudo cp -rf "$base/sddm" /usr/share/sddm/themes/sugar-candy
-        sudo chmod -R 755 /usr/share/sddm/themes/sugar-candy
+        sudo chmod -R 777 /usr/share/sddm/themes/sugar-candy
         print_success "SDDM theme installed to /usr/share/sddm/themes/sugar-candy/"
     else
         print_warning "sddm/ theme directory not found - skipping theme installation"

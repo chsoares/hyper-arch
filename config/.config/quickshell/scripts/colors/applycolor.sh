@@ -127,6 +127,46 @@ apply_openrgb() {
   fi
 }
 
+apply_sddm() {
+  SDDM_THEME_CONFIG="/usr/share/sddm/themes/sugar-candy/theme.conf"
+  
+  # Check if SDDM theme config exists
+  if [ ! -f "$SDDM_THEME_CONFIG" ]; then
+    return
+  fi
+  
+  # Find required color values from material_colors.scss
+  local main_color="" accent_color="" bg_color="" login_button_color=""
+  for i in "${!colorlist[@]}"; do
+    case "${colorlist[$i]}" in
+      '$onBackground') main_color="${colorvalues[$i]}" ;;
+      '$primaryContainer') accent_color="${colorvalues[$i]}" ;;
+      '$background') bg_color="${colorvalues[$i]}" ;;
+      '$onPrimary') login_button_color="${colorvalues[$i]}" ;;
+    esac
+  done
+  
+  # Update MainColour (text and UI elements)
+  if [ -n "$main_color" ]; then
+    sed -i "s/^MainColour=.*/MainColour=\"$main_color\"/" "$SDDM_THEME_CONFIG"
+  fi
+  
+  # Update AccentColour (focused elements)
+  if [ -n "$accent_color" ]; then
+    sed -i "s/^AccentColour=.*/AccentColour=\"$accent_color\"/" "$SDDM_THEME_CONFIG"
+  fi
+  
+  # Update BackgroundColour (form background)
+  if [ -n "$bg_color" ]; then
+    sed -i "s/^BackgroundColour=.*/BackgroundColour=\"$bg_color\"/" "$SDDM_THEME_CONFIG"
+  fi
+  
+  # Update OverrideLoginButtonTextColour (login button text)
+  if [ -n "$login_button_color" ]; then
+    sed -i "s/^OverrideLoginButtonTextColour=.*/OverrideLoginButtonTextColour=\"$login_button_color\"/" "$SDDM_THEME_CONFIG"
+  fi
+}
+
 apply_hypr() {
   # Update Hyprland colors.conf with term6 value for fullscreen border color
   HYPR_COLORS_FILE="$HOME/.config/hypr/hyprland/colors.conf"
@@ -219,3 +259,4 @@ apply_term &
 apply_hypr &
 apply_kitty &
 apply_openrgb &
+apply_sddm &

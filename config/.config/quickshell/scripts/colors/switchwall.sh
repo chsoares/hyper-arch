@@ -149,6 +149,19 @@ EOF
     mv "$RESTORE_SCRIPT.tmp" "$RESTORE_SCRIPT"
 }
 
+copy_wallpaper_to_sddm() {
+    local wallpaper_path="$1"
+    local sddm_bg_path="/usr/share/sddm/themes/sugar-candy/Backgrounds/bg.jpg"
+    
+    # Check if wallpaper path exists and SDDM theme directory exists
+    if [ ! -f "$wallpaper_path" ] || [ ! -d "/usr/share/sddm/themes/sugar-candy/Backgrounds" ]; then
+        return
+    fi
+    
+    # Copy wallpaper to SDDM theme directory
+    cp "$wallpaper_path" "$sddm_bg_path" 2>/dev/null || true
+}
+
 switch() {
     imgpath="$1"
     mode_flag="$2"
@@ -217,6 +230,8 @@ switch() {
                 matugen_args=(image "$thumbnail")
                 generate_colors_material_args=(--path "$thumbnail")
                 create_restore_script "$video_path"
+                # Copy thumbnail as SDDM background
+                copy_wallpaper_to_sddm "$thumbnail"
             else
                 echo "Cannot create image to colorgen"
                 remove_restore
@@ -230,6 +245,9 @@ switch() {
                 --transition-type grow --transition-angle 30 --transition-duration 1 \
                 --transition-pos "$cursorposx, $cursorposy_inverted" &
             remove_restore
+            
+            # Copy wallpaper to SDDM theme directory
+            copy_wallpaper_to_sddm "$imgpath"
         fi
     fi
 
