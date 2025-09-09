@@ -255,10 +255,7 @@ EOF
     sudo systemctl daemon-reload
     sudo systemctl enable grub-btrfsd --now
     
-    # Install Particle GRUB theme
-    setup_grub_theme
-    
-    # Generate GRUB configuration
+    # Generate GRUB configuration (theme will be installed later)
     print_step "Generating GRUB configuration..."
     sudo grub-mkconfig -o /boot/grub/grub.cfg
     
@@ -457,16 +454,26 @@ setup_fish_plugins
 print_success "Installation completed!"
 echo
 print_step "Next steps:"
-echo "1. Logout and login again (for group changes to take effect)"
-echo "2. At login screen, select 'Hyprland' from the session list"
-echo "3. Enjoy your new desktop setup!"
+echo "1. GRUB theme installation (interactive setup required)"
+echo "2. Logout and login again (for group changes to take effect)"
+echo "3. At login screen, select 'Hyprland' from the session list"
+echo "4. Enjoy your new desktop setup!"
 echo
 print_step "Useful keybinds after login:"
 echo "• Super+H = Toggle cheatsheet"
-echo "• Super+Ctrl+Alt+W = Change wallpaper"
+echo "• Super+Ctrl+Alt+T = Change wallpaper"
 echo "• Super+Return = Terminal"
 echo "• Super+E = File manager"
 echo "• Super = Toggle overview/launcher"
 echo
 print_warning "Important: Do NOT select UWSM session - use regular Hyprland"
 print_warning "Note: Existing config files were overwritten for clean installation"
+echo
+print_step "Press any key to continue with GRUB theme installation..."
+read -n 1 -s
+
+# Install Particle GRUB theme
+setup_grub_theme
+
+print_success "GRUB theme installation completed!"
+print_step "You can now logout and restart to see the themed bootloader."
