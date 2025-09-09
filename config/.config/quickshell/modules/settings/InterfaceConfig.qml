@@ -15,7 +15,7 @@ ContentPage {
             title: "Multi-monitor"
             ConfigSwitch {
                 text: 'Simplified bars on secondary monitors'
-                checked: Config.options.bar.multiMonitorMode || false
+                checked: Config.options.bar.multiMonitorMode ?? false
                 onCheckedChanged: {
                     Config.options.bar.multiMonitorMode = checked;
                 }
