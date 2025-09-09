@@ -71,12 +71,18 @@ Column {
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: selectUser.height * 0.125
-                    icon.height: parent.height * 0.25
-                    icon.width: parent.height * 0.25
                     enabled: false
-                    icon.color: root.palette.text
                     flat: true
-                    icon.source: Qt.resolvedUrl("../Assets/User.svgz")
+                    
+                    // Use Material Design person icon instead of SVG
+                    contentItem: Text {
+                        text: "person"
+                        font.family: "Material Symbols Outlined"
+                        font.pixelSize: parent.height * 0.25
+                        color: config.MainColour
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
             }
 
             background: Rectangle {
@@ -125,24 +131,24 @@ Column {
                     name: "pressed"
                     when: selectUser.down
                     PropertyChanges {
-                        target: usernameIcon
-                        icon.color: Qt.lighter(root.palette.highlight, 1.1)
+                        target: usernameIcon.contentItem
+                        color: Qt.lighter(config.AccentColour, 1.1)
                     }
                 },
                 State {
                     name: "hovered"
                     when: selectUser.hovered
                     PropertyChanges {
-                        target: usernameIcon
-                        icon.color: Qt.lighter(root.palette.highlight, 1.2)
+                        target: usernameIcon.contentItem
+                        color: Qt.lighter(config.AccentColour, 1.2)
                     }
                 },
                 State {
                     name: "focused"
                     when: selectUser.activeFocus
                     PropertyChanges {
-                        target: usernameIcon
-                        icon.color: root.palette.highlight
+                        target: usernameIcon.contentItem
+                        color: config.AccentColour
                     }
                 }
             ]
@@ -450,56 +456,45 @@ Column {
 
             contentItem: Text {
                 text: parent.text
-                color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : root.palette.highlight.hslLightness >= 0.7 ? "#444" : "white"
+                color: loginButton.enabled ? (config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : root.palette.highlight.hslLightness >= 0.7 ? "#444" : "white") : "#333333"  // Dark gray text for disabled state
                 font.pointSize: root.font.pointSize
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                opacity: 0.5
+                opacity: 1
             }
 
             background: Rectangle {
                 id: buttonBackground
-                color: "white"
-                opacity: 0.2
+                color: "#666666"  // Medium gray for disabled state
+                opacity: 1
                 radius: config.RoundCorners || 0
             }
 
             states: [
                 State {
                     name: "pressed"
-                    when: loginButton.down
+                    when: loginButton.down && loginButton.enabled
                     PropertyChanges {
                         target: buttonBackground
-                        color: Qt.darker(root.palette.highlight, 1.1)
+                        color: Qt.darker(config.AccentColour, 1.1)
                         opacity: 1
-                    }
-                    PropertyChanges {
-                        target: loginButton.contentItem
                     }
                 },
                 State {
                     name: "hovered"
-                    when: loginButton.hovered
+                    when: loginButton.hovered && loginButton.enabled
                     PropertyChanges {
                         target: buttonBackground
-                        color: Qt.lighter(root.palette.highlight, 1.15)
-                        opacity: 1
-                    }
-                    PropertyChanges {
-                        target: loginButton.contentItem
+                        color: Qt.lighter(config.AccentColour, 1.15)
                         opacity: 1
                     }
                 },
                 State {
                     name: "focused"
-                    when: loginButton.activeFocus
+                    when: loginButton.activeFocus && loginButton.enabled
                     PropertyChanges {
                         target: buttonBackground
-                        color: Qt.lighter(root.palette.highlight, 1.2)
-                        opacity: 1
-                    }
-                    PropertyChanges {
-                        target: loginButton.contentItem
+                        color: Qt.lighter(config.AccentColour, 1.2)
                         opacity: 1
                     }
                 },
@@ -508,11 +503,7 @@ Column {
                     when: loginButton.enabled
                     PropertyChanges {
                         target: buttonBackground;
-                        color: root.palette.highlight;
-                        opacity: 1
-                    }
-                    PropertyChanges {
-                        target: loginButton.contentItem;
+                        color: config.AccentColour;
                         opacity: 1
                     }
                 }

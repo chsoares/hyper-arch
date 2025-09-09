@@ -8,10 +8,10 @@ RowLayout {
 
     spacing: root.font.pointSize
 
-    readonly property var suspend: ["Suspend", config.TranslateSuspend || textConstants.suspend, sddm.canSuspend]
-    readonly property var hibernate: ["Hibernate", config.TranslateHibernate || textConstants.hibernate, sddm.canHibernate]
-    readonly property var reboot: ["Reboot", config.TranslateReboot || textConstants.reboot, sddm.canReboot]
-    readonly property var shutdown: ["Shutdown", config.TranslateShutdown || textConstants.shutdown, sddm.canPowerOff]
+    readonly property var suspend: ["dark_mode", config.TranslateSuspend || textConstants.suspend, sddm.canSuspend]
+    readonly property var hibernate: ["bedtime", config.TranslateHibernate || textConstants.hibernate, sddm.canHibernate]
+    readonly property var reboot: ["restart_alt", config.TranslateReboot || textConstants.reboot, sddm.canReboot]
+    readonly property var shutdown: ["power_settings_new", config.TranslateShutdown || textConstants.shutdown, sddm.canPowerOff]
 
     property Control exposedSession
 
@@ -24,13 +24,30 @@ RowLayout {
             text: modelData[1]
             font.pointSize: root.font.pointSize * 0.8
             Layout.alignment: Qt.AlignHCenter
-            icon.source: modelData ? Qt.resolvedUrl("../Assets/" + modelData[0] + ".svgz") : ""
-            icon.height: 2 * Math.round((root.font.pointSize * 3) / 2)
-            icon.width: 2 * Math.round((root.font.pointSize * 3) / 2)
-            display: AbstractButton.TextUnderIcon
+            
+            // Use Material Design icons instead of SVG files
+            contentItem: Column {
+                spacing: 4
+                Text {
+                    text: modelData[0]
+                    font.family: "Material Symbols Outlined"
+                    font.pixelSize: 2 * Math.round((root.font.pointSize * 3) / 2)
+                    color: parent.parent.palette.buttonText
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                Text {
+                    text: modelData[1]
+                    font.pointSize: root.font.pointSize * 0.8
+                    color: parent.parent.palette.buttonText
+                    horizontalAlignment: Text.AlignHCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
+            
             visible: config.ForceHideSystemButtons != "true" && modelData[2]
             hoverEnabled: true
-            palette.buttonText: root.palette.text
+            palette.buttonText: config.MainColour
             background: Rectangle {
                 height: 2
                 color: "transparent"
@@ -53,11 +70,11 @@ RowLayout {
                     when: parent.children[index].down
                     PropertyChanges {
                         target: parent.children[index]
-                        palette.buttonText: Qt.darker(root.palette.highlight, 1.1)
+                        palette.buttonText: Qt.darker(config.AccentColour, 1.1)
                     }
                     PropertyChanges {
                         target: parent.children[index].background
-                        border.color: Qt.darker(root.palette.highlight, 1.1)
+                        border.color: Qt.darker(config.AccentColour, 1.1)
                     }
                 },
                 State {
@@ -65,11 +82,11 @@ RowLayout {
                     when: parent.children[index].hovered
                     PropertyChanges {
                         target: parent.children[index]
-                        palette.buttonText: Qt.lighter(root.palette.highlight, 1.1)
+                        palette.buttonText: config.AccentColour
                     }
                     PropertyChanges {
                         target: parent.children[index].background
-                        border.color: Qt.lighter(root.palette.highlight, 1.1)
+                        border.color: config.AccentColour
                     }
                 },
                 State {
@@ -77,11 +94,11 @@ RowLayout {
                     when: parent.children[index].activeFocus
                     PropertyChanges {
                         target: parent.children[index]
-                        palette.buttonText: root.palette.highlight
+                        palette.buttonText: config.AccentColour
                     }
                     PropertyChanges {
                         target: parent.children[index].background
-                        border.color: root.palette.highlight
+                        border.color: config.AccentColour
                     }
                 }
             ]

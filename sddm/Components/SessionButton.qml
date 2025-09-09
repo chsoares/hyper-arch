@@ -47,13 +47,13 @@ Item {
             contentItem: Text {
                 text: model.name
                 font.pointSize: root.font.pointSize * 0.8
-                color: selectSession.highlightedIndex === index ? root.palette.highlight.hslLightness >= 0.7 ? "#444444" : "white" : root.palette.window.hslLightness >= 0.8 ? root.palette.highlight.hslLightness >= 0.8 ? "#444444" : root.palette.highlight : "white"
+                color: selectSession.highlightedIndex === index ? config.MainColour : config.MainColour
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
             }
             highlighted: parent.highlightedIndex === index
             background: Rectangle {
-                color: selectSession.highlightedIndex === index ? root.palette.highlight : "transparent"
+                color: selectSession.highlightedIndex === index ? config.AccentColour : "transparent"
             }
         }
 
@@ -64,7 +64,7 @@ Item {
         contentItem: Text {
             id: displayedItem
             text: (config.TranslateSession || (textConstantSession + ":")) + " " + selectSession.currentText
-            color: root.palette.text
+            color: config.MainColour
             verticalAlignment: Text.AlignVCenter
             anchors.left: parent.left
             anchors.leftMargin: 3
@@ -125,11 +125,11 @@ Item {
                 when: selectSession.down
                 PropertyChanges {
                     target: displayedItem
-                    color: Qt.darker(root.palette.highlight, 1.1)
+                    color: Qt.darker(config.AccentColour, 1.1)
                 }
                 PropertyChanges {
                     target: selectSession.background
-                    border.color: Qt.darker(root.palette.highlight, 1.1)
+                    border.color: Qt.darker(config.AccentColour, 1.1)
                 }
             },
             State {
@@ -137,11 +137,11 @@ Item {
                 when: selectSession.hovered
                 PropertyChanges {
                     target: displayedItem
-                    color: Qt.lighter(root.palette.highlight, 1.1)
+                    color: config.AccentColour
                 }
                 PropertyChanges {
                     target: selectSession.background
-                    border.color: Qt.lighter(root.palette.highlight, 1.1)
+                    border.color: config.AccentColour
                 }
             },
             State {
@@ -149,11 +149,11 @@ Item {
                 when: selectSession.visualFocus
                 PropertyChanges {
                     target: displayedItem
-                    color: root.palette.highlight
+                    color: config.AccentColour
                 }
                 PropertyChanges {
                     target: selectSession.background
-                    border.color: root.palette.highlight
+                    border.color: config.AccentColour
                 }
             }
         ]
