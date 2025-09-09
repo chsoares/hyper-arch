@@ -102,6 +102,7 @@ polkit-gnome
 networkmanager
 nm-connection-editor
 bluetooth-utils
+openrgb
 
 # === PYTHON ENVIRONMENT ===
 clang

@@ -166,6 +166,9 @@ setup_services() {
     # Enable Bluetooth
     sudo systemctl enable bluetooth --now
     print_success "Enabled Bluetooth service"
+    
+    # Setup OpenRGB service
+    setup_openrgb_service
 }
 
 # Configure desktop environment settings
@@ -179,6 +182,32 @@ setup_desktop_settings() {
     # Enable dark theme preference
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     print_success "Enabled dark theme preference"
+}
+
+# Setup OpenRGB service
+setup_openrgb_service() {
+    print_step "Setting up OpenRGB service..."
+    
+    # Create OpenRGB service file with localhost binding for security
+    sudo tee /lib/systemd/system/openrgb.service > /dev/null << 'EOF'
+[Unit]
+Description=Run OpenRGB server
+After=network.target lm_sensors.service
+
+[Service]
+ExecStart=/usr/bin/openrgb --server --server-host 127.0.0.1 --config /etc/openrgb
+Restart=on-failure
+RuntimeDirectory=openrgb
+WorkingDirectory=/run/openrgb
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    
+    # Reload systemd and enable the service
+    sudo systemctl daemon-reload
+    sudo systemctl enable openrgb --now
+    print_success "OpenRGB service configured and started (listening on 127.0.0.1)"
 }
 
 # Install Fish shell plugins using fisher
