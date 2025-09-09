@@ -363,12 +363,21 @@ install_dotfiles() {
     
     print_step "Copying configuration files with rsync..."
     
+    # Debug: Show what we're working with
+    print_step "Available configurations:"
+    ls -la config/.config/ | head -5
+    
     # Copy all .config directories using rsync with --delete to ensure clean sync
     for config_dir in config/.config/*/; do
         if [[ -d "$config_dir" ]]; then
             dirname=$(basename "$config_dir")
             print_step "Installing $dirname configuration..."
-            rsync -av --delete "$config_dir" "$XDG_CONFIG_HOME/"
+            echo "[DEBUG] Copying: $config_dir -> $XDG_CONFIG_HOME/$dirname"
+            # Use -v for verbose output and ensure trailing slash behavior is correct
+            rsync -av --delete "$config_dir" "$XDG_CONFIG_HOME/" || {
+                print_warning "rsync failed for $dirname, trying cp..."
+                cp -rf "$config_dir" "$XDG_CONFIG_HOME/"
+            }
         fi
     done
     
@@ -377,7 +386,11 @@ install_dotfiles() {
         if [[ -f "$config_file" ]]; then
             filename=$(basename "$config_file")
             print_step "Installing $filename configuration..."
-            rsync -av "$config_file" "$XDG_CONFIG_HOME/"
+            echo "[DEBUG] Copying file: $config_file -> $XDG_CONFIG_HOME/$filename"
+            rsync -av "$config_file" "$XDG_CONFIG_HOME/" || {
+                print_warning "rsync failed for $filename, trying cp..."
+                cp -f "$config_file" "$XDG_CONFIG_HOME/"
+            }
         fi
     done
     
