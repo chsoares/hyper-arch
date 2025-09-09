@@ -169,6 +169,9 @@ setup_services() {
     
     # Setup OpenRGB service
     setup_openrgb_service
+    
+    # Setup GRUB with timeshift integration
+    setup_grub_timeshift
 }
 
 # Configure desktop environment settings
@@ -208,6 +211,74 @@ EOF
     sudo systemctl daemon-reload
     sudo systemctl enable openrgb --now
     print_success "OpenRGB service configured and started (listening on 127.0.0.1)"
+}
+
+# Setup GRUB with timeshift integration
+setup_grub_timeshift() {
+    print_step "Setting up GRUB with Timeshift integration..."
+    
+    # Check if system is UEFI
+    if [[ -d /sys/firmware/efi ]]; then
+        print_step "Installing GRUB for UEFI system..."
+        sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+    else
+        print_error "BIOS systems not supported by this script. Please install manually."
+        return 1
+    fi
+    
+    # Enable os-prober for dual boot detection
+    if ! grep -q "GRUB_DISABLE_OS_PROBER=false" /etc/default/grub; then
+        sudo sed -i '/^#GRUB_DISABLE_OS_PROBER/c\GRUB_DISABLE_OS_PROBER=false' /etc/default/grub
+        echo "GRUB_DISABLE_OS_PROBER=false" | sudo tee -a /etc/default/grub > /dev/null
+    fi
+    
+    # Configure grub-btrfsd service for timeshift integration
+    print_step "Configuring grub-btrfsd for Timeshift..."
+    
+    # Create override directory and service override
+    sudo mkdir -p /etc/systemd/system/grub-btrfsd.service.d/
+    sudo tee /etc/systemd/system/grub-btrfsd.service.d/override.conf > /dev/null << 'EOF'
+[Service]
+ExecStart=
+ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto
+EOF
+    
+    # Enable and start grub-btrfsd
+    sudo systemctl daemon-reload
+    sudo systemctl enable grub-btrfsd --now
+    
+    # Install Particle GRUB theme
+    setup_grub_theme
+    
+    # Generate GRUB configuration
+    print_step "Generating GRUB configuration..."
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    
+    print_success "GRUB with Timeshift integration configured successfully"
+}
+
+# Setup Particle GRUB theme
+setup_grub_theme() {
+    print_step "Installing Particle GRUB theme..."
+    
+    # Clone theme repository to temporary directory
+    TEMP_DIR="/tmp/particle-grub-theme"
+    if [[ -d "$TEMP_DIR" ]]; then
+        rm -rf "$TEMP_DIR"
+    fi
+    
+    git clone https://github.com/yeyushengfan258/Particle-grub-theme.git "$TEMP_DIR"
+    
+    if [[ -d "$TEMP_DIR" ]]; then
+        cd "$TEMP_DIR"
+        # Install with sidebar theme variant
+        sudo ./install.sh -b -t sidebar
+        cd "$base"
+        rm -rf "$TEMP_DIR"
+        print_success "Particle GRUB theme (sidebar) installed successfully"
+    else
+        print_warning "Failed to clone Particle theme repository - continuing without theme"
+    fi
 }
 
 # Install Fish shell plugins using fisher

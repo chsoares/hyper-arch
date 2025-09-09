@@ -135,6 +135,13 @@ fisher
 fastfetch
 bat
 
+# === BOOTLOADER & SNAPSHOTS ===
+grub
+grub-btrfs
+inotify-tools
+os-prober
+efibootmgr
+
 # === USER APPLICATIONS ===
 ferdium-bin
 obsidian
