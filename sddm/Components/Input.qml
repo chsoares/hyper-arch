@@ -1,31 +1,9 @@
-//
-// This file is part of SDDM Sugar Candy.
-// A theme for the Simple Display Desktop Manager.
-//
-// Copyright (C) 2018–2020 Marian Arlt
-//
-// SDDM Sugar Candy is free software: you can redistribute it and/or modify it
-// under the terms of the GNU General Public License as published by the
-// Free Software Foundation, either version 3 of the License, or any later version.
-//
-// You are required to preserve this and any additional legal notices, either
-// contained in this file or in other files that you received along with
-// SDDM Sugar Candy that refer to the author(s) in accordance with
-// sections §4, §5 and specifically §7b of the GNU General Public License.
-//
-// SDDM Sugar Candy is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with SDDM Sugar Candy. If not, see <https://www.gnu.org/licenses/>
-//
+// Copyright at EOF
 
 import QtQuick 2.11
 import QtQuick.Layouts 1.11
 import QtQuick.Controls 2.4
-import QtGraphicalEffects 1.0
+import Qt5Compat.GraphicalEffects
 
 Column {
     id: inputContainer
@@ -45,6 +23,7 @@ Column {
 
             id: selectUser
 
+            displayText: ""
             width: parent.height
             height: parent.height
             anchors.left: parent.left
@@ -96,6 +75,7 @@ Column {
                     icon.width: parent.height * 0.25
                     enabled: false
                     icon.color: root.palette.text
+                    flat: true
                     icon.source: Qt.resolvedUrl("../Assets/User.svgz")
             }
 
@@ -181,6 +161,7 @@ Column {
         TextField {
             id: username
             text: config.ForceLastUser == "true" ? selectUser.currentText : null
+            font.pointSize: root.font.pointSize
             font.capitalization: config.AllowBadUsernames == "false" ? Font.Capitalize : Font.MixedCase
             anchors.centerIn: parent
             height: root.font.pointSize * 3
@@ -229,6 +210,7 @@ Column {
 
         TextField {
             id: password
+            font.pointSize: root.font.pointSize
             anchors.centerIn: parent
             height: root.font.pointSize * 3
             width: parent.width
@@ -238,7 +220,7 @@ Column {
             placeholderText: config.TranslatePlaceholderPassword || textConstants.password
             horizontalAlignment: TextInput.AlignHCenter
             passwordCharacter: "•"
-            passwordMaskDelay: config.ForceHideCompletePassword == "true" ? undefined : 1000
+            passwordMaskDelay: config.ForceHideCompletePassword == "true" ? undefined : 500
             renderType: Text.QtRendering
             background: Rectangle {
                 color: "transparent"
@@ -468,7 +450,7 @@ Column {
 
             contentItem: Text {
                 text: parent.text
-                color: config.OverrideLoginButtonTextColor != "" ? config.OverrideLoginButtonTextColor : root.palette.highlight.hslLightness >= 0.7 ? "#444" : "white"
+                color: config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : root.palette.highlight.hslLightness >= 0.7 ? "#444" : "white"
                 font.pointSize: root.font.pointSize
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -560,8 +542,8 @@ Column {
 
     Connections {
         target: sddm
-        onLoginSucceeded: {}
-        onLoginFailed: {
+        function onLoginSucceeded() { }
+        function onLoginFailed() {
             failed = true
             resetError.running ? resetError.stop() && resetError.start() : resetError.start()
         }
@@ -574,3 +556,26 @@ Column {
         running: false
     }
 }
+
+// This file is part of SDDM Eucalyptus Drop.
+// A theme for the Simple Display Desktop Manager.
+//
+// Copyright (C) 2018–2020 Marian Arlt
+// Copyright (C) 2020-2024 <matt.jolly@footclan.ninja>
+//
+// SDDM Eucalyptus Drop is free software: you can redistribute it and/or modify it
+// under the terms of the GNU General Public License as published by the
+// Free Software Foundation, either version 3 of the License, or any later version.
+//
+// You are required to preserve this and any additional legal notices, either
+// contained in this file or in other files that you received along with
+// SDDM Eucalyptus Drop that refer to the author(s) in accordance with
+// sections §4, §5 and specifically §7b of the GNU General Public License.
+//
+// SDDM Eucalyptus Drop is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with SDDM Eucalyptus Drop. If not, see <https://www.gnu.org/licenses/>
