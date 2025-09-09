@@ -105,8 +105,9 @@ print(f'{r_int:02x}{g_int:02x}{b_int:02x}')
 }
 
 apply_qt() {
-  sh "$CONFIG_DIR/scripts/kvantum/materialQT.sh"          # generate kvantum theme
-  python "$CONFIG_DIR/scripts/kvantum/changeAdwColors.py" # apply config colors
+  # NOTE: Kvantum theming disabled - not used in this setup
+  # sh "$CONFIG_DIR/scripts/kvantum/materialQT.sh"          # generate kvantum theme
+  # python "$CONFIG_DIR/scripts/kvantum/changeAdwColors.py" # apply config colors
 }
 
 apply_openrgb() {
