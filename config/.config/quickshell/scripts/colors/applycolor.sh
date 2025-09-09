@@ -269,88 +269,34 @@ apply_fish() {
     fi
   done
   
-  # Apply fish color scheme based on theme mode
-  if [[ "$is_dark_mode" == "True" ]]; then
-    # Ayu Dark color scheme
-    fish -c "set -U fish_color_normal B3B1AD" 2>/dev/null || true
-    fish -c "set -U fish_color_command 39BAE6" 2>/dev/null || true
-    fish -c "set -U fish_color_keyword 39BAE6" 2>/dev/null || true
-    fish -c "set -U fish_color_quote C2D94C" 2>/dev/null || true
-    fish -c "set -U fish_color_redirection FFEE99" 2>/dev/null || true
-    fish -c "set -U fish_color_end F29668" 2>/dev/null || true
-    fish -c "set -U fish_color_error FF3333" 2>/dev/null || true
-    fish -c "set -U fish_color_param B3B1AD" 2>/dev/null || true
-    fish -c "set -U fish_color_comment 626A73" 2>/dev/null || true
-    fish -c "set -U fish_color_match F07178" 2>/dev/null || true
-    fish -c "set -U fish_color_selection --background=E6B450" 2>/dev/null || true
-    fish -c "set -U fish_color_search_match --background=E6B450" 2>/dev/null || true
-    fish -c "set -U fish_color_history_current --bold" 2>/dev/null || true
-    fish -c "set -U fish_color_operator E6B450" 2>/dev/null || true
-    fish -c "set -U fish_color_escape 95E6CB" 2>/dev/null || true
-    fish -c "set -U fish_color_cwd 59C2FF" 2>/dev/null || true
-    fish -c "set -U fish_color_cwd_root red" 2>/dev/null || true
-    fish -c "set -U fish_color_option B3B1AD" 2>/dev/null || true
-    fish -c "set -U fish_color_valid_path --underline" 2>/dev/null || true
-    fish -c "set -U fish_color_autosuggestion 4D5566" 2>/dev/null || true
-    fish -c "set -U fish_color_user brgreen" 2>/dev/null || true
-    fish -c "set -U fish_color_host normal" 2>/dev/null || true
-    fish -c "set -U fish_color_host_remote yellow" 2>/dev/null || true
-    fish -c "set -U fish_color_status red" 2>/dev/null || true
-    fish -c "set -U fish_color_cancel --reverse" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_prefix normal --bold --underline" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_progress brwhite --background=cyan" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_completion normal" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_description B3A06D" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_selected_background --background=E6B450" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_background" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_secondary_completion" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_secondary_description" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_secondary_prefix" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_selected_completion" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_selected_description" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_secondary_background" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_selected_prefix" 2>/dev/null || true
-  else
-    # Ayu Light color scheme
-    fish -c "set -U fish_color_normal 575F66" 2>/dev/null || true
-    fish -c "set -U fish_color_command 55B4D4" 2>/dev/null || true
-    fish -c "set -U fish_color_keyword 55B4D4" 2>/dev/null || true
-    fish -c "set -U fish_color_quote 86B300" 2>/dev/null || true
-    fish -c "set -U fish_color_redirection A37ACC" 2>/dev/null || true
-    fish -c "set -U fish_color_end ED9366" 2>/dev/null || true
-    fish -c "set -U fish_color_error F51818" 2>/dev/null || true
-    fish -c "set -U fish_color_param 575F66" 2>/dev/null || true
-    fish -c "set -U fish_color_comment ABB0B6" 2>/dev/null || true
-    fish -c "set -U fish_color_match F07171" 2>/dev/null || true
-    fish -c "set -U fish_color_selection --background=FF9940" 2>/dev/null || true
-    fish -c "set -U fish_color_search_match --background=FF9940" 2>/dev/null || true
-    fish -c "set -U fish_color_history_current --bold" 2>/dev/null || true
-    fish -c "set -U fish_color_operator FF9940" 2>/dev/null || true
-    fish -c "set -U fish_color_escape 4CBF99" 2>/dev/null || true
-    fish -c "set -U fish_color_cwd 399EE6" 2>/dev/null || true
-    fish -c "set -U fish_color_cwd_root red" 2>/dev/null || true
-    fish -c "set -U fish_color_option 575F66" 2>/dev/null || true
-    fish -c "set -U fish_color_valid_path --underline" 2>/dev/null || true
-    fish -c "set -U fish_color_autosuggestion 8A9199" 2>/dev/null || true
-    fish -c "set -U fish_color_user brgreen" 2>/dev/null || true
-    fish -c "set -U fish_color_host normal" 2>/dev/null || true
-    fish -c "set -U fish_color_host_remote yellow" 2>/dev/null || true
-    fish -c "set -U fish_color_status red" 2>/dev/null || true
-    fish -c "set -U fish_color_cancel --reverse" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_prefix normal --bold --underline" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_progress brwhite --background=cyan" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_completion normal" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_description B3A06D" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_selected_background --background=FF9940" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_background" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_secondary_completion" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_secondary_description" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_secondary_prefix" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_selected_completion" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_selected_description" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_secondary_background" 2>/dev/null || true
-    fish -c "set -U fish_pager_color_selected_prefix" 2>/dev/null || true
-  fi
+  # Apply fish color scheme - same default theme for both dark and light mode
+  fish -c "set -U fish_color_autosuggestion 555 brblack" 2>/dev/null || true
+  fish -c "set -U fish_color_cancel -r" 2>/dev/null || true
+  fish -c "set -U fish_color_command blue" 2>/dev/null || true
+  fish -c "set -U fish_color_comment red" 2>/dev/null || true
+  fish -c "set -U fish_color_cwd green" 2>/dev/null || true
+  fish -c "set -U fish_color_cwd_root red" 2>/dev/null || true
+  fish -c "set -U fish_color_end green" 2>/dev/null || true
+  fish -c "set -U fish_color_error brred" 2>/dev/null || true
+  fish -c "set -U fish_color_escape brcyan" 2>/dev/null || true
+  fish -c "set -U fish_color_history_current --bold" 2>/dev/null || true
+  fish -c "set -U fish_color_host normal" 2>/dev/null || true
+  fish -c "set -U fish_color_host_remote yellow" 2>/dev/null || true
+  fish -c "set -U fish_color_normal normal" 2>/dev/null || true
+  fish -c "set -U fish_color_operator brcyan" 2>/dev/null || true
+  fish -c "set -U fish_color_param cyan" 2>/dev/null || true
+  fish -c "set -U fish_color_quote yellow" 2>/dev/null || true
+  fish -c "set -U fish_color_redirection cyan --bold" 2>/dev/null || true
+  fish -c "set -U fish_color_search_match --background=111" 2>/dev/null || true
+  fish -c "set -U fish_color_selection white --bold --background=brblack" 2>/dev/null || true
+  fish -c "set -U fish_color_status red" 2>/dev/null || true
+  fish -c "set -U fish_color_user brgreen" 2>/dev/null || true
+  fish -c "set -U fish_color_valid_path --underline" 2>/dev/null || true
+  fish -c "set -U fish_pager_color_completion normal" 2>/dev/null || true
+  fish -c "set -U fish_pager_color_description B3A06D yellow -i" 2>/dev/null || true
+  fish -c "set -U fish_pager_color_prefix cyan --bold --underline" 2>/dev/null || true
+  fish -c "set -U fish_pager_color_progress brwhite --background=cyan" 2>/dev/null || true
+  fish -c "set -U fish_pager_color_selected_background -r" 2>/dev/null || true
 }
 
 apply_qt &
