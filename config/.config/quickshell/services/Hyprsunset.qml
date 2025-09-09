@@ -85,12 +85,16 @@ Singleton {
 
     onShouldBeOnChanged: ensureState()
     function ensureState() {
-        // console.log("[Hyprsunset] Ensuring state:", root.shouldBeOn, "Automatic mode:", root.automatic);
-        if (!root.automatic || root.manualActive !== undefined)
+        console.log("[Hyprsunset] Ensuring state - shouldBeOn:", root.shouldBeOn, "automatic:", root.automatic, "manualActive:", root.manualActive, "currentlyActive:", root.active);
+        if (!root.automatic || root.manualActive !== undefined) {
+            console.log("[Hyprsunset] Skipping ensure state - not in automatic mode or manual override active");
             return;
+        }
         if (root.shouldBeOn) {
+            console.log("[Hyprsunset] Should be on - enabling");
             root.enable();
         } else {
+            console.log("[Hyprsunset] Should be off - disabling");
             root.disable();
         }
     }
@@ -103,11 +107,16 @@ Singleton {
         
         function onRawEvent(event) {
             // Re-evaluate state when potentially resuming from idle
+            // Listen to more events to catch system resume
             if (event.name === "screencast" || 
                 event.name === "activewindow" || 
-                event.name === "focusedmon") {
-                // Delay slightly to ensure system is fully resumed
+                event.name === "focusedmon" ||
+                event.name === "workspace" ||
+                event.name === "monitoradded" ||
+                event.name === "configreloaded") {
+                // Multiple delayed checks to ensure we catch the resume
                 stateCheckTimer.restart();
+                delayedStateCheckTimer.restart();
             }
         }
     }
@@ -118,23 +127,31 @@ Singleton {
         interval: 1000 // 1 second delay
         repeat: false
         onTriggered: {
-            console.log("[Hyprsunset] Re-checking state after potential resume");
-            fetchState();
-            Qt.callLater(reEvaluate);
+            console.log("[Hyprsunset] Re-checking state after potential resume (1s)");
+            forceRestart();
         }
     }
     
-    // Periodic state verification (every 5 minutes)
+    // Second delayed check to catch cases where first check was too early
+    Timer {
+        id: delayedStateCheckTimer
+        interval: 3000 // 3 second delay
+        repeat: false
+        onTriggered: {
+            console.log("[Hyprsunset] Re-checking state after potential resume (3s)");
+            forceSync();
+        }
+    }
+    
+    // Periodic state verification (every 2 minutes instead of 5)
     Timer {
         id: periodicCheckTimer
-        interval: 5 * 60 * 1000 // 5 minutes
+        interval: 2 * 60 * 1000 // 2 minutes
         repeat: true
         running: true
         onTriggered: {
-            if (root.automatic) {
-                fetchState();
-                Qt.callLater(reEvaluate);
-            }
+            console.log("[Hyprsunset] Periodic state check");
+            forceSync();
         }
     }
 
@@ -156,11 +173,54 @@ Singleton {
     
     function forceSync() {
         console.log("[Hyprsunset] Force sync requested");
+        // First re-evaluate what state should be
+        reEvaluate();
+        // Then fetch actual state and ensure it matches
         fetchState();
+        // After a delay, ensure state is correct
         Qt.callLater(function() {
-            reEvaluate();
             ensureState();
         });
+    }
+    
+    function forceRestart() {
+        console.log("[Hyprsunset] Force restart requested - cycling off/on to sync UI");
+        if (!root.automatic || root.manualActive !== undefined) {
+            console.log("[Hyprsunset] Skipping force restart - not in automatic mode");
+            return;
+        }
+        
+        // First check what state should be
+        reEvaluate();
+        
+        if (root.shouldBeOn) {
+            console.log("[Hyprsunset] Should be on - forcing restart cycle");
+            // Force kill any existing hyprsunset process
+            disable();
+            // Wait a moment then restart
+            restartTimer.restart();
+        } else {
+            console.log("[Hyprsunset] Should be off - ensuring it's disabled");
+            disable();
+        }
+    }
+    
+    // Timer to restart hyprsunset after disabling
+    Timer {
+        id: restartTimer
+        interval: 500 // 500ms delay
+        repeat: false
+        onTriggered: {
+            console.log("[Hyprsunset] Restarting hyprsunset after force cycle");
+            enable();
+        }
+    }
+    
+    // Force a complete state sync on component completion
+    Component.onCompleted: {
+        console.log("[Hyprsunset] Component completed - performing initial sync");
+        // Small delay to ensure all bindings are established
+        Qt.callLater(forceSync);
     }
 
     Process {
@@ -172,21 +232,52 @@ Singleton {
             onStreamFinished: {
                 const output = stateCollector.text.trim();
                 const previousActive = root.active;
-                if (output.length == 0 || output.startsWith("Couldn't"))
-                    root.active = false;
-                else
-                    root.active = (output != "6500");
+                let newActive = false;
                 
-                // If state changed unexpectedly, try to restore correct state
-                if (root.automatic && root.manualActive === undefined && previousActive !== root.active) {
+                console.log("[Hyprsunset] Fetch result:", output, "length:", output.length);
+                
+                if (output.length == 0 || output.startsWith("Couldn't")) {
+                    newActive = false;
+                } else {
+                    // Consider active if temperature is not the default 6500K
+                    newActive = (output !== "6500");
+                }
+                
+                console.log("[Hyprsunset] State update - Previous:", previousActive, "New:", newActive, "Expected:", root.shouldBeOn);
+                
+                root.active = newActive;
+                
+                // Always verify state consistency in automatic mode
+                if (root.automatic && root.manualActive === undefined) {
                     const expectedActive = root.shouldBeOn;
                     if (root.active !== expectedActive) {
-                        console.log("[Hyprsunset] State mismatch detected. Expected:", expectedActive, "Actual:", root.active, "Fixing...");
-                        Qt.callLater(ensureState);
+                        console.log("[Hyprsunset] State mismatch! Expected:", expectedActive, "Actual:", root.active, "Will fix...");
+                        // Use a small delay to avoid infinite loops
+                        fixStateTimer.restart();
+                    } else {
+                        console.log("[Hyprsunset] State is correct:", root.active);
                     }
                 }
-                // console.log("[Hyprsunset] Fetched state:", output, "->", root.active);
             }
+        }
+        stderr: StdioCollector {
+            id: errorCollector
+            onStreamFinished: {
+                if (errorCollector.text.trim().length > 0) {
+                    console.log("[Hyprsunset] Error output:", errorCollector.text.trim());
+                }
+            }
+        }
+    }
+    
+    // Timer to fix state mismatches with a small delay
+    Timer {
+        id: fixStateTimer
+        interval: 500 // 500ms delay
+        repeat: false
+        onTriggered: {
+            console.log("[Hyprsunset] Fixing state mismatch");
+            ensureState();
         }
     }
 
