@@ -185,6 +185,15 @@ setup_desktop_settings() {
     # Enable dark theme preference
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     print_success "Enabled dark theme preference"
+    
+    # Set default icon theme
+    print_step "Configuring default icon theme..."
+    sudo mkdir -p /usr/share/icons/default
+    sudo tee /usr/share/icons/default/index.theme > /dev/null << 'EOF'
+[Icon Theme]
+Inherits=Bibata-Modern-Classic
+EOF
+    print_success "Set Bibata-Modern-Classic as default icon theme"
 }
 
 # Setup OpenRGB service
