@@ -4,6 +4,7 @@ import "root:/modules/common"
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import Quickshell.Hyprland
 
 /**
  * Simple hyprsunset service with automatic mode.
@@ -95,6 +96,47 @@ Singleton {
     }
 
     function load() { } // Dummy to force init
+    
+    // Listen for Hyprland events to handle idle/resume
+    Connections {
+        target: Hyprland
+        
+        function onRawEvent(event) {
+            // Re-evaluate state when potentially resuming from idle
+            if (event.name === "screencast" || 
+                event.name === "activewindow" || 
+                event.name === "focusedmon") {
+                // Delay slightly to ensure system is fully resumed
+                stateCheckTimer.restart();
+            }
+        }
+    }
+    
+    // Timer to re-check state after potential idle resume
+    Timer {
+        id: stateCheckTimer
+        interval: 1000 // 1 second delay
+        repeat: false
+        onTriggered: {
+            console.log("[Hyprsunset] Re-checking state after potential resume");
+            fetchState();
+            Qt.callLater(reEvaluate);
+        }
+    }
+    
+    // Periodic state verification (every 5 minutes)
+    Timer {
+        id: periodicCheckTimer
+        interval: 5 * 60 * 1000 // 5 minutes
+        repeat: true
+        running: true
+        onTriggered: {
+            if (root.automatic) {
+                fetchState();
+                Qt.callLater(reEvaluate);
+            }
+        }
+    }
 
     function enable() {
         root.active = true;
@@ -111,6 +153,15 @@ Singleton {
     function fetchState() {
         fetchProc.running = true;
     }
+    
+    function forceSync() {
+        console.log("[Hyprsunset] Force sync requested");
+        fetchState();
+        Qt.callLater(function() {
+            reEvaluate();
+            ensureState();
+        });
+    }
 
     Process {
         id: fetchProc
@@ -120,10 +171,20 @@ Singleton {
             id: stateCollector
             onStreamFinished: {
                 const output = stateCollector.text.trim();
+                const previousActive = root.active;
                 if (output.length == 0 || output.startsWith("Couldn't"))
                     root.active = false;
                 else
                     root.active = (output != "6500");
+                
+                // If state changed unexpectedly, try to restore correct state
+                if (root.automatic && root.manualActive === undefined && previousActive !== root.active) {
+                    const expectedActive = root.shouldBeOn;
+                    if (root.active !== expectedActive) {
+                        console.log("[Hyprsunset] State mismatch detected. Expected:", expectedActive, "Actual:", root.active, "Fixing...");
+                        Qt.callLater(ensureState);
+                    }
+                }
                 // console.log("[Hyprsunset] Fetched state:", output, "->", root.active);
             }
         }
