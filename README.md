@@ -8,15 +8,6 @@ A modern Arch Linux desktop environment featuring Hyprland (Wayland compositor) 
 - **QuickShell**: Modern desktop shell built with Qt/QML for rich UI components
 - **Modular Configuration**: Easy-to-customize modular configuration system
 - **Modern Aesthetics**: Material Design 3 theming with dynamic wallpaper-based colors
-- **Complete Desktop Environment**: 
-  - Customizable status bar with system information
-  - Overview/launcher with fuzzy search
-  - Notification system
-  - Settings interface (Super+I)
-  - Resource monitoring
-  - Weather integration
-  - Audio/brightness controls
-  - And much more...
 
 ## Installation
 
