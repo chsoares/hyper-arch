@@ -14,6 +14,7 @@ jq
 meson
 xdg-user-dirs
 xorg-xhost
+fish
 
 # === HYPRLAND ECOSYSTEM ===
 hyprland
@@ -44,8 +45,8 @@ ttf-gabarito-git
 ttf-material-symbols-variable-git
 ttf-readex-pro
 starship
-fish
 fontconfig
+bibata-cursor-theme-bin
 
 # === BACKLIGHT/DISPLAY ===
 brightnessctl
@@ -137,7 +138,7 @@ bat
 grub
 grub-btrfs
 inotify-tools
-os-prober
+#os-prober
 efibootmgr
 
 # === USER APPLICATIONS ===
@@ -163,4 +164,3 @@ fcitx5
 
 # === BUILD DEPENDENCIES (for AUR packages) ===
 base-devel
-git

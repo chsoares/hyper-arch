@@ -229,16 +229,16 @@ setup_grub_timeshift() {
     # Configure GRUB for silent boot and dual boot detection
     print_step "Configuring GRUB settings..."
     
-    # Enable os-prober for dual boot detection
-    if ! grep -q "GRUB_DISABLE_OS_PROBER=false" /etc/default/grub; then
-        sudo sed -i '/^#GRUB_DISABLE_OS_PROBER/c\GRUB_DISABLE_OS_PROBER=false' /etc/default/grub
-        echo "GRUB_DISABLE_OS_PROBER=false" | sudo tee -a /etc/default/grub > /dev/null
-    fi
+    # # Enable os-prober for dual boot detection
+    # if ! grep -q "GRUB_DISABLE_OS_PROBER=false" /etc/default/grub; then
+    #     sudo sed -i '/^#GRUB_DISABLE_OS_PROBER/c\GRUB_DISABLE_OS_PROBER=false' /etc/default/grub
+    #     echo "GRUB_DISABLE_OS_PROBER=false" | sudo tee -a /etc/default/grub > /dev/null
+    # fi
     
-    # Add silent kernel boot parameters (removes boot messages during logout/login)
-    if ! grep -q "GRUB_CMDLINE_LINUX_DEFAULT.*quiet" /etc/default/grub; then
-        sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3"/' /etc/default/grub
-    fi
+    # # Add silent kernel boot parameters (removes boot messages during logout/login)
+    # if ! grep -q "GRUB_CMDLINE_LINUX_DEFAULT.*quiet" /etc/default/grub; then
+    #     sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="\(.*\)"/GRUB_CMDLINE_LINUX_DEFAULT="\1 quiet splash loglevel=3 rd.systemd.show_status=auto rd.udev.log_level=3"/' /etc/default/grub
+    # fi
     
     # Configure grub-btrfsd service for timeshift integration
     print_step "Configuring grub-btrfsd for Timeshift..."
