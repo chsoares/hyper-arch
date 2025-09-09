@@ -166,7 +166,6 @@ satty
 libvoikko
 hspell
 nuspell
-fcitx5
 
 # === BUILD DEPENDENCIES (for AUR packages) ===
 base-devel
