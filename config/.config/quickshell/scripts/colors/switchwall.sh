@@ -270,7 +270,7 @@ switch() {
 
     # Notify user about the color/palette change
     notification_title=""
-    notification_body="Colors applied successfully!\nNote: Some apps (like Nautilus) may need logout to update."
+    # notification_body="Colors applied successfully!\nNote: Some apps (like Nautilus) may need logout to update."
     notification_icon="preferences-desktop-theme"
     
     if [[ -n "$mode_flag" && -n "$type_flag" ]]; then
@@ -294,13 +294,14 @@ switch() {
         notification_title="Colors Updated"
     fi
     
-    if [[ -n "$notification_title" ]]; then
-        notify-send "$notification_title" \
-            "$notification_body" \
-            -i "$notification_icon" \
-            -t 4000 \
-            -u low
-    fi
+    # Notification disabled - silent theme switching
+    # if [[ -n "$notification_title" ]]; then
+    #     notify-send "$notification_title" \
+    #         "$notification_body" \
+    #         -i "$notification_icon" \
+    #         -t 4000 \
+    #         -u low
+    # fi
 
     # Run post_process in background to avoid blocking UI updates
     {
