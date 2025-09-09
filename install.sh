@@ -266,28 +266,22 @@ EOF
 setup_grub_theme() {
     print_step "Installing Particle GRUB theme..."
     
-    # Clone theme repository to temporary directory
-    TEMP_DIR="/tmp/particle-grub-theme"
-    if [[ -d "$TEMP_DIR" ]]; then
-        rm -rf "$TEMP_DIR"
-    fi
-    
-    git clone https://github.com/yeyushengfan258/Particle-grub-theme.git "$TEMP_DIR"
-    
-    if [[ -d "$TEMP_DIR" ]]; then
-        cd "$TEMP_DIR"
+    # Use our local grub theme installation script
+    if [[ -f "$base/grub/install-theme.sh" ]]; then
+        print_step "Installing Particle Circle Window theme (2k resolution)..."
+        
         # Clean any existing theme installation
         sudo rm -rf /boot/grub/themes/Particle* 2>/dev/null || true
-        # Install theme using interactive prompt (works better than flags)
-        print_step "Installing Particle GRUB theme..."
-        print_step "The theme installer will open an interactive prompt"
+        sudo rm -rf /usr/share/grub/themes/Particle* 2>/dev/null || true
         
-        sudo ./install.sh
-        print_success "Particle GRUB theme installed successfully"
+        # Run our automated installation script
+        cd "$base/grub"
+        sudo ./install-theme.sh
         cd "$base"
-        rm -rf "$TEMP_DIR"
+        
+        print_success "Particle GRUB theme installed successfully"
     else
-        print_warning "Failed to clone Particle theme repository - continuing without theme"
+        print_warning "Local GRUB theme installer not found - skipping theme installation"
     fi
 }
 
@@ -502,14 +496,16 @@ setup_fish_plugins
 # Setup SDDM display manager
 setup_sddm
 
+# Install Particle GRUB theme
+setup_grub_theme
+
 print_success "Installation completed!"
 echo
 print_step "Next steps:"
-echo "1. GRUB theme installation (interactive setup required)"
-echo "2. Configure Timeshift for automatic snapshots (recommended: daily schedule)"
-echo "3. Reboot to use SDDM login manager with Sugar Candy theme"
-echo "4. At login screen, select 'Hyprland' from the session list"
-echo "5. Enjoy your new desktop setup!"
+echo "1. Configure Timeshift for automatic snapshots (recommended: daily schedule)"
+echo "2. Reboot to use SDDM login manager with Sugar Candy theme"
+echo "3. At login screen, select 'Hyprland' from the session list"
+echo "4. Enjoy your new desktop setup!"
 echo
 print_step "Useful keybinds after login:"
 echo "• Super+H = Toggle cheatsheet"
@@ -521,11 +517,4 @@ echo
 print_warning "Important: Do NOT select UWSM session - use regular Hyprland"
 print_warning "Note: Existing config files were overwritten for clean installation"
 echo
-print_step "Press any key to continue with GRUB theme installation..."
-read -n 1 -s
-
-# Install Particle GRUB theme
-setup_grub_theme
-
-print_success "GRUB theme installation completed!"
-print_step "You can now logout and restart to see the themed bootloader."
+print_success "You can now logout and restart to see the themed bootloader and SDDM login manager."
