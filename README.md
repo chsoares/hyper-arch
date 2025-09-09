@@ -40,9 +40,12 @@ The install script will:
 - Configure default monitor settings
 
 ### Post-Installation
-1. Logout and login again (for group changes to take effect)
-2. At login screen, select **Hyprland** from the session list
-3. On first run, a random wallpaper will be set and settings will open automatically
+1. **Configure Timeshift**: Set up automatic snapshots for system protection
+   - Open Timeshift and configure snapshot schedule (recommended: daily)
+   - Snapshots will appear in GRUB menu for easy system recovery
+2. Logout and login again (for group changes to take effect)
+3. At login screen, select **Hyprland** from the session list
+4. On first run, a random wallpaper will be set and settings will open automatically
 
 ## Key Bindings
 - `Super` = Toggle overview/launcher

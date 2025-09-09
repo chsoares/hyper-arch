@@ -455,9 +455,10 @@ print_success "Installation completed!"
 echo
 print_step "Next steps:"
 echo "1. GRUB theme installation (interactive setup required)"
-echo "2. Logout and login again (for group changes to take effect)"
-echo "3. At login screen, select 'Hyprland' from the session list"
-echo "4. Enjoy your new desktop setup!"
+echo "2. Configure Timeshift for automatic snapshots (recommended: daily schedule)"
+echo "3. Logout and login again (for group changes to take effect)"
+echo "4. At login screen, select 'Hyprland' from the session list"
+echo "5. Enjoy your new desktop setup!"
 echo
 print_step "Useful keybinds after login:"
 echo "• Super+H = Toggle cheatsheet"
