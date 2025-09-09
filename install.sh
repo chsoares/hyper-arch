@@ -317,6 +317,8 @@ setup_sddm() {
     sudo tee /etc/sddm.conf > /dev/null << 'EOF'
 [Theme]
 Current=sugar-candy
+CursorSize=24
+CursorTheme=Bibata-Modern-Classic
 
 [General]
 HaltCommand=/usr/bin/systemctl poweroff
