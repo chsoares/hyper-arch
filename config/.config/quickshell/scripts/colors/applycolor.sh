@@ -140,7 +140,7 @@ apply_sddm() {
   for i in "${!colorlist[@]}"; do
     case "${colorlist[$i]}" in
       '$onBackground') main_color="${colorvalues[$i]}" ;;
-      '$primaryContainer') accent_color="${colorvalues[$i]}" ;;
+      '$primary') accent_color="${colorvalues[$i]}" ;;
       '$background') bg_color="${colorvalues[$i]}" ;;
       '$onPrimary') login_button_color="${colorvalues[$i]}" ;;
     esac

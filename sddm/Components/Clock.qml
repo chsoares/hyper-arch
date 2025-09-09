@@ -10,8 +10,8 @@ Column {
 
     Label {
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: config.HeaderText !=="" ? root.font.pointSize * 3 : 0
-        color: root.palette.text
+        font.pointSize: config.HeaderText !=="" ? root.font.pointSize * 4 : 0
+        color: config.MainColour
         renderType: Text.QtRendering
         text: config.HeaderText
     }
@@ -19,8 +19,8 @@ Column {
     Label {
         id: timeLabel
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: root.font.pointSize * 3
-        color: root.palette.text
+        font.pointSize: root.font.pointSize * 4
+        color: config.MainColour
         renderType: Text.QtRendering
         function updateTime() {
             text = new Date().toLocaleTimeString(Qt.locale(config.Locale),
@@ -32,7 +32,8 @@ Column {
     Label {
         id: dateLabel
         anchors.horizontalCenter: parent.horizontalCenter
-        color: root.palette.text
+        font.pointSize: root.font.pointSize * 1.5
+        color: config.MainColour
         renderType: Text.QtRendering
         function updateDate() {
             text = new Date().toLocaleDateString(Qt.locale(config.Locale),

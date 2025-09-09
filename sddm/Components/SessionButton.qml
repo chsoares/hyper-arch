@@ -19,7 +19,7 @@ Item {
         id: selectSession
 
         hoverEnabled: true
-        anchors.left: parent.left
+        anchors.horizontalCenter: parent.horizontalCenter
         Keys.onPressed: {
             if (event.key == Qt.Key_Up && loginButton.state != "enabled" && !popup.opened)
                 revealSecret.focus = true,
@@ -61,15 +61,38 @@ Item {
             visible: false
         }
 
-        contentItem: Text {
+        contentItem: Row {
             id: displayedItem
-            text: (config.TranslateSession || (textConstantSession + ":")) + " " + selectSession.currentText
-            color: config.MainColour
-            verticalAlignment: Text.AlignVCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 3
-            font.pointSize: root.font.pointSize * 0.8
-            Keys.onReleased: parent.popup.open()
+            spacing: 8
+            anchors.horizontalCenter: parent.horizontalCenter
+            
+            Text {
+                text: "desktop_windows"
+                font.family: "Material Symbols Outlined"
+                font.pixelSize: root.font.pointSize * 0.9
+                color: config.MainColour
+                verticalAlignment: Text.AlignVCenter
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            
+            Text {
+                text: (config.TranslateSession || (textConstantSession + ":"))
+                color: config.MainColour
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: root.font.pointSize * 0.8
+                font.weight: Font.Bold
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            
+            Text {
+                text: selectSession.currentText
+                color: config.MainColour
+                verticalAlignment: Text.AlignVCenter
+                font.pointSize: root.font.pointSize * 0.8
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            
+            Keys.onReleased: selectSession.popup.open()
         }
 
         background: Rectangle {
@@ -79,15 +102,14 @@ Item {
             height: parent.visualFocus ? 2 : 0
             width: displayedItem.implicitWidth
             anchors.top: parent.bottom
-            anchors.left: parent.left
-            anchors.leftMargin: 3
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
         popup: Popup {
             id: popupHandler
             y: parent.height - 1
-            x: config.ForceRightToLeft == "true" ? -loginButtonWidth + displayedItem.width : 0
-            width: sessionButton.width
+            x: -(loginButtonWidth - displayedItem.width) / 2  // Center the popup
+            width: loginButtonWidth  // Same width as login button
             implicitHeight: contentItem.implicitHeight
             padding: 10
 

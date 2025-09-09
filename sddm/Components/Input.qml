@@ -173,6 +173,7 @@ Column {
             height: root.font.pointSize * 3
             width: parent.width
             placeholderText: config.TranslatePlaceholderUsername || textConstants.userName
+            placeholderTextColor: "#666666"
             selectByMouse: true
             horizontalAlignment: TextInput.AlignHCenter
             renderType: Text.QtRendering
@@ -182,7 +183,7 @@ Column {
             }
             background: Rectangle {
                 color: "transparent"
-                border.color: root.palette.text
+                border.color: config.MainColour
                 border.width: parent.activeFocus ? 2 : 1
                 radius: config.RoundCorners || 0
             }
@@ -196,11 +197,11 @@ Column {
                     when: username.activeFocus
                     PropertyChanges {
                         target: username.background
-                        border.color: root.palette.highlight
+                        border.color: config.AccentColour
                     }
                     PropertyChanges {
                         target: username
-                        color: root.palette.highlight
+                        color: config.AccentColour
                     }
                 }
             ]
@@ -214,6 +215,28 @@ Column {
         width: parent.width / 2
         anchors.horizontalCenter: parent.horizontalCenter
 
+        Button {
+            id: passwordIcon
+            width: passwordField.height * 0.8
+            height: passwordField.height * 0.8
+            anchors.left: passwordField.left
+            anchors.verticalCenter: password.verticalCenter
+            anchors.leftMargin: passwordField.height * 0.125
+            enabled: false
+            flat: true
+            z: 2
+            
+            // Use Material Design lock icon
+            contentItem: Text {
+                text: "lock"
+                font.family: "Material Symbols Outlined"
+                font.pixelSize: parent.height * 0.25
+                color: config.MainColour
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+
         TextField {
             id: password
             font.pointSize: root.font.pointSize
@@ -222,20 +245,22 @@ Column {
             width: parent.width
             focus: config.ForcePasswordFocus == "true" ? true : false
             selectByMouse: true
-            echoMode: revealSecret.checked ? TextInput.Normal : TextInput.Password
+            echoMode: TextInput.Password
             placeholderText: config.TranslatePlaceholderPassword || textConstants.password
+            placeholderTextColor: "#666666"
             horizontalAlignment: TextInput.AlignHCenter
             passwordCharacter: "•"
             passwordMaskDelay: config.ForceHideCompletePassword == "true" ? undefined : 500
             renderType: Text.QtRendering
             background: Rectangle {
                 color: "transparent"
-                border.color: root.palette.text
+                border.color: config.MainColour
                 border.width: parent.activeFocus ? 2 : 1
                 radius: config.RoundCorners || 0
             }
             onAccepted: loginButton.clicked()
-            KeyNavigation.down: revealSecret
+            KeyNavigation.down: loginButton
+            z: 1
         }
 
         states: [
@@ -244,11 +269,15 @@ Column {
                 when: password.activeFocus
                 PropertyChanges {
                     target: password.background
-                    border.color: root.palette.highlight
+                    border.color: config.AccentColour
                 }
                 PropertyChanges {
                     target: password
-                    color: root.palette.highlight
+                    color: config.AccentColour
+                }
+                PropertyChanges {
+                    target: passwordIcon.contentItem
+                    color: config.AccentColour
                 }
             }
         ]
@@ -263,139 +292,6 @@ Column {
         ]
     }
 
-    Item {
-        id: secretCheckBox
-        height: root.font.pointSize * 7
-        width: parent.width / 2
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        CheckBox {
-            id: revealSecret
-            width: parent.width
-            hoverEnabled: true
-
-            indicator: Rectangle {
-                id: indicator
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.topMargin: 3
-                anchors.leftMargin: 4
-                implicitHeight: root.font.pointSize
-                implicitWidth: root.font.pointSize
-                color: "transparent"
-                border.color: root.palette.text
-                border.width: parent.activeFocus ? 2 : 1
-                Rectangle {
-                    id: dot
-                    anchors.centerIn: parent
-                    implicitHeight: parent.width - 6
-                    implicitWidth: parent.width - 6
-                    color: root.palette.text
-                    opacity: revealSecret.checked ? 1 : 0
-                }
-            }
-
-            contentItem: Text {
-                id: indicatorLabel
-                text: config.TranslateShowPassword || "Show Password"
-                anchors.verticalCenter: indicator.verticalCenter
-                horizontalAlignment: Text.AlignLeft
-                anchors.left: indicator.right
-                anchors.leftMargin: indicator.width / 2
-                font.pointSize: root.font.pointSize * 0.8
-                color: root.palette.text
-            }
-
-            Keys.onReturnPressed: toggle()
-            Keys.onEnterPressed: toggle()
-            KeyNavigation.down: loginButton
-
-            background: Rectangle {
-                color: "transparent"
-                border.width: parent.activeFocus ? 1 : 0
-                border.color: parent.activeFocus ? root.palette.text : "transparent"
-                height: parent.activeFocus ? 2 : 0
-                width: (indicator.width + indicatorLabel.contentWidth + indicatorLabel.anchors.leftMargin + 2)
-                anchors.top: indicatorLabel.bottom
-                anchors.left: parent.left
-                anchors.leftMargin: 3
-                anchors.topMargin: 8
-            }
-        }
-
-        states: [
-            State {
-                name: "pressed"
-                when: revealSecret.down
-                PropertyChanges {
-                    target: revealSecret.contentItem
-                    color: Qt.darker(root.palette.highlight, 1.1)
-                }
-                PropertyChanges {
-                    target: dot
-                    color: Qt.darker(root.palette.highlight, 1.1)
-                }
-                PropertyChanges {
-                    target: indicator
-                    border.color: Qt.darker(root.palette.highlight, 1.1)
-                }
-                PropertyChanges {
-                    target: revealSecret.background
-                    border.color: Qt.darker(root.palette.highlight, 1.1)
-                }
-            },
-            State {
-                name: "hovered"
-                when: revealSecret.hovered
-                PropertyChanges {
-                    target: indicatorLabel
-                    color: Qt.lighter(root.palette.highlight, 1.1)
-                }
-                PropertyChanges {
-                    target: indicator
-                    border.color: Qt.lighter(root.palette.highlight, 1.1)
-                }
-                PropertyChanges {
-                    target: dot
-                    color: Qt.lighter(root.palette.highlight, 1.1)
-                }
-                PropertyChanges {
-                    target: revealSecret.background
-                    border.color: Qt.lighter(root.palette.highlight, 1.1)
-                }
-            },
-            State {
-                name: "focused"
-                when: revealSecret.activeFocus
-                PropertyChanges {
-                    target: indicatorLabel
-                    color: root.palette.highlight
-                }
-                PropertyChanges {
-                    target: indicator
-                    border.color: root.palette.highlight
-                }
-                PropertyChanges {
-                    target: dot
-                    color: root.palette.highlight
-                }
-                PropertyChanges {
-                    target: revealSecret.background
-                    border.color: root.palette.highlight
-                }
-            }
-        ]
-
-        transitions: [
-            Transition {
-                PropertyAnimation {
-                    properties: "color, border.color, opacity"
-                    duration: 150
-                }
-            }
-        ]
-
-    }
 
     Item {
         height: root.font.pointSize * 2.3
@@ -456,7 +352,7 @@ Column {
 
             contentItem: Text {
                 text: parent.text
-                color: loginButton.enabled ? (config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : root.palette.highlight.hslLightness >= 0.7 ? "#444" : "white") : "#333333"  // Dark gray text for disabled state
+                color: loginButton.enabled ? (config.OverrideLoginButtonTextColour != "" ? config.OverrideLoginButtonTextColour : root.palette.highlight.hslLightness >= 0.7 ? "#444" : "white") : "#222222"  // Dark gray text for disabled state
                 font.pointSize: root.font.pointSize
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -466,7 +362,7 @@ Column {
             background: Rectangle {
                 id: buttonBackground
                 color: "#666666"  // Medium gray for disabled state
-                opacity: 1
+                opacity: 0.5
                 radius: config.RoundCorners || 0
             }
 
@@ -521,14 +417,22 @@ Column {
             onClicked: config.AllowBadUsernames == "false" ? sddm.login(username.text.toLowerCase(), password.text, sessionSelect.selectedSession) : sddm.login(username.text, password.text, sessionSelect.selectedSession)
             Keys.onReturnPressed: clicked()
             Keys.onEnterPressed: clicked()
+            KeyNavigation.up: password
             KeyNavigation.down: sessionSelect.exposeSession
         }
     }
 
-    SessionButton {
-        id: sessionSelect
-        textConstantSession: textConstants.session
-        loginButtonWidth: loginButton.background.width
+    Item {
+        height: root.font.pointSize * 4  // Increased spacing
+        width: parent.width / 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        
+        SessionButton {
+            id: sessionSelect
+            textConstantSession: textConstants.session
+            loginButtonWidth: loginButton.background.width
+            anchors.centerIn: parent  // Center the session button
+        }
     }
 
     Connections {
@@ -547,26 +451,3 @@ Column {
         running: false
     }
 }
-
-// This file is part of SDDM Eucalyptus Drop.
-// A theme for the Simple Display Desktop Manager.
-//
-// Copyright (C) 2018–2020 Marian Arlt
-// Copyright (C) 2020-2024 <matt.jolly@footclan.ninja>
-//
-// SDDM Eucalyptus Drop is free software: you can redistribute it and/or modify it
-// under the terms of the GNU General Public License as published by the
-// Free Software Foundation, either version 3 of the License, or any later version.
-//
-// You are required to preserve this and any additional legal notices, either
-// contained in this file or in other files that you received along with
-// SDDM Eucalyptus Drop that refer to the author(s) in accordance with
-// sections §4, §5 and specifically §7b of the GNU General Public License.
-//
-// SDDM Eucalyptus Drop is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with SDDM Eucalyptus Drop. If not, see <https://www.gnu.org/licenses/>
