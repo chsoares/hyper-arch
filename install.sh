@@ -291,6 +291,54 @@ setup_grub_theme() {
     fi
 }
 
+# Setup SDDM display manager and theme
+setup_sddm() {
+    print_step "Setting up SDDM display manager..."
+    
+    # Install theme from sddm/ directory to system location
+    if [[ -d "$base/sddm" ]]; then
+        print_step "Installing Sugar Candy SDDM theme..."
+        sudo mkdir -p /usr/share/sddm/themes/
+        sudo cp -rf "$base/sddm" /usr/share/sddm/themes/sugar-candy
+        sudo chmod -R 755 /usr/share/sddm/themes/sugar-candy
+        print_success "SDDM theme installed to /usr/share/sddm/themes/sugar-candy/"
+    else
+        print_warning "sddm/ theme directory not found - skipping theme installation"
+    fi
+    
+    # Create/update SDDM configuration
+    print_step "Configuring SDDM..."
+    sudo tee /etc/sddm.conf > /dev/null << 'EOF'
+[Theme]
+Current=sugar-candy
+
+[General]
+HaltCommand=/usr/bin/systemctl poweroff
+RebootCommand=/usr/bin/systemctl reboot
+
+[Users]
+MaximumUid=60513
+MinimumUid=1000
+EOF
+    
+    # Check if systemctl is available and configure display manager
+    if command -v systemctl &>/dev/null; then
+        print_step "Configuring SDDM as display manager..."
+        
+        # Disable any existing display manager
+        sudo systemctl disable display-manager.service 2>/dev/null || true
+        
+        # Enable SDDM
+        sudo systemctl enable sddm.service
+        print_success "SDDM enabled as display manager"
+        print_warning "Reboot required to use SDDM"
+    else
+        print_warning "systemctl not found - could not configure SDDM service"
+    fi
+    
+    print_success "SDDM setup completed"
+}
+
 # Install Fish shell plugins using fisher
 setup_fish_plugins() {
     print_step "Installing Fish shell plugins..."
@@ -451,12 +499,15 @@ install_dotfiles
 # Install Fish plugins
 setup_fish_plugins
 
+# Setup SDDM display manager
+setup_sddm
+
 print_success "Installation completed!"
 echo
 print_step "Next steps:"
 echo "1. GRUB theme installation (interactive setup required)"
 echo "2. Configure Timeshift for automatic snapshots (recommended: daily schedule)"
-echo "3. Logout and login again (for group changes to take effect)"
+echo "3. Reboot to use SDDM login manager with Sugar Candy theme"
 echo "4. At login screen, select 'Hyprland' from the session list"
 echo "5. Enjoy your new desktop setup!"
 echo

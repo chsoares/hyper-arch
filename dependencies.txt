@@ -103,6 +103,12 @@ nm-connection-editor
 bluetooth-utils
 openrgb
 
+# === LOGIN MANAGER ===
+sddm
+qt5-graphicaleffects
+qt5-quickcontrols2
+qt5-svg
+
 # === PYTHON ENVIRONMENT ===
 clang
 uv
