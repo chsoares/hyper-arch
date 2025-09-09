@@ -38,13 +38,11 @@ playerctl
 easyeffects
 
 # === FONTS & THEMES ===
-ttf-rubik-vf
+ttf-googlefonts-typewolf
 ttf-jetbrains-mono-nerd
 ttf-gabarito-git
 ttf-material-symbols-variable-git
 ttf-readex-pro
-ttf-space-grotesk
-otf-space-grotesk
 starship
 fish
 fontconfig

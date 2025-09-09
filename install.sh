@@ -271,7 +271,9 @@ setup_grub_theme() {
     
     if [[ -d "$TEMP_DIR" ]]; then
         cd "$TEMP_DIR"
-        # Install with sidebar theme variant
+        # Clean any existing theme installation
+        sudo rm -rf /boot/grub/themes/Particle* 2>/dev/null || true
+        # Install with sidebar theme variant  
         sudo ./install.sh -b -t sidebar
         cd "$base"
         rm -rf "$TEMP_DIR"
