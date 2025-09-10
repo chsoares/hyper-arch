@@ -140,6 +140,7 @@ fisher
 fastfetch
 bat
 pacman-contrib
+gum
 
 # === BOOTLOADER & SNAPSHOTS ===
 grub
