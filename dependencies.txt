@@ -139,6 +139,7 @@ fzf
 fisher
 fastfetch
 bat
+pacman-contrib
 
 # === BOOTLOADER & SNAPSHOTS ===
 grub
