@@ -24,6 +24,8 @@ abbr --add gc "git commit -m"
 #set -U fish_function_path "$CTF_HOME/functions" $fish_function_path
 #set -U fish_complete_path "$CTF_HOME/completions" $fish_complete_path
 
-if test -f $CTF_HOME/misc/aliases.fish
-    source $CTF_HOME/misc/aliases.fish
+if test -n $CTF_HOME
+    if test -f $CTF_HOME/misc/aliases.fish
+        source $CTF_HOME/misc/aliases.fish
+    end
 end
