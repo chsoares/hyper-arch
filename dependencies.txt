@@ -39,7 +39,7 @@ playerctl
 easyeffects
 
 # === FONTS & THEMES ===
-ttf-googlefonts-typewolf
+ttf-google-fonts-typewolf 
 ttf-jetbrains-mono-nerd
 ttf-gabarito-git
 ttf-material-symbols-variable-git
