@@ -27,12 +27,10 @@ Singleton {
     }
 
     function handleFirstRun() {
-        // Set random wallpaper using the same script as Super+Ctrl+Alt+T
-        Quickshell.execDetached(["bash", `${Directories.config}/hypr/hyprland/scripts/random-wallpaper.sh`])
-        // Show welcome notification
-        Quickshell.execDetached(["notify-send", root.firstRunNotifSummary, root.firstRunNotifBody, "-i", "welcome"])
-        // Open settings for first-time configuration (same as Super+I)
-        Quickshell.execDetached(["qs", "-p", "~/.config/quickshell/settings.qml"])
+        // Set random wallpaper
+        Quickshell.execDetached(["bash", "-c", "~/.config/hypr/hyprland/scripts/random-wallpaper.sh"])
+        // Open Welcome.qml
+        Quickshell.execDetached(["qs", "-p", root.welcomeQmlPath])
     }
 
     FileView {

@@ -81,7 +81,7 @@ ContentPage {
                     materialIcon: "shuffle"
                     mainText: "Random"
                     onClicked: {
-                        Quickshell.execDetached(["/home/chsoares/.config/hypr/hyprland/scripts/random-wallpaper.sh"]);
+                        Quickshell.execDetached(["bash", "-c", "~/.config/hypr/hyprland/scripts/random-wallpaper.sh"]);
                     }
                     StyledToolTip {
                         content: "Random wallpaper from ~/Pictures/Wallpapers"
