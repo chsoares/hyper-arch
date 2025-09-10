@@ -78,7 +78,7 @@ Item {
                 StyledText {
                     text: Weather.data.temp
                     font.pixelSize: Appearance.font.pixelSize.huge * 1.5
-                    font.weight: Font.Bold
+                    //font.weight: Font.Bold
                     color: Appearance.colors.colOnLayer1
                 }
             }

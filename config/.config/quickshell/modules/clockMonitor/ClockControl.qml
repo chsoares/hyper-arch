@@ -90,7 +90,7 @@ Item {
                         return Qt.locale().toString(new Date(), withSeconds);
                     }
                     font.pixelSize: Appearance.font.pixelSize.huge * 1.2
-                    font.weight: Font.Bold
+                    //font.weight: Font.Bold
                     color: Appearance.colors.colOnLayer1
                 }
             }

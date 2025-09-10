@@ -83,7 +83,7 @@ Item {
                     StyledText {
                         text: Weather.data.temp
                         font.pixelSize: Appearance.font.pixelSize.huge * 2
-                        font.weight: Font.Bold
+                        //font.weight: Font.Bold
                         color: Appearance.colors.colOnLayer2
                     }
                 }
@@ -227,7 +227,7 @@ Item {
                     return Qt.locale().toString(new Date(), withSeconds);
                 }
                 font.pixelSize: Appearance.font.pixelSize.huge * 1.2
-                font.weight: Font.Bold
+                //font.weight: Font.Bold
                 color: Appearance.colors.colOnLayer1
             }
         }
