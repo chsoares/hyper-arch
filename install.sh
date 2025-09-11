@@ -85,6 +85,15 @@ install_packages() {
     
     # Remove comments and empty lines, then install
     grep -v '^#' dependencies.txt | grep -v '^$' | xargs yay -S --needed --noconfirm
+    
+    # Install claude-desktop-native from AUR manually (not available in yay)
+    print_step "Installing claude-desktop-native from AUR..."
+    cd /tmp
+    git clone https://github.com/jkoelker/claude-desktop-native/
+    cd claude-desktop-native
+    makepkg -si --noconfirm
+    cd "$base"
+    rm -rf /tmp/claude-desktop-native
 
     # Some configs
     claude config set -g autoUpdates disabled
