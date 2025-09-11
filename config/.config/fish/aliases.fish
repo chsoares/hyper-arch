@@ -26,6 +26,6 @@ abbr --add gc "git commit -m"
 
 if test -n $CTF_HOME
     if test -f $CTF_HOME/misc/aliases.fish
-        source $CTF_HOME/misc/aliases.fish
+        source $CTF_HOME/misc/aliases.fish 2>/dev/null
     end
 end
