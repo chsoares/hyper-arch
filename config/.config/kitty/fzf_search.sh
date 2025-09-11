@@ -35,10 +35,10 @@ show_context() {
         "$stdin_file"
 }
 
-# Create temporary file for stdin content
+# Create temporary file for stdin content, removing empty lines
 stdin_file=$(mktemp)
 trap "rm -f '$stdin_file'" EXIT
-cat > "$stdin_file"
+grep -v '^[[:space:]]*$' > "$stdin_file"
 
 # Count total lines
 total_lines=$(wc -l < "$stdin_file")
@@ -56,18 +56,20 @@ if [[ -z "$FZF_DEFAULT_OPTS" && -z "$FZF_DEFAULT_OPTS_FILE" ]]; then
     export FZF_DEFAULT_OPTS="--cycle --layout=reverse --border --height=100% --preview-window=wrap --marker=*"
 fi
 
-# Execute fzf with fzf.fish-style interface
+# Execute fzf with direct clipboard copy bind
 fzf \
     --ansi \
     --no-sort \
     --exact \
+    --tac \
     --prompt="Scrollback> " \
     --preview='show_context $(({n} + 1))' \
     --preview-window="right:60%:wrap:border-left" \
     --bind="ctrl-/:toggle-preview" \
     --bind="alt-up:preview-up,alt-down:preview-down" \
     --bind="shift-up:preview-page-up,shift-down:preview-page-down" \
-    --header="Ctrl-/ toggle preview │ Alt-↑↓ scroll │ Shift-↑↓ page" \
+    --bind="enter:execute-silent(echo {} | tr -d '\n' | wl-copy)" \
+    --header="Ctrl-/ toggle preview │ Alt-↑↓ scroll │ Shift-↑↓ page │ Enter copy" \
     --header-lines=0 \
     < "$stdin_file"
 
