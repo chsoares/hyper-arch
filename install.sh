@@ -85,6 +85,9 @@ install_packages() {
     
     # Remove comments and empty lines, then install
     grep -v '^#' dependencies.txt | grep -v '^$' | xargs yay -S --needed --noconfirm
+
+    # Some configs
+    claude config set -g autoUpdates disabled
     
     print_success "All packages installed successfully"
 }

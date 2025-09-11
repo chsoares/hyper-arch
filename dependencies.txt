@@ -160,6 +160,7 @@ nautilus
 nautilus-open-any-terminal
 visual-studio-code-bin
 loupe
+claude-code
 
 # === SCREENSHOT TOOLS ===
 grimblast-git
