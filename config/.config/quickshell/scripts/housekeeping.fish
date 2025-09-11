@@ -3,27 +3,26 @@
 # Arch Linux Housekeeping Script
 # Compatible with Fish shell, Hyprland, and common tools
 
-set -l RED '\033[0;31m'
-set -l CYAN '\033[0;36m'
-set -l YELLOW '\033[1;33m'
-set -l MAGENTA '\033[0;35m'
-set -l NC '\033[0m' # No Color
+set -lx RED '\033[0;31m'
+set -lx CYAN '\033[0;36m'
+set -lx YELLOW '\033[1;33m'
+set -lx MAGENTA '\033[0;35m'
+set -lx NC '\033[0m' # No Color
 
 function print_header
-    echo -e "\n$MAGENTA🧹 Arch Linux Housekeeping Script 🚀$NC"
-    echo -e "$MAGENTA✨ Keeping your system clean and fast ✨$NC\n"
+    gum style --foreground 5 --border-foreground 6 --border rounded --padding "0 4" "󰵲 hypr-arch update & maintenance script"
 end
 
 function print_section
-    echo -e "\n$YELLOW🔧 [INFO]$NC $argv[1]"
+    echo -e "\n$CYAN [INFO] $argv[1]$NC"
 end
 
 function print_success
-    echo -e "$CYAN✅ [SUCCESS]$NC $argv[1]"
+    echo -e "$MAGENTA [SUCCESS] $argv[1]$NC"
 end
 
 function print_error
-    echo -e "$RED❌ [ERROR]$NC $argv[1]"
+    echo -e "$RED [ERROR] $argv[1]$NC"
 end
 
 function check_command
@@ -132,8 +131,16 @@ function clean_trash
     print_section "Cleaning trash/recycle bin..."
     
     if test -d ~/.local/share/Trash
-        rm -rf ~/.local/share/Trash/files/* 2>/dev/null
-        rm -rf ~/.local/share/Trash/info/* 2>/dev/null
+        # Check if files directory exists and has content
+        if test -d ~/.local/share/Trash/files; and test (count ~/.local/share/Trash/files/*) -gt 0
+            rm -rf ~/.local/share/Trash/files/*
+        end
+        
+        # Check if info directory exists and has content
+        if test -d ~/.local/share/Trash/info; and test (count ~/.local/share/Trash/info/*) -gt 0
+            rm -rf ~/.local/share/Trash/info/*
+        end
+        
         print_success "Trash emptied"
     else
         print_success "No trash directory found"
@@ -166,10 +173,10 @@ end
 function check_disk_space
     print_section "Checking disk space..."
     
-    echo "📊 Disk usage:"
-    df -h / /home 2>/dev/null | grep -E "(Filesystem|/dev/)"
+    echo "Disk usage:"
+    df -h / /home 2>/dev/null | grep --color=never -E "(Filesystem|/dev/)"
     
-    echo -e "\n📁 Largest directories in /home:"
+    echo -e "\nLargest directories in /home:"
     du -sh ~/.* 2>/dev/null | sort -hr | head -5
 end
 
@@ -195,11 +202,11 @@ function check_system_health
         
         if test $critical_warnings -gt 0
             print_error "$critical_warnings critical package issues found"
-            echo "📝 Also found $doc_warnings documentation warnings (non-critical)"
+            echo "Also found $doc_warnings documentation warnings (non-critical)"
             echo "Run 'pacman -Qk | grep -v \"doc/\\|ri/\\|man/\"' for critical issues only"
         else if test $doc_warnings -gt 0
             print_success "No critical package issues found"
-            echo "📚 Found $doc_warnings documentation warnings (non-critical)"
+            echo "Found $doc_warnings documentation warnings (non-critical)"
         else
             print_success "No package issues found"
         end
@@ -212,17 +219,13 @@ function main
     
     # Check if running with appropriate permissions
     if test (id -u) -eq 0
-        print_error "Don't run this script as root! 🚫"
+        print_error "Don't run this script as root!"
         exit 1
     end
     
     # Prompt user for confirmation
-    echo "⚠️  This script will perform system maintenance tasks."
-    echo "🤔 Continue? (y/N)"
-    read -l confirm
-    
-    if test "$confirm" != "y" -a "$confirm" != "Y"
-        echo "👋 Aborted by user"
+    if not gum confirm "This script will perform system maintenance tasks. Continue?" --selected.background 6 --prompt.foreground 6
+        echo "Aborted by user"
         exit 0
     end
     
@@ -240,8 +243,10 @@ function main
     check_system_health
     check_disk_space
     
-    print_section "Housekeeping completed! 🎉"
-    echo -e "$CYAN💖 Your system is now clean and optimized! 💖$NC"
+    echo 
+    print_success "Housekeeping completed!"
+    echo -e "Your system is now clean and optimized!"
+    echo 
 end
 
 # Run main function
