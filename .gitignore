@@ -6,6 +6,6 @@ config/.config/fish/fish_variables
 config/.config/illogical-impulse/config.json
 
 # colors
-config/.config/fuzzel
+config/.config/fuzzel/
 config/.config/hypr/hyprland/colors.conf
-config/.config/Kvuantum
+config/.config/Kvuantum/
