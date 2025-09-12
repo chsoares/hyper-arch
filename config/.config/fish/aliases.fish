@@ -18,14 +18,6 @@ abbr --add gc "git commit -m"
 
 
 # CTFs and stuff
-
-## ctf-utils
-#set -Ux CTF_HOME '/home/chsoares/Repos/ctf-utils' 
-#set -U fish_function_path "$CTF_HOME/functions" $fish_function_path
-#set -U fish_complete_path "$CTF_HOME/completions" $fish_complete_path
-
 if test -n $CTF_HOME
-    if test -f $CTF_HOME/misc/aliases.fish
-        source $CTF_HOME/misc/aliases.fish 2>/dev/null
-    end
+    source $CTF_HOME/misc/aliases.fish 2>/dev/null
 end
